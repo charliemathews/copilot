@@ -19,3 +19,8 @@ Namespace & Class Structure
 	Namespace - \CP\API
 			Class - Rest
 			Class - Paths
+
+
+Sublime project files are setup to access C:\Program Files (x86)\Zend\Apache2\htdocs\copilot.
+
+(c)Technical Solutions LLC.
