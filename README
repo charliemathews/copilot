@@ -1,0 +1,17 @@
+-==// Copilot //==-
+
+A restful API built to fill the role of a middle tier data access layer 
+for TS Software and Services.
+
+
+Namespace & Class Structure
+
+	Namespace - \
+
+	Namespace - \CP
+			Class - Copilot
+			Class - Messenger
+			Class - Postman
+	Namespace - \CP\API
+			Class - Rest
+			Class - Paths
