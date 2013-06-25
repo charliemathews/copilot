@@ -8,6 +8,14 @@
 	"buffers":
 	[
 		{
+			"file": "README",
+			"settings":
+			{
+				"buffer_size": 555,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "cp.php",
 			"settings":
 			{
@@ -195,11 +203,37 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "README",
+					"settings":
+					{
+						"buffer_size": 555,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								370,
+								370
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
 					"file": "cp.php",
 					"settings":
 					{
@@ -225,7 +259,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 2,
 					"file": "inc/_config.php",
 					"settings":
 					{
@@ -251,7 +285,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "view/splash.php",
 					"settings":
 					{
@@ -279,11 +313,11 @@
 			]
 		},
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "inc/class.copilot.php",
 					"settings":
 					{
@@ -304,13 +338,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 225.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "inc/class.log.php",
 					"settings":
 					{
@@ -337,7 +371,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "inc/class.data.php",
 					"settings":
 					{
@@ -364,7 +398,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "inc/class.db.php",
 					"settings":
 					{
@@ -396,7 +430,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "class/class.db.php",
 					"settings":
 					{
@@ -424,7 +458,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 9,
 					"file": "class/class.tss.main.php",
 					"settings":
 					{
@@ -458,7 +492,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 9,
+					"buffer": 10,
 					"file": "inc/class.api.rest.php",
 					"settings":
 					{
@@ -485,7 +519,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 11,
 					"file": "inc/class.api.paths.php",
 					"settings":
 					{
@@ -512,7 +546,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 12,
 					"file": "inc/class.api.paths.adapter.php",
 					"settings":
 					{
