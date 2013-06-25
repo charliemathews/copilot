@@ -14,11 +14,19 @@ Namespace & Class Structure
 
 	Namespace - \CP
 			Class - Copilot
-			Class - Messenger
-			Class - Postman
+			Class - Log
+			Class - Data
+			Class - DB
+
 	Namespace - \CP\API
 			Class - Rest
 			Class - Paths
+			Class - Adapter
+			
+	Namespace - \APP\PILOT
+			Class - DB
+			Class - tss_main
+
 
 
 Sublime project files are setup to access C:\Program Files (x86)\Zend\Apache2\htdocs\copilot.
