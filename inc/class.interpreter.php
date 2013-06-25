@@ -6,9 +6,9 @@
 Namespace CP ;
 
 /**
-* Responsible for compiling responses and interpreting submissions.
+* Responsible for compiling responses and interpreting submissions into json.
 */
-class Postman {
+class Interpreter {
 
 	/**
 	* CONSTRUCTOR
