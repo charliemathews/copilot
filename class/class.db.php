@@ -3,6 +3,8 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
+Namespace APP\PILOT
+
     class DB {
             var $created;
             

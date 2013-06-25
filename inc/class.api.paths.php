@@ -3,7 +3,7 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
-namespace CP\API ;
+Namespace CP\API ;
 
 /**
 * Loads, parses, and handles api route construction.
@@ -13,9 +13,12 @@ class Paths {
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct() {
+	public function __construct(&$m) {
 
 		$this->bridge = new Adapter() ;
+
+		$this->m = $m ;
+		$this->m->add_method(__METHOD__) ;
 
 	}
 

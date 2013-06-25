@@ -3,10 +3,10 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
-namespace CP\API ;
+Namespace CP\API ;
 
 /**
-* Constructs the API.
+* Points API calls to actual functions.
 */
 class Adapter {
 
