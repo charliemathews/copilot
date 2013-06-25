@@ -13,17 +13,46 @@ class Paths {
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(&$app) {
+	public function __construct() {
 
-		$app->get('/:name', function ($name) {
-			echo "Hello $name" ;
+		$this->bridge = new Adapter() ;
+
+	}
+
+	public function buildPaths(&$app) {
+
+
+
+		$app->get('/:f1', function($f1) {
+
+			$this->bridge->testGet1($f1) ;
+
+			return true ;
+
 		});
+
+		$app->get('/get1/:vars+', function ($vars) {
+			foreach($vars as $var) {
+				echo $var."<br>";
+			}
+		});
+
+		//$app->get('/get2/:vars+', array($bridge, 'testGet2') );
+		$app->get('/get2/:vars+', function($vars) {
+
+			$this->bridge->testGet2($vars) ;
+
+		});
+
+
 		$app->post('/', function () {
 			echo "This is a POST route." ;
 		});
+
 		$app->put('/', function () {
 			echo "This is a PUT route." ;
 		});
+
 		$app->delete('/', function () {
 			echo "This is a DELETE route." ;
 		});

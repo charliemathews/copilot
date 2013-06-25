@@ -31,7 +31,8 @@ class Rest {
 	public function enable() {
 
 		// load api routes
-		$route = new Paths($this->app) ;
+		$route = new Paths() ;
+		$route->buildPaths($this->app) ;
 
 		// start api
 		$this->app->run();
