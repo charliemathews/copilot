@@ -22,41 +22,40 @@ class Paths {
 
 	}
 
-	public function buildPaths(&$app) {
+	public function buildPaths(&$slim) {
 
 
 
-		$app->get('/:f1', function($f1) {
+		$slim->get('/:f1', function($f1) {
 
 			$this->bridge->testGet1($f1) ;
 
-			return true ;
-
 		});
 
-		$app->get('/get1/:vars+', function ($vars) {
+		$slim->get('/get1/:vars+', function ($vars) {
 			foreach($vars as $var) {
 				echo $var."<br>";
 			}
 		});
 
-		//$app->get('/get2/:vars+', array($bridge, 'testGet2') );
-		$app->get('/get2/:vars+', function($vars) {
+		//$slim->get('/get2/:vars+', array($bridge, 'testGet2') );
+		$slim->get('/get2/:vars+', function($vars) {
 
 			$this->bridge->testGet2($vars) ;
+			$this->m->add('"/get2/:vars+" was run ', 'LOG') ;
 
 		});
 
 
-		$app->post('/', function () {
+		$slim->post('/', function () {
 			echo "This is a POST route." ;
 		});
 
-		$app->put('/', function () {
+		$slim->put('/', function () {
 			echo "This is a PUT route." ;
 		});
 
-		$app->delete('/', function () {
+		$slim->delete('/', function () {
 			echo "This is a DELETE route." ;
 		});
 

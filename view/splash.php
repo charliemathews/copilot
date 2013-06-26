@@ -10,6 +10,9 @@
 			"VERSION: ".APP_VERSION." ".APP_VERSION_TITLE."<br>\n"
 			: ERROR_ACCESS_DENIED) ?>
 
-<?=  '<br><br>Log<br>' . $cp->log->display('LOG') ; ?>
+<br><br>Messages<br>
+<div style="height:130px;width:500px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+<?php $cp->log->display_fancy('*') ; ?>
+</div>
 
 <?php require_once(SERVER_DOCRT.'/view/foot.php'); ?>

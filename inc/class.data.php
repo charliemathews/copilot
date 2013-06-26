@@ -6,7 +6,9 @@
 Namespace CP ;
 
 /**
-* Responsible for compiling responses and interpreting submissions into json.
+* Responsible for compiling the response queue and interpreting submissions into json.
+*
+* http://en.wikipedia.org/wiki/Queue_(abstract_data_type)
 */
 class Data {
 

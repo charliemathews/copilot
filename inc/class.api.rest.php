@@ -16,7 +16,7 @@ class Rest {
 	public function __construct(&$m) {
 
 		// create new Slim framework interface object
-		$this->app = new \Slim\Slim() ;
+		$this->slim = new \Slim\Slim() ;
 
 		$this->m = $m ;
 		$this->m->add_method(__METHOD__) ;
@@ -32,10 +32,10 @@ class Rest {
 
 		// load api routes
 		$route = new Paths($this->m) ;
-		$route->buildPaths($this->app) ;
+		$route->buildPaths($this->slim) ;
 
 		// start api
-		$this->app->run();
+		$this->slim->run();
 
 	}
 

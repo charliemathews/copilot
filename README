@@ -2,6 +2,13 @@
 
 A restful API built to fill the role of a middle tier data access layer for TS Software and Services.
 
+To Do:
+	- Encapsulate the classes which are considered to be part of the app core.
+	- Write the automatic json->path creator.
+	- Extend Data class to handle queueing and output return.
+	- Further extend Data class by structuring output return to contain necessary overhead.
+	- Output json responses to "output" textbox while DEV = true.
+
 
 Licensing
 
