@@ -3,7 +3,7 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
-Namespace CP\API ;
+Namespace CP ;
 
 /**
 * Constructs the API.
@@ -20,7 +20,6 @@ class API {
 	public function __construct(&$log) {
 
 		$this->log = $log ;
-		$this->log->add_method(__METHOD__) ;
 
 		// Initiate the slim framework.
 		\Slim\Slim::registerAutoloader();
@@ -31,9 +30,9 @@ class API {
 	}
 
 	/**
-	* Function enable
+	* Function enableSlim
 	*
-	* Enables slim.
+	* Enables the slim instance.
 	*/
 	public function enableSlim() {
 
@@ -42,29 +41,24 @@ class API {
 	}
 
 	/**
-
+	* Function addRoute
+	*
+	* Adds any desired route to the routeIndex which is dynamically added to the API.
+	*
+	* @param string $httpMethod contains the http method - i.e. get, post, put, delete.
+	* @param string $requestRoute contains the url parameter which calls this route.
+	* @param string $callbackMethod contains the call_user_method() compatible function name.
 	*/
-	public function bindMethodToRoute($httpMethod, $requestRoute, $callbackMethod) {
-		$this->addRoute($httpMethod, $requestRoute, $callbackMethod) ;
+	public function addRoute($httpMethod, $requestRoute, $callbackMethod) {
 
-		echo '<br>'.$this->routeIndex[0]['httpmethod'] ;
-		echo '<br>'.$this->routeIndex[0]['requestRoute'] ;
-		echo '<br>'.$this->routeIndex[0]['callbackMethod'] ;
-
-		call_user_func($callbackMethod) ;
-	}
-
-	/**
-
-	*/
-	private function addRoute($httpMethod, $requestRoute, $callbackMethod) {
-
-		$this->routeIndex[] = array('httpmethod'=>$httpMethod, 'requestRoute'=>$requestRoute, 'callbackMethod'=>$callbackMethod) ;
+		$this->routeIndex[] = array('httpMethod'=>$httpMethod, 'requestRoute'=>$requestRoute, 'callbackMethod'=>$callbackMethod) ;
 
 	}
 
 	/**
-
+	* Function buildRoutes
+	*
+	* Runs the methods for building statically and dynamically created routes.
 	*/
 	public function buildRoutes() {
 
@@ -74,10 +68,13 @@ class API {
 	}
 
 	/**
-
+	* Function buildStaticRoutes
+	*
+	* Submits staticly programmed routes into slim.
 	*/
 	private function buildStaticRoutes() {
 
+		/* EXAMPLES
 		$this->slim->get('/:f1', function($f1) {
 
 			$this->testGet1($f1) ;
@@ -89,8 +86,8 @@ class API {
 				echo $var."<br>";
 			}
 		});
+		*/
 
-		//$slim->get('/get2/:vars+', array($bridge, 'testGet2') );
 		$this->slim->get('/get2/:vars+', function($vars) {
 
 			$this->testGet2($vars) ;
@@ -114,11 +111,17 @@ class API {
 	}
 
 	/**
-
+	* Function buildDynamicRoutes
+	*
+	* Submits dynamically programmed routes into slim.
 	*/
 	private function buildDynamicRoutes() {
 
-		//use $this->slim->
+		foreach($this->routeIndex as $singleRoute) {
+			if($singleRoute['httpMethod'] == 'get') {
+				$this->slim->get($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
+			}
+		}
 
 	}
 

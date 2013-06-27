@@ -16,7 +16,6 @@ class DB {
 	public function __construct(&$log, $host, $dbname, $user, $pass) {
 
 		$this->log = $log ;
-		$this->log->add_method(__METHOD__) ;
 
 		try {
 

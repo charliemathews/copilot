@@ -40,13 +40,13 @@ class Log {
 
 
 	/**
-	* Function add_method
+	* Function addMethod
 	*
 	* Logs method creation.
 	*
 	* @param string $method should contain __METHOD__.
 	*/
-	public function add_method($method) {
+	public function addMethod($method) {
 
 		$this->messages[] = array('msg'=>($method. ' initiated.'), 'type'=>'LOG') ;
 
@@ -87,7 +87,9 @@ class Log {
 	*/
 	public function display($type) {
 
-		for($i = 0 ; $i < count($this->messages); $i++) {
+		$msgCount = count($this->messages) ;
+
+		for($i = 0 ; $i < $msgCount; ++$i) {
 
 			$temp = $this->parseLog($i, $type) ;
 
@@ -106,9 +108,9 @@ class Log {
 	*
 	* @param string $type defines what type of message is being returned.
 	*/
-	public function display_fancy($type) {
+	public function displayFancy($type) {
 
-		for($i = 0 ; $i < count($this->messages); $i++) {
+		for($i = 0 ; $i < count($this->messages); ++$i) {
 
 			$temp = $this->parseLog($i, $type) ;	
 

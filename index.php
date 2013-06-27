@@ -22,7 +22,7 @@ $cp_instance = CP\Copilot::Instance() ;
 	// Method binding test.
 	*/
 	require_once(SERVER_DOCRT.'/class/class.foo.php');
-	$cp_instance->api->bindMethodToRoute('get', '/get3', 'test\foo::test') ;
+	$cp_instance->createRoute('get', '/get3', 'test\foo::test') ;
 
 
 

@@ -6,7 +6,7 @@ TODO
 
 	DONE	- Encapsulate the classes which are considered to be part of the app core.
 	DONE	- Rewrite api classes to interpret new app object.
-	REMOVED - Write the automatic json->path creator.
+	REVIEW	- Write the automatic json->path creator.
 			- Extend Data class to handle queueing and output return.
 			- Further extend Data class by structuring output return to contain necessary overhead.
 			- Output json responses to "output" textbox while DEV = true.

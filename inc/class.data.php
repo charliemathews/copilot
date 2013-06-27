@@ -16,7 +16,6 @@ class Data {
 	public function __construct(&$log) {
 
 		$this->log = $log ;
-		$this->log->add_method(__METHOD__) ;
 
 	}
 
