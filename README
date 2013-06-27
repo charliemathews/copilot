@@ -31,9 +31,7 @@ Namespace & Class Structure
 			Class - DB
 
 	Namespace - \CP\API
-			Class - Rest
-			Class - Paths
-			Class - Adapter
+			Class - API
 			
 	Namespace - \APP\PILOT
 			Class - DB
