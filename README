@@ -30,13 +30,7 @@ Namespace & Class Structure
 			Class - Log
 			Class - Data
 			Class - DB
-
-	Namespace - \CP\API
 			Class - API
-			
-	Namespace - \APP\PILOT
-			Class - DB
-			Class - tss_main
 
 
 Licensing

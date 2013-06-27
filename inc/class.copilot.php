@@ -36,6 +36,12 @@ class Copilot {
 	* CONSTRUCTOR
 	*/
 	public function __construct() {
+
+		//Script timer.
+		$this->mtime = microtime(); 
+		$this->mtime = explode(" ",$this->mtime); 
+		$this->mtime = $this->mtime[1] + $this->mtime[0]; 
+		$this->starttime = $this->mtime; 
 		
 		// Core classes.
 		$this->log = new Log() ;
@@ -51,6 +57,14 @@ class Copilot {
 
 		$this->api->buildRoutes() ;
 		$this->api->enableSlim() ;
+
+		//Script timer end.
+		$this->mtime = microtime(); 
+		$this->mtime = explode(" ",$this->mtime); 
+		$this->mtime = $this->mtime[1] + $this->mtime[0]; 
+		$endtime = $this->mtime; 
+		$totaltime = ($endtime - $this->starttime);
+		define('SCRIPT_TIME', $totaltime) ;
 
 	}
 

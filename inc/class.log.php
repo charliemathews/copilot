@@ -61,19 +61,15 @@ class Log {
 	*/
 	private function parseLog($row, $type) {
 
-		if($type == '*') {
+		if($type == '*' || $this->messages[$row]['type'] == $type) {
 
-			$cached_msg = $this->messages[$row]['msg'] ;
-			$cached_type = $this->messages[$row]['type'] ;
+			return array($this->messages[$row]['msg'], $this->messages[$row]['type']) ;
 
-		} elseif($this->messages[$row]['type'] == $type) {
+		} else {
 
-			$cached_msg = $this->messages[$row]['msg'] ;
-			$cached_type = $this->messages[$row]['type'] ;
+			return array(null, null) ;
 
 		}
-
-		return array($cached_msg, $cached_type) ;
 
 	}
 
@@ -93,7 +89,7 @@ class Log {
 
 			$temp = $this->parseLog($i, $type) ;
 
-			$cache[] = array('msg'=>$temp[0], 'type'=>$temp[1]) ;
+			if($temp[0] != null) $cache[] = array('msg'=>$temp[0], 'type'=>$temp[1]) ;
 		}
 
 		return json_encode($cache) ;

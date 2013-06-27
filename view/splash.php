@@ -16,9 +16,6 @@
 			"</div>\n"
 			: ERROR_ACCESS_DENIED) ?>
 </div>
-
-<br>
-
 <h2>Messages</h2>
 <div style="height:130px;width:500px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
 	<?php $cp_instance->log->displayFancy('*') ; ?>

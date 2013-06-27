@@ -1,25 +1,30 @@
 <?php
 
-namespace test ;
+namespace app\test ;
 
 class foo {
 
 	private $greeting ;
+	private $msgLog ;
 
 	public function __construct() {
 
+		$this->msgLog = array() ;
+
 		$this->greeting = "Hello world." ;
-		echo $this->greeting ;
+		$this->msgLog[] = $this->greeting ;
 
 	}
 
 	public static function staticfunctiontest() {
-		echo __METHOD__ ;
+		$this->msgLog[] = __METHOD__ ;
 	}
 
 	public function childfunctiontest() {
-		echo __METHOD__ ;
+		$this->msgLog[] = __METHOD__ ;
 	}
+
+	public function returnLog() { return $this->msgLog; }
 
 }
 

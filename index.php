@@ -4,41 +4,17 @@
 //Confidential & Proprietary Information.
 
 
-//Script timer.
-$mtime = microtime(); 
-$mtime = explode(" ",$mtime); 
-$mtime = $mtime[1] + $mtime[0]; 
-$starttime = $mtime; 
-
-
-
 // Create a copilot instance.
 require_once('/cp.php');
 $cp_instance = CP\Copilot::Instance() ;
 
-
-
-	/**
-	// Method binding test.
-	*/
+	// Method binding demos.
 	require_once(SERVER_DOCRT.'/class/class.foo.php');
 	//$cp_instance->createRoute('get', '/foo', 'test\foo::staticfunctiontest') ;
 	$cp_instance->createRoute('get', '/foo', function(){ $testfoo = new test\foo() ; $testfoo->childfunctiontest() ; }) ;
 
-
-
 // Enable copilot.
 $cp_instance->ready() ;
-
-
-
-//Script timer end.
-$mtime = microtime(); 
-$mtime = explode(" ",$mtime); 
-$mtime = $mtime[1] + $mtime[0]; 
-$endtime = $mtime; 
-$totaltime = ($endtime - $starttime);
-define('SCRIPT_TIME', $totaltime) ;
 
 
 

@@ -127,7 +127,7 @@ class API {
 
 
 	/**
-	// Static route functions are listed below.
+	* Static route functions are listed below.
 	*/
 
 	public function testGet1($f1) {
@@ -136,7 +136,7 @@ class API {
 
 	public function testGet2($vars) {
 		foreach($vars as $var) {
-				echo $var."<br>";
+				echo $var.", ";
 			}
 	}
 
