@@ -31,9 +31,9 @@ class Routes {
 	/**
 
 	*/
-	public function addRoute() {
+	public function addRoute($httpMethod, $requestRoute, $callbackMethod) {
 
-		//$this->routeIndex[] = 
+		$this->routeIndex[] = array('httpmethod'=>$httpMethod, 'requestRoute'=>$requestRoute, 'callbackMethod'=>$callbackMethod) ;
 
 	}
 

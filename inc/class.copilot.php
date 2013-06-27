@@ -16,7 +16,7 @@ class Copilot {
 	
 	private $db_local ;
 	private $data ;
-	private $api ;
+	public $api ;
 
 	static private $_instance = null;
 
@@ -44,6 +44,7 @@ class Copilot {
 
 		//Initiate API
 		$this->api = new API\API($this->log) ;
+		$this->api->buildRoutes() ;
 		$this->api->enable() ;
 
 	}

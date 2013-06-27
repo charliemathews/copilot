@@ -10,6 +10,21 @@
 <!-- because of mod_rewrite, any local links will not work on localhost. -->
 <!-- contents of style.css are in <style> tags below -->
 <style>
+* {
+	font-family: Helvetica,Arial,Verdana,sans-serif ;
+}
+html {
+	font-size: 62.5%;  /* equals 10px */
+}
+body {
+
+}
+h2 {
+	font-size: 1.7em ;
+}
+#meta_all {
+	font-size: 1.6em ;
+}
 #meta_version {
 	position: fixed ;
 	bottom: 0px ;
