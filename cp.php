@@ -19,7 +19,6 @@ require_once(SERVER_DOCRT.'/inc/class.db.php') ;
 require_once(SERVER_DOCRT.'/inc/class.log.php') ;
 require_once(SERVER_DOCRT.'/inc/class.data.php') ;
 require_once(SERVER_DOCRT.'/inc/class.api.php');
-require_once(SERVER_DOCRT.'/inc/class.api.routes.php');
 
 //Slim Framework
 require_once(SERVER_DOCRT.'/Slim/Slim.php');
