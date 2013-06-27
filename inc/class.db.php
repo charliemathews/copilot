@@ -13,7 +13,10 @@ class DB {
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(&$m, $host, $dbname, $user, $pass) {
+	public function __construct(&$log, $host, $dbname, $user, $pass) {
+
+		$this->log = $log ;
+		$this->log->add_method(__METHOD__) ;
 
 		try {
 
@@ -23,15 +26,14 @@ class DB {
 			// Set strict error mode.
 			$DBH->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
 
-			$this->m = $m ;
-			$this->m->add_method(__METHOD__) ;
+			$this->log->add("Initializing database connection at " . $host . ".", 'LOG') ;
 
 		}
 		catch(PDOException $e){
 
 			echo $e->getMessage();
 
-			$m->add("DB connection failed.", 'LOG') ;
+			$this->log->add("Database connection to " . $host . " failed.", 'LOG') ;
 
 		}
 

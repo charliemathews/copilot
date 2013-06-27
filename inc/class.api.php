@@ -8,18 +8,21 @@ Namespace CP\API ;
 /**
 * Constructs the API.
 */
-class Rest {
+class API {
+
+	private $log ;
+	private $slim ;
 
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(&$m) {
+	public function __construct(&$log) {
+
+		$this->log = $log ;
+		$this->log->add_method(__METHOD__) ;
 
 		// create new Slim framework interface object
 		$this->slim = new \Slim\Slim() ;
-
-		$this->m = $m ;
-		$this->m->add_method(__METHOD__) ;
 
 	}
 
@@ -31,11 +34,18 @@ class Rest {
 	public function enable() {
 
 		// load api routes
-		$route = new Paths($this->m) ;
-		$route->buildPaths($this->slim) ;
+		$route = new Routes($this->log, $this->slim) ;
+		$route->buildRoutes() ;
 
 		// start api
 		$this->slim->run();
+
+	}
+
+	/**
+
+	*/
+	public function bindMethodToRoute() {
 
 	}
 

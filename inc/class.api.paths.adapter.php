@@ -13,7 +13,10 @@ class Adapter {
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct() {
+	public function __construct(&$app) {
+
+		$this->app = $app ;
+		$this->app->log->add_method(__METHOD__) ;
 
 	}
 

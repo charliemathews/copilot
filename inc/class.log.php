@@ -7,6 +7,8 @@ Namespace CP ;
 
 /**
 * Handles all published errors and messages (logs).
+*
+* This object is currently being initialized public so that anyone anywhere can access it.
 */
 class Log {
 
@@ -50,6 +52,32 @@ class Log {
 
 	}
 
+
+	/**
+
+	* The functions that use this need to be re-written so that parseLog returns an array
+	* containing the results of the "query" and then the calling function can format it.
+
+	*/
+	private function parseLog($row, $type) {
+
+		if($type == '*') {
+
+			$cached_msg = $this->messages[$row]['msg'] ;
+			$cached_type = $this->messages[$row]['type'] ;
+
+		} elseif($this->messages[$row]['type'] == $type) {
+
+			$cached_msg = $this->messages[$row]['msg'] ;
+			$cached_type = $this->messages[$row]['type'] ;
+
+		}
+
+		return array($cached_msg, $cached_type) ;
+
+	}
+
+
 	/**
 	* Function display
 	*
@@ -61,24 +89,15 @@ class Log {
 
 		for($i = 0 ; $i < count($this->messages); $i++) {
 
-			if($type == '*') {
+			$temp = $this->parseLog($i, $type) ;
 
-				$cached_msg = $this->messages[$i]['msg'] ;
-				$cached_type = $this->messages[$i]['type'] ;
-
-			} elseif($this->messages[$i]['type'] == $type) {
-
-				$cached_msg = $this->messages[$i]['msg'] ;
-				$cached_type = $this->messages[$i]['type'] ;
-
-			}
-
-			$cache[] = array('msg'=>$cached_msg, 'type'=>$cached_type) ;
+			$cache[] = array('msg'=>$temp[0], 'type'=>$temp[1]) ;
 		}
 
 		return json_encode($cache) ;
 
 	}
+
 
 	/**
 	* Function display_fancy
@@ -90,19 +109,11 @@ class Log {
 	public function display_fancy($type) {
 
 		for($i = 0 ; $i < count($this->messages); $i++) {
-			if($type == '*') {
 
-				$cached_msg = $this->messages[$i]['msg'] ;
-				$cached_type = $this->messages[$i]['type'] ;
+			$temp = $this->parseLog($i, $type) ;	
 
-			} elseif($this->messages[$i]['type'] == $type) {
+			echo $temp[1] . ': ' . $temp[0] . '<br>', PHP_EOL ;
 
-				$cached_msg = $this->messages[$i]['msg'] ;
-				$cached_type = $this->messages[$i]['type'] ;
-
-			}
-
-			echo $cached_type . ': ' . $cached_msg . '<br>', PHP_EOL ;
 		}
 
 	}

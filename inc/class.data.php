@@ -7,18 +7,16 @@ Namespace CP ;
 
 /**
 * Responsible for compiling the response queue and interpreting submissions into json.
-*
-* http://en.wikipedia.org/wiki/Queue_(abstract_data_type)
 */
 class Data {
 
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(&$m) {
+	public function __construct(&$log) {
 
-		$this->m = $m ;
-		$this->m->add_method(__METHOD__) ;
+		$this->log = $log ;
+		$this->log->add_method(__METHOD__) ;
 
 	}
 
@@ -29,9 +27,9 @@ class Data {
 	*
 	* @param string $data contains array of data to be encoded.
 	*/
-	public function encode(&$data) {
+	public function encode(&$input) {
 
-		return json_encode($data) ;
+		return json_encode($input) ;
 
 	}
 
@@ -42,9 +40,9 @@ class Data {
 	*
 	* @param string $data contains array of data to be decoded.
 	*/
-	public function decode(&$data) {
+	public function decode(&$input) {
 
-		return json_decode($data) ;
+		return json_decode($input) ;
 
 	}
 
