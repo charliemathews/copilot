@@ -11,7 +11,7 @@ $cp_instance = CP\Copilot::Instance() ;
 	// Method binding demos.
 	require_once(SERVER_DOCRT.'/class/class.foo.php');
 	//$cp_instance->createRoute('get', '/foo', 'test\foo::staticfunctiontest') ;
-	$cp_instance->createRoute('get', '/foo', function(){ $testfoo = new test\foo() ; $testfoo->childfunctiontest() ; }) ;
+	$cp_instance->createRoute('get', '/foo', function(){ $testfoo = new app\test\foo() ; $testfoo->childfunctiontest() ; }) ;
 
 // Enable copilot.
 $cp_instance->ready() ;
