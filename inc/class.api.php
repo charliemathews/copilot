@@ -35,7 +35,7 @@ class API {
 	*
 	* Enables slim.
 	*/
-	public function enable() {
+	public function enableSlim() {
 
 		$this->slim->run();
 
@@ -46,6 +46,12 @@ class API {
 	*/
 	public function bindMethodToRoute($httpMethod, $requestRoute, $callbackMethod) {
 		$this->addRoute($httpMethod, $requestRoute, $callbackMethod) ;
+
+		echo '<br>'.$this->routeIndex[0]['httpmethod'] ;
+		echo '<br>'.$this->routeIndex[0]['requestRoute'] ;
+		echo '<br>'.$this->routeIndex[0]['callbackMethod'] ;
+
+		call_user_func($callbackMethod) ;
 	}
 
 	/**

@@ -44,9 +44,14 @@ class Copilot {
 
 		//Initiate API
 		$this->api = new API\API($this->log) ;
-		$this->api->buildRoutes() ;
-		$this->api->enable() ;
 
+	}
+
+	public function ready() {
+
+		$this->api->buildRoutes() ;
+		$this->api->enableSlim() ;
+		
 	}
 
 	public function __clone() {

@@ -1,5 +1,7 @@
 <?php
 
+namespace test ;
+
 class foo {
 
 	private $greeting ;
@@ -9,6 +11,10 @@ class foo {
 		$this->greeting = "Hello world." ;
 		echo $this->greeting ;
 
+	}
+
+	public static function test() {
+		echo "wow" ;
 	}
 
 }
