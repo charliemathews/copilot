@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <head>
 
-<title><?php echo APP_NAME; ?></title>
+<title><?php echo APP_NAME, ' | ', APP_VERSION ; ?></title>
 
 <link href="<?= SERVER_DOCRT ?>/view/style.css" rel="stylesheet" type="text/css">
 <!-- because of mod_rewrite, any local links will not work on localhost. -->
@@ -22,8 +22,14 @@ body {
 h2 {
 	font-size: 1.7em ;
 }
-#meta_all {
-	font-size: 1.6em ;
+#meta {
+	position: fixed ;
+	bottom: 0px ;
+	left: 0px ;
+	font-size: 4em ;
+	opacity: 0.1 ;
+	text-align: left ;
+	text-transform: uppercase ;
 }
 #meta_version {
 	position: fixed ;

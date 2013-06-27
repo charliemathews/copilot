@@ -9,13 +9,11 @@
 			: ERROR_ACCESS_DENIED) ?>
 </div>
 
-<div id="meta_all">
-<?= (DEV ? 	"<br><br>\n".
-			"SERVER: ".SERVER_NAME."<br>\n".
-			"ROOT: ".SERVER_DOCRT."<br>\n".
-			"SCRIPT: ".$_SERVER['SCRIPT_NAME']."<br>\n".
-			"VERSION: ".APP_VERSION." ".APP_VERSION_TITLE."<br>\n".
-			"TIME: ".SCRIPT_TIME."<br>\n"
+<div id="meta">
+<?= (DEV ? 	"<div>\n".
+			SERVER_NAME."<br>\n".
+			SCRIPT_TIME."<br>\n".
+			"</div>\n"
 			: ERROR_ACCESS_DENIED) ?>
 </div>
 

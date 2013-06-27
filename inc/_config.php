@@ -4,10 +4,10 @@
 //Confidential & Proprietary Information.
 
 
-define("APP_NAME_PREFIX", "TS");
+define("APP_DOMAIN", "TS");
 define("APP_NAME", "Copilot");
-define("APP_VERSION", "0.4.2"); // major, minor, patch
-define("APP_VERSION_TITLE", "PRE-ALPHA");
+define("APP_VERSION", "0.5.0"); // major, minor, patch
+define("APP_VERSION_TITLE", "ALPHA");
 define("COPYRIGHT_YEAR", "2013");
 
 

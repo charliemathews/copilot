@@ -13,8 +13,12 @@ class foo {
 
 	}
 
-	public static function test() {
-		echo "wow" ;
+	public static function staticfunctiontest() {
+		echo __METHOD__ ;
+	}
+
+	public function childfunctiontest() {
+		echo __METHOD__ ;
 	}
 
 }
