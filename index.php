@@ -6,16 +6,22 @@
 
 // Create a copilot instance.
 require_once('/cp.php');
-$cp_instance = CP\Copilot::Instance() ;
+$__CP = &CP\Copilot::Instance() ;
 
-	// Method binding demos.
-	require_once(SERVER_DOCRT.'/class/class.foo.php');
-	//$cp_instance->createRoute('get', '/foo', 'test\foo::staticfunctiontest') ;
-	$cp_instance->createRoute('get', '/foo', function(){ $testfoo = new app\test\foo() ; $testfoo->childfunctiontest() ; }) ;
+// Method binding demos.
+//$cp_instance->createRoute('get', '/foo', 'test\foo::staticfunctiontest') ;
+$__CP->createRoute('get', '/foo/:vars+', function($vars) use(&$__CP){ 
+																require_once(SERVER_DOCRT.'/class/class.foo.php');
+																$testfoo = new app\test\foo() ; 
+																$testfoo->childfunctiontest() ; 
+																$__CP->log->add("You called the GET method. '/foo'", 'API') ;
+																foreach($vars as $var) {
+																	echo $var ;
+																}
+																}) ;
 
 // Enable copilot.
-$cp_instance->ready() ;
-
+$__CP->ready() ;
 
 
 /**

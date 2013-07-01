@@ -91,21 +91,25 @@ class API {
 		$this->slim->get('/get2/:vars+', function($vars) {
 
 			$this->testGet2($vars) ;
-			$this->log->add('"/get2/:vars+" was run.', 'LOG') ;
+			$this->log->add('"/get2/:vars+" was run.', 'API') ;
 
 		});
 
 
+		$this->slim->get('/', function () {
+			$this->log->add("You called the GET method. '/'", 'API') ;
+		});
+
 		$this->slim->post('/', function () {
-			echo "This is a POST route." ;
+			$this->log->add("You called the POST method. '/'", 'API') ;
 		});
 
 		$this->slim->put('/', function () {
-			echo "This is a PUT route." ;
+			$this->log->add("You called the PUT method. '/'", 'API') ;
 		});
 
 		$this->slim->delete('/', function () {
-			echo "This is a DELETE route." ;
+			$this->log->add("You called the DELETE method. '/'", 'API') ;
 		});
 
 	}

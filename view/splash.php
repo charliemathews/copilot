@@ -18,7 +18,7 @@
 </div>
 <h2>Messages</h2>
 <div style="height:130px;width:500px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
-	<?php $cp_instance->log->displayFancy('*') ; ?>
+	<?php $__CP->log->displayFancy('*') ; ?>
 </div>
 
 <?php require_once(SERVER_DOCRT.'/view/foot.php'); ?>
