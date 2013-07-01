@@ -15,7 +15,7 @@ class Data {
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(&$log) {
+	public function __construct(Log &$log) {
 
 		$this->dataQueue = array() ;
 
@@ -30,8 +30,8 @@ class Data {
 	*
 	* @param string $input contains the new data array or object to add to queue.
 	*/
-	public function add($input) {
-		$this->dataQueue[] = $input ;
+	public function add($name, $input) {
+		$this->dataQueue[] = array("name"=>$name, "data"=>$input) ;
 	}
 
 	/**
@@ -42,16 +42,13 @@ class Data {
 	private function encoder() {
 
 		$output = array() ;
-		$header = array() ;
-	
-		$header['app'] = APP_NAME ;
-		$header['version'] = APP_VERSION ;
-		$header['token'] = "xxxx-xxxx-xxxx-xxxx" ;
 
-		$output['header'] = $header ;
+		$token = "xxxx-xxxx-xxxx-xxxx" ;
+
+		$output['header'] = array('app'=>APP_NAME, 'version'=>APP_VERSION, 'token'=>$token) ;
 
 		foreach($this->dataQueue as $dataPart) {
-			$output['data'][] = $dataPart ;
+			$output['blocks'][] = $dataPart ;
 		}
 
 		return json_encode($output) ;

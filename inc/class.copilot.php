@@ -66,6 +66,14 @@ class Copilot {
 		$totaltime = ($endtime - $this->starttime);
 		define('SCRIPT_TIME', $totaltime) ;
 
+		// Output
+		if(DEV) {
+			$this->log->add($this->getData(), CP_RESPONSE) ;
+			require_once(SERVER_DOCRT.'/view/splash.php') ;
+		} elseif(!DEV) {
+			// return json
+		}
+
 	}
 
 	/**
@@ -81,8 +89,8 @@ class Copilot {
 		$this->api->addRoute($httpMethod, $requestRoute, $callbackMethod) ;
 	}
 
-	public function addData($input) {
-		$this->data->add($input) ;
+	public function addData($name, $input) {
+		$this->data->add($name, $input) ;
 	}
 
 	public function getData() {

@@ -53,12 +53,6 @@ class Log {
 	}
 
 
-	/**
-
-	* The functions that use this need to be re-written so that parseLog returns an array
-	* containing the results of the "query" and then the calling function can format it.
-
-	*/
 	private function parseLog($row, $type) {
 
 		if($type == '*' || $this->messages[$row]['type'] == $type) {
@@ -110,7 +104,7 @@ class Log {
 
 			$temp = $this->parseLog($i, $type) ;	
 
-			echo $temp[1] . ': ' . $temp[0] . '<br>', PHP_EOL ;
+			echo '<span style="font-weight: bold;">' . $temp[1] . '</span>: ' . $temp[0] . '<br>', PHP_EOL ;
 
 		}
 

@@ -16,9 +16,9 @@
 			"</div>\n"
 			: ERROR_ACCESS_DENIED) ?>
 </div>
-<h2>Messages</h2>
+<h2>Dev Messages</h2>
 <div id="msg_box">
-	<?php $__CP->log->displayFancy('*') ; ?>
+	<?php $this->log->displayFancy('*') ; ?>
 </div>
 
 <?php require_once(SERVER_DOCRT.'/view/foot.php'); ?>

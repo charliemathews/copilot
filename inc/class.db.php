@@ -13,7 +13,7 @@ class DB {
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(&$log, $host, $dbname, $user, $pass) {
+	public function __construct(Log &$log, $host, $dbname, $user, $pass) {
 
 		$this->log = $log ;
 

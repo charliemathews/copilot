@@ -6,7 +6,7 @@
 
 define("APP_DOMAIN", "TS");
 define("APP_NAME", "Copilot");
-define("APP_VERSION", "0.5.4"); // major, minor, patch
+define("APP_VERSION", "0.5.5"); // major, minor, patch
 define("APP_VERSION_TITLE", "ALPHA");
 define("COPYRIGHT_YEAR", "2013");
 
@@ -44,5 +44,11 @@ define("DB_USER_LOCAL", $local_db_user) ;
 define("DB_PASS_LOCAL", $local_db_pass) ;
 
 define("ERROR_ACCESS_DENIED", "Access denied. This is not a public portal.");
+
+// Possible log types.
+define("CP_ERR", "Error") ;
+define("CP_STATUS", "Status") ;
+define("CP_INPUT", "Input") ;
+define("CP_RESPONSE", "Response") ;
 
 ?>

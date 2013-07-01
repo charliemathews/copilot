@@ -17,7 +17,7 @@ class API {
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(&$log) {
+	public function __construct(Log &$log) {
 
 		$this->log = $log ;
 
@@ -96,9 +96,13 @@ class API {
 		*/
 
 
-		// Base calls.
+		// Required calls.
 		$this->slim->get('/', function () {
-			$this->log->add("Copilot is online.", 'STATUS') ;
+			$this->log->add("Copilot is online.", CP_STATUS) ;
+		});
+
+		$this->slim->notFound(function () {
+    		$this->log->add("Copilot is online. (Route not found)", CP_STATUS) ;
 		});
 
 	}
