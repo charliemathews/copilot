@@ -2,17 +2,6 @@
 
 A restful API built to fill the role of a middle tier data access layer for TS Software and Services.
 
-TODO
-
-	DONE	- Encapsulate the classes which are considered to be part of the app core.
-	DONE	- Rewrite api classes to interpret new app object.
-	DONE	- Write the automatic path creator.
-	DONE	- Extend Data class to handle queueing and output return.
-	DONE	- Further extend Data class by structuring output return to contain necessary overhead.
-	DONE	- Output json responses to "output" textbox while DEV = true.
-	DONE	- Register functions and their path to copilot then return their data via json.
-
-
 Roadmap
 	
 	PRE-ALPHA 	- non-functional
