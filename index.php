@@ -4,29 +4,32 @@
 //Confidential & Proprietary Information.
 
 
-// Create a copilot instance.
+// Load copilot.
 require_once('/cp.php');
 $__CP = &CP\Copilot::Instance() ;
 
-// Method binding demos.
-//$cp_instance->createRoute('get', '/foo', 'test\foo::staticfunctiontest') ;
-$__CP->createRoute('get', '/foo/:vars+', function($vars) use(&$__CP){ 
-																require_once(SERVER_DOCRT.'/class/class.foo.php');
-																$testfoo = new app\test\foo() ; 
-																$testfoo->childfunctiontest() ; 
-																$__CP->log->add("You called the GET method. '/foo'", 'API') ;
-																foreach($vars as $var) {
-																	echo $var ;
-																}
-																}) ;
+// Method binding.
+$__CP->createRoute('get', '/foo/:vars+', function($vars) use(&$__CP) 
+					{ 
+					require(SERVER_DOCRT.'/class/class.foo.php'); // include the code you want to run for this method
+					$testfoo = new app\test\foo() ; // in this case, we create a class which was in the included code
+
+					$testfoo->childfunctiontest() ; // run the desired function
+
+					$response = "You called the GET method. '/foo/:vars+" ;
+
+					$__CP->addData(array(1, 2, 3, "test")) ; // you have full access to the api call arguments
+
+					$__CP->log->add($response, 'API') ;
+					$__CP->log->add(print_r($vars, true), 'API') ;
+					$__CP->log->add($__CP->getData(), 'API') ;
+					}) ;
 
 // Enable copilot.
 $__CP->ready() ;
 
 
-/**
-// Views / Output. Replace this with slim views.
-*/
+// Output
 if(DEV) require_once(SERVER_DOCRT.'/view/splash.php') ;
 
 ?>

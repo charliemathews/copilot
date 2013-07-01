@@ -81,6 +81,14 @@ class Copilot {
 		$this->api->addRoute($httpMethod, $requestRoute, $callbackMethod) ;
 	}
 
+	public function addData($input) {
+		$this->data->encode($input) ;
+	}
+
+	public function getData() {
+		return $this->data->returnStream() ;
+	}
+
 	public function __clone() {
 		trigger_error('Cloning instances of this class is forbidden.', E_USER_ERROR);
 	}

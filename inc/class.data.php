@@ -10,10 +10,14 @@ Namespace CP ;
 */
 class Data {
 
+	private $dataQueue ;
+
 	/**
 	* CONSTRUCTOR
 	*/
 	public function __construct(&$log) {
+
+		$this->dataQueue = array() ;
 
 		$this->log = $log ;
 
@@ -28,8 +32,32 @@ class Data {
 	*/
 	public function encode(&$input) {
 
-		return json_encode($input) ;
+		$encoded_input = array() ;
+		$header = array() ;
+	
+		$header['app'] = APP_NAME ;
+		$header['version'] = APP_VERSION ;
+		$header['token'] = "xxxx-xxxx-xxxx-xxxx" ;
 
+		$encoded_input['header'] = $header ;
+		$encoded_input['data'] = $input ;
+
+		$this->dataQueue[] = json_encode($encoded_input) ;
+
+	}
+
+	/**
+	* Function returnStream
+	*
+	* Returns the JSON response.
+	*/
+
+	public function returnStream() {
+
+		foreach($this->dataQueue as $dataPart) {
+			return $dataPart ;
+		}
+		
 	}
 
 	/**

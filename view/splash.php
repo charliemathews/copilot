@@ -17,7 +17,7 @@
 			: ERROR_ACCESS_DENIED) ?>
 </div>
 <h2>Messages</h2>
-<div style="height:130px;width:500px;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+<div id="msg_box">
 	<?php $__CP->log->displayFancy('*') ; ?>
 </div>
 

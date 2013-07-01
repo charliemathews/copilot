@@ -40,4 +40,11 @@ h2 {
 	text-align: right ;
 	text-transform: uppercase ;
 }
+#msg_box {
+	height:100%;
+	width:100%;
+	border:1px solid #ccc;
+	font:16px/26px Georgia, Garamond, Serif;
+	overflow:auto;
+}
 </style>

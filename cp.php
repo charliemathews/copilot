@@ -4,7 +4,7 @@
 //Confidential & Proprietary Information.
 
 /**
-* Load all of CoPilot's classes and logic.
+* Load all of CoPilot's logic.
 */
 
 require_once('inc/_config.php');

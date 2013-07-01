@@ -86,16 +86,17 @@ class API {
 				echo $var."<br>";
 			}
 		});
-		*/
 
 		$this->slim->get('/get2/:vars+', function($vars) {
 
 			$this->testGet2($vars) ;
-			$this->log->add('"/get2/:vars+" was run.', 'API') ;
+			$this->log->add("You called the GET method. '/get2/:vars+'", 'API') ;
 
 		});
+		*/
 
 
+		// Base calls.
 		$this->slim->get('/', function () {
 			$this->log->add("You called the GET method. '/'", 'API') ;
 		});
@@ -142,18 +143,6 @@ class API {
 		foreach($vars as $var) {
 				echo $var.", ";
 			}
-	}
-
-	public function doPost($input) {
-
-	}
-
-	public function doPut($input) {
-
-	}
-
-	public function doDelete($input) {
-
 	}
 
 }
