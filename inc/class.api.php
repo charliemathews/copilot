@@ -98,19 +98,7 @@ class API {
 
 		// Base calls.
 		$this->slim->get('/', function () {
-			$this->log->add("You called the GET method. '/'", 'API') ;
-		});
-
-		$this->slim->post('/', function () {
-			$this->log->add("You called the POST method. '/'", 'API') ;
-		});
-
-		$this->slim->put('/', function () {
-			$this->log->add("You called the PUT method. '/'", 'API') ;
-		});
-
-		$this->slim->delete('/', function () {
-			$this->log->add("You called the DELETE method. '/'", 'API') ;
+			$this->log->add("Copilot is online.", 'STATUS') ;
 		});
 
 	}
@@ -128,21 +116,6 @@ class API {
 			}
 		}
 
-	}
-
-
-	/**
-	* Static route functions are listed below.
-	*/
-
-	public function testGet1($f1) {
-		echo "hello! " . $f1 ;
-	}
-
-	public function testGet2($vars) {
-		foreach($vars as $var) {
-				echo $var.", ";
-			}
 	}
 
 }

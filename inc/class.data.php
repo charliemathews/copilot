@@ -26,23 +26,35 @@ class Data {
 	/**
 	* Function encode
 	*
-	* Encodes returning data stream into json and adds relevant authentication data.
+	* Queues up data that the program wishes to return.
 	*
-	* @param string $data contains array of data to be encoded.
+	* @param string $input contains the new data array or object to add to queue.
 	*/
-	public function encode(&$input) {
+	public function add($input) {
+		$this->dataQueue[] = $input ;
+	}
 
-		$encoded_input = array() ;
+	/**
+	* Function encode
+	*
+	* Encodes returning data stream into json and adds relevant authentication data.
+	*/
+	private function encoder() {
+
+		$output = array() ;
 		$header = array() ;
 	
 		$header['app'] = APP_NAME ;
 		$header['version'] = APP_VERSION ;
 		$header['token'] = "xxxx-xxxx-xxxx-xxxx" ;
 
-		$encoded_input['header'] = $header ;
-		$encoded_input['data'] = $input ;
+		$output['header'] = $header ;
 
-		$this->dataQueue[] = json_encode($encoded_input) ;
+		foreach($this->dataQueue as $dataPart) {
+			$output['data'][] = $dataPart ;
+		}
+
+		return json_encode($output) ;
 
 	}
 
@@ -51,12 +63,9 @@ class Data {
 	*
 	* Returns the JSON response.
 	*/
-
 	public function returnStream() {
 
-		foreach($this->dataQueue as $dataPart) {
-			return $dataPart ;
-		}
+		return $this->encoder() ;
 		
 	}
 

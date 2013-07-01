@@ -3,8 +3,8 @@
 namespace app\test ;
 
 class foo {
-	
-	private $msgLog ;
+
+	public $msgLog ;
 
 	public function __construct() {
 

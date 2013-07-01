@@ -82,7 +82,7 @@ class Copilot {
 	}
 
 	public function addData($input) {
-		$this->data->encode($input) ;
+		$this->data->add($input) ;
 	}
 
 	public function getData() {
