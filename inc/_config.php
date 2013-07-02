@@ -20,6 +20,7 @@ if(SERVER_NAME == $prod_server) {
 
 
 	define("DEV", FALSE) ;
+	define("DEV_GUI", FALSE) ;
 
 	//define db here
 
