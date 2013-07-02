@@ -73,36 +73,13 @@ class API {
 	* Submits staticly programmed routes into slim.
 	*/
 	private function buildStaticRoutes() {
-
-		/* EXAMPLES
-		$this->slim->get('/:f1', function($f1) {
-
-			$this->testGet1($f1) ;
-
-		});
-
-		$this->slim->get('/get1/:vars+', function ($vars) {
-			foreach($vars as $var) {
-				echo $var."<br>";
-			}
-		});
-
-		$this->slim->get('/get2/:vars+', function($vars) {
-
-			$this->testGet2($vars) ;
-			$this->log->add("You called the GET method. '/get2/:vars+'", 'API') ;
-
-		});
-		*/
-
-
-		// Required calls.
+		
 		$this->slim->get('/', function () {
-			$this->log->add("Copilot is online.", CP_STATUS) ;
+			$this->log->add(APP_NAME ." is online.", CP_STATUS) ;
 		});
 
 		$this->slim->notFound(function () {
-    		$this->log->add("Copilot is online. (Route not found)", CP_STATUS) ;
+    		$this->log->add("Unknown call.", CP_STATUS) ;
 		});
 
 	}

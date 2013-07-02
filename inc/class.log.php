@@ -13,6 +13,7 @@ Namespace CP ;
 class Log {
 
 	private $messages ;
+	public $timer ;
 
 	/**
 	* CONSTRUCTOR
@@ -77,6 +78,8 @@ class Log {
 	*/
 	public function display($type) {
 
+		$cache = array() ;
+
 		$msgCount = count($this->messages) ;
 
 		for($i = 0 ; $i < $msgCount; ++$i) {
@@ -86,7 +89,7 @@ class Log {
 			if($temp[0] != null) $cache[] = array('msg'=>$temp[0], 'type'=>$temp[1]) ;
 		}
 
-		return json_encode($cache) ;
+		return $cache ;
 
 	}
 

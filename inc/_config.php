@@ -6,7 +6,7 @@
 
 define("APP_DOMAIN", "TS");
 define("APP_NAME", "Copilot");
-define("APP_VERSION", "0.5.5"); // major, minor, patch
+define("APP_VERSION", "0.5.6"); // major, minor, patch
 define("APP_VERSION_TITLE", "ALPHA");
 define("COPYRIGHT_YEAR", "2013");
 
@@ -28,6 +28,7 @@ if(SERVER_NAME == $prod_server) {
 
 
 	define("DEV", TRUE) ;
+	define("DEV_GUI", FALSE) ;
 
 	error_reporting(E_ALL);
 
@@ -50,5 +51,6 @@ define("CP_ERR", "Error") ;
 define("CP_STATUS", "Status") ;
 define("CP_INPUT", "Input") ;
 define("CP_RESPONSE", "Response") ;
+define("CP_DEV", "Dev") ;
 
 ?>

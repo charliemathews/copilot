@@ -38,10 +38,10 @@ class Copilot {
 	public function __construct() {
 
 		//Script timer.
-		$this->mtime = microtime(); 
-		$this->mtime = explode(" ",$this->mtime); 
-		$this->mtime = $this->mtime[1] + $this->mtime[0]; 
-		$this->starttime = $this->mtime; 
+		$mtime = microtime(); 
+		$mtime = explode(" ",$mtime); 
+		$mtime = $mtime[1] + $mtime[0]; 
+		$this->starttime = $mtime; 
 		
 		// Core classes.
 		$this->log = new Log() ;
@@ -59,19 +59,20 @@ class Copilot {
 		$this->api->enableSlim() ;
 
 		//Script timer end.
-		$this->mtime = microtime(); 
-		$this->mtime = explode(" ",$this->mtime); 
-		$this->mtime = $this->mtime[1] + $this->mtime[0]; 
-		$endtime = $this->mtime; 
-		$totaltime = ($endtime - $this->starttime);
-		define('SCRIPT_TIME', $totaltime) ;
+		$mtime = microtime(); 
+		$mtime = explode(" ",$mtime); 
+		$mtime = $mtime[1] + $mtime[0]; 
+		$endtime = $mtime; 
+		$this->totaltime = ($endtime - $this->starttime);
+		$this->log->timer = $this->totaltime ;
 
 		// Output
-		if(DEV) {
+		if(DEV_GUI) {
 			$this->log->add($this->getData(), CP_RESPONSE) ;
 			require_once(SERVER_DOCRT.'/view/splash.php') ;
-		} elseif(!DEV) {
-			// return json
+		} else {
+			header('Content-Type: application/json');
+			echo $this->getData() ;
 		}
 
 	}

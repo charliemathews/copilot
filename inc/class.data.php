@@ -43,12 +43,22 @@ class Data {
 
 		$output = array() ;
 
-		$token = "xxxx-xxxx-xxxx-xxxx" ;
+		$token = "8a37j-1jg84k-94cj3-cfk8r" ;
 
-		$output['header'] = array('app'=>APP_NAME, 'version'=>APP_VERSION, 'token'=>$token) ;
+		$output['header'] = array(	'app'=>APP_NAME, 
+									'version'=>APP_VERSION,
+									'time'=>$this->log->timer,
+									'token'=>$token // every transaction is issued a token by the API. The server remains stateless, this is just a historical tracking tool.
+								 );
 
 		foreach($this->dataQueue as $dataPart) {
 			$output['blocks'][] = $dataPart ;
+		}
+
+		$logOutput = $this->log->display('*') ;
+
+		foreach($logOutput as $log) {
+			$output['log'][] = $log ;
 		}
 
 		return json_encode($output) ;
