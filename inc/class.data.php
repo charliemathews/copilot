@@ -45,8 +45,8 @@ class Data {
 
 		$token = $this->random_text("alnum", 32) ;
 
-		$output['header'] = array(	'app'=>APP_NAME, 
-									'version'=>APP_VERSION,
+		$output['header'] = array(	'app'=>APP_NAME.' v'.APP_VERSION, 
+									'api'=>API_VERSION,
 									'time'=>$this->log->timer,
 									'token'=>$token // every transaction is issued a token by the API. The server remains stateless, this is just a historical tracking tool.
 								 );

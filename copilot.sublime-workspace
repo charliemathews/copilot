@@ -23,7 +23,7 @@
 			"file": "inc/_config.php",
 			"settings":
 			{
-				"buffer_size": 1217,
+				"buffer_size": 1735,
 				"line_ending": "Windows"
 			}
 		},
@@ -31,7 +31,7 @@
 			"file": "index.php",
 			"settings":
 			{
-				"buffer_size": 608,
+				"buffer_size": 1345,
 				"line_ending": "Windows"
 			}
 		},
@@ -39,7 +39,7 @@
 			"file": "inc/class.copilot.php",
 			"settings":
 			{
-				"buffer_size": 2457,
+				"buffer_size": 3742,
 				"line_ending": "Windows"
 			}
 		},
@@ -55,7 +55,7 @@
 			"file": "inc/class.data.php",
 			"settings":
 			{
-				"buffer_size": 2975,
+				"buffer_size": 2988,
 				"line_ending": "Windows"
 			}
 		},
@@ -79,7 +79,7 @@
 			"file": "class/class.db.php",
 			"settings":
 			{
-				"buffer_size": 3600,
+				"buffer_size": 3633,
 				"line_ending": "Windows"
 			}
 		},
@@ -87,7 +87,7 @@
 			"file": "class/class.tss.main.php",
 			"settings":
 			{
-				"buffer_size": 19015,
+				"buffer_size": 19033,
 				"line_ending": "Windows"
 			}
 		}
@@ -103,7 +103,10 @@
 	},
 	"console":
 	{
-		"height": 0.0
+		"height": 0.0,
+		"history":
+		[
+		]
 	},
 	"distraction_free":
 	{
@@ -211,12 +214,13 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
 					"file": "README",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 669,
@@ -244,69 +248,18 @@
 				{
 					"buffer": 1,
 					"file": "inc/_config.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1217,
+						"buffer_size": 1735,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5,
-								5
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "index.php",
-					"settings":
-					{
-						"buffer_size": 608,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								417,
-								417
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "inc/class.copilot.php",
-					"settings":
-					{
-						"buffer_size": 2457,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1445,
-								1445
+								195,
+								195
 							]
 						],
 						"settings":
@@ -315,7 +268,62 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 675.0,
+						"translation.y": 315.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1345,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								674,
+								675
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "inc/class.copilot.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3742,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3501,
+								3501
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 405.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -323,6 +331,7 @@
 				{
 					"buffer": 4,
 					"file": "inc/class.log.php",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 2090,
@@ -332,8 +341,8 @@
 						"selection":
 						[
 							[
-								309,
-								309
+								5,
+								5
 							]
 						],
 						"settings":
@@ -350,17 +359,18 @@
 				{
 					"buffer": 5,
 					"file": "inc/class.data.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2975,
+						"buffer_size": 2988,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								685,
-								685
+								910,
+								910
 							]
 						],
 						"settings":
@@ -369,7 +379,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 450.0,
+						"translation.y": 225.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -377,6 +387,7 @@
 				{
 					"buffer": 6,
 					"file": "inc/class.db.php",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 760,
@@ -404,6 +415,7 @@
 				{
 					"buffer": 7,
 					"file": "inc/class.api.php",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 2030,
@@ -413,8 +425,8 @@
 						"selection":
 						[
 							[
-								560,
-								560
+								1684,
+								1684
 							]
 						],
 						"settings":
@@ -423,7 +435,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 405.0,
+						"translation.y": 664.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -437,17 +449,18 @@
 				{
 					"buffer": 8,
 					"file": "class/class.db.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3600,
+						"buffer_size": 3633,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								786,
-								786
+								2207,
+								2207
 							]
 						],
 						"settings":
@@ -457,7 +470,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 506.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -465,17 +478,18 @@
 				{
 					"buffer": 9,
 					"file": "class/class.tss.main.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19015,
+						"buffer_size": 19033,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6,
-								0
+								2563,
+								2563
 							]
 						],
 						"settings":
@@ -521,7 +535,7 @@
 		"cols":
 		[
 			0.0,
-			0.677380952381,
+			0.570238095238,
 			1.0
 		],
 		"rows":
@@ -531,6 +545,7 @@
 		]
 	},
 	"menu_visible": true,
+	"project": "copilot.sublime-project",
 	"replace":
 	{
 		"height": 0.0
@@ -552,10 +567,24 @@
 		],
 		"width": 0.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 150.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }
