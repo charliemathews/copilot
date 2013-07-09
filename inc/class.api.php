@@ -73,7 +73,7 @@ class API {
 	* Submits staticly programmed routes into slim.
 	*/
 	private function buildStaticRoutes() {
-		
+
 		$this->slim->get('/', function () {
 			$this->log->add(APP_NAME ." is online.", CP_STATUS) ;
 		});

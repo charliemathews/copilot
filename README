@@ -10,7 +10,23 @@ Roadmap
 	v1.0		- functional, release
 
 
-Namespace & Class Structure
+API Structure
+
+	User
+	Ticket
+		Comment
+		Photo
+		File
+		Material
+		Labor
+		Total
+		ChangeLog
+	Schedule
+	Timesheet
+
+
+
+Object Structure
 
 	Namespace - \
 

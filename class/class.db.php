@@ -3,7 +3,7 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
-Namespace APP\PILOT
+Namespace APP\PILOT ;
 
     class DB {
             var $created;
@@ -56,7 +56,7 @@ Namespace APP\PILOT
                     eval($this->exec_func);
                     
                     
-                    if($result === FALSE) {
+                    if($result === "DISABLED") { //if($result === FALSE) {
                         	   // ON ERROR, NOTIFY ADMINS...
                             DB::throwError(mysql_error());
                 		   

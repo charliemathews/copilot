@@ -15,7 +15,7 @@
 			"file": "README",
 			"settings":
 			{
-				"buffer_size": 1062,
+				"buffer_size": 669,
 				"line_ending": "Windows"
 			}
 		},
@@ -23,7 +23,7 @@
 			"file": "inc/_config.php",
 			"settings":
 			{
-				"buffer_size": 985,
+				"buffer_size": 1217,
 				"line_ending": "Windows"
 			}
 		},
@@ -31,31 +31,7 @@
 			"file": "index.php",
 			"settings":
 			{
-				"buffer_size": 632,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "cp.php",
-			"settings":
-			{
-				"buffer_size": 509,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "view/head.php",
-			"settings":
-			{
-				"buffer_size": 849,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "view/splash.php",
-			"settings":
-			{
-				"buffer_size": 583,
+				"buffer_size": 608,
 				"line_ending": "Windows"
 			}
 		},
@@ -63,7 +39,7 @@
 			"file": "inc/class.copilot.php",
 			"settings":
 			{
-				"buffer_size": 2159,
+				"buffer_size": 2457,
 				"line_ending": "Windows"
 			}
 		},
@@ -71,7 +47,7 @@
 			"file": "inc/class.log.php",
 			"settings":
 			{
-				"buffer_size": 2203,
+				"buffer_size": 2090,
 				"line_ending": "Windows"
 			}
 		},
@@ -79,7 +55,7 @@
 			"file": "inc/class.data.php",
 			"settings":
 			{
-				"buffer_size": 773,
+				"buffer_size": 2975,
 				"line_ending": "Windows"
 			}
 		},
@@ -87,7 +63,15 @@
 			"file": "inc/class.db.php",
 			"settings":
 			{
-				"buffer_size": 756,
+				"buffer_size": 760,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "inc/class.api.php",
+			"settings":
+			{
+				"buffer_size": 2030,
 				"line_ending": "Windows"
 			}
 		},
@@ -104,22 +88,6 @@
 			"settings":
 			{
 				"buffer_size": 19015,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "class/class.foo.php",
-			"settings":
-			{
-				"buffer_size": 448,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "inc/class.api.php",
-			"settings":
-			{
-				"buffer_size": 2754,
 				"line_ending": "Windows"
 			}
 		}
@@ -148,6 +116,14 @@
 	},
 	"file_history":
 	[
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/sendtext.php",
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/inc/_config.php",
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/CHANGELOG",
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/README",
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/view/splash.php",
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/view/head.php",
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/cp.php",
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/index.html",
 		"/G/autorun.inf",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/Slim/Slim.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/test.php",
@@ -170,13 +146,11 @@
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/inc/class.messenger.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/inc/class.interpreter.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/view/foot.php",
-		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/view/head.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/inc/class.api.path.adapter.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/inc/api/class.paths.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/inc/api/class.rest.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/inc/class.translator.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/inc/class.postman.php",
-		"/C/Program Files (x86)/Zend/Apache2/htdocs/index.html",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/nato-phonetic-translator/style.css",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/nato-phonetic-translator/main.js",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/nato-phonetic-translator/index.html",
@@ -245,15 +219,15 @@
 					"file": "README",
 					"settings":
 					{
-						"buffer_size": 1062,
+						"buffer_size": 669,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								632,
-								632
+								19,
+								0
 							]
 						],
 						"settings":
@@ -272,15 +246,15 @@
 					"file": "inc/_config.php",
 					"settings":
 					{
-						"buffer_size": 985,
+						"buffer_size": 1217,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								181,
-								181
+								5,
+								5
 							]
 						],
 						"settings":
@@ -288,7 +262,7 @@
 							"syntax": "Packages/PHP/PHP.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 135.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -298,41 +272,15 @@
 					"file": "index.php",
 					"settings":
 					{
-						"buffer_size": 632,
+						"buffer_size": 608,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								419,
-								419
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 45.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "cp.php",
-					"settings":
-					{
-						"buffer_size": 509,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								225,
-								225
+								417,
+								417
 							]
 						],
 						"settings":
@@ -346,19 +294,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "view/head.php",
+					"buffer": 3,
+					"file": "inc/class.copilot.php",
 					"settings":
 					{
-						"buffer_size": 849,
+						"buffer_size": 2457,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								597,
-								597
+								1445,
+								1445
 							]
 						],
 						"settings":
@@ -367,33 +315,115 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 180.0,
+						"translation.y": 675.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "view/splash.php",
+					"buffer": 4,
+					"file": "inc/class.log.php",
 					"settings":
 					{
-						"buffer_size": 583,
+						"buffer_size": 2090,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								518,
-								518
+								309,
+								309
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "inc/class.data.php",
+					"settings":
+					{
+						"buffer_size": 2975,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								685,
+								685
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 450.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "inc/class.db.php",
+					"settings":
+					{
+						"buffer_size": 760,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5,
+								5
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "inc/class.api.php",
+					"settings":
+					{
+						"buffer_size": 2030,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								560,
+								560
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 405.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -405,121 +435,7 @@
 			"sheets":
 			[
 				{
-					"buffer": 6,
-					"file": "inc/class.copilot.php",
-					"settings":
-					{
-						"buffer_size": 2159,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								607,
-								607
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 315.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "inc/class.log.php",
-					"settings":
-					{
-						"buffer_size": 2203,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1381,
-								1381
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 791.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
 					"buffer": 8,
-					"file": "inc/class.data.php",
-					"settings":
-					{
-						"buffer_size": 773,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								301,
-								301
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 135.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "inc/class.db.php",
-					"settings":
-					{
-						"buffer_size": 756,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								265,
-								265
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 45.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 2,
-			"sheets":
-			[
-				{
-					"buffer": 10,
 					"file": "class/class.db.php",
 					"settings":
 					{
@@ -547,7 +463,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 9,
 					"file": "class/class.tss.main.php",
 					"settings":
 					{
@@ -558,8 +474,8 @@
 						"selection":
 						[
 							[
-								10890,
-								10890
+								6,
+								0
 							]
 						],
 						"settings":
@@ -569,67 +485,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5505.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "class/class.foo.php",
-					"settings":
-					{
-						"buffer_size": 448,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								221,
-								221
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 0,
-			"sheets":
-			[
-				{
-					"buffer": 13,
-					"file": "inc/class.api.php",
-					"settings":
-					{
-						"buffer_size": 2754,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2476,
-								2476
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1755.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -660,30 +516,17 @@
 				0,
 				2,
 				1
-			],
-			[
-				0,
-				1,
-				1,
-				2
-			],
-			[
-				1,
-				1,
-				2,
-				2
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.677380952381,
 			1.0
 		],
 		"rows":
 		[
 			0.0,
-			0.5,
 			1.0
 		]
 	},

@@ -13,7 +13,6 @@ Namespace CP ;
 class Copilot {
 
 	public $log ;
-	
 	private $db_local ;
 	private $data ;
 	private $api ;
@@ -53,6 +52,9 @@ class Copilot {
 
 	}
 
+	/**
+
+	*/
 	public function ready() {
 
 		$this->api->buildRoutes() ;
@@ -78,22 +80,73 @@ class Copilot {
 	}
 
 	/**
+	* Function interpretQuery
+	*
+	* Public function which interprets the query string and also determines if the request was malformed.
+	*/
+	public function interpretQuery($querystring) {
+
+		/* a properly formed query string contains either fields or filters.
+		   an example of each:
+				fields
+					/user/joe?(firstname,lastname)
+				fields and filters
+					/users?(firstname,lastname):(postcode=07869)
+				filters
+					/users?(postcode=07869)
+
+			Query Composure Ideas
+		*/
+
+		$output = str_replace(array('(', ')'), '', trim(urldecode($querystring))) ;
+
+		$output = explode(':', $output) ;
+
+		for($i = 0; $i < 2; ++$i) {
+			$temp = explode(',', $output[$i]) ;
+			for($j = 0; $j < count($temp); ++$j) {
+				$temp[$j] = explode('=', $temp[$j]) ;
+			}
+			$output[$i] = $temp ;
+		}
+
+		$output['filters'] = $output[0] ;
+		$output['fields'] = $output[1] ;
+		unset($output[0], $output[1]) ;
+
+		return $output ;
+	}
+
+	/**
 	* Function createRoute
 	*
-	* Public function which allows external methods to be bound to the API using api\addRoute().
+	* Public pasthrough function which allows external methods to be bound to the API using api\addRoute().
 	*
 	* @param string $httpMethod contains the http method - i.e. get, post, put, delete.
 	* @param string $requestRoute contains the url parameter which calls this route.
 	* @param string $callbackMethod contains the call_user_method() compatible function name.
 	*/
 	public function createRoute($httpMethod, $requestRoute, $callbackMethod) {
-		$this->api->addRoute($httpMethod, $requestRoute, $callbackMethod) ;
+		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, $callbackMethod) ;
 	}
 
+	/**
+	* Function addData
+	*
+	* Public pasthrough function which adds a datablock to the return stream.
+	*
+	* @param string $name contains the name of the data block.
+	* @param string $input contains the new block of data.
+	*/
 	public function addData($name, $input) {
 		$this->data->add($name, $input) ;
 	}
 
+	/**
+	* Function addData
+	*
+	* Public pasthrough function which get's the json encoded return data stream.
+	*/
 	public function getData() {
 		return $this->data->returnStream() ;
 	}

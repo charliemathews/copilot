@@ -3,7 +3,7 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
-Namespace APP\PILOT
+Namespace APP\PILOT ;
 
   class tss_main extends DB {
       function get_technician_list($hide_inactive = true) {
@@ -51,13 +51,14 @@ Namespace APP\PILOT
             
             $rs1 = $this->query($query);
             
+            /*
             for($z = 0; $z < count($rs1); $z++) {
                 foreach ($rs1[$z] as $k => $v) {
                     $data[$z]{$k} = $v;
                 }
-            }
+            }*/
             
-            return $data;
+            return $rs1;
       }
       
       
