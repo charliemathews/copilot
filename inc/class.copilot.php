@@ -99,6 +99,9 @@ class Copilot {
 
 			Query Composure Ideas
 				??????????????
+
+		localhost/copilot/v1/query?(postcode=07869,gender=male):(firstname,lastname)
+		
 		*/
 
 		$querystring = isset($querystring) ? $querystring : $_SERVER['QUERY_STRING'] ;
