@@ -59,7 +59,7 @@ class Copilot {
 
 		// End the script timer.
 			$mtime = explode(" ",microtime()); 
-			$this->totaltime = (($mtime[1] + $mtime[0]; ) - $this->starttime);
+			$this->totaltime = (($mtime[1] + $mtime[0]) - $this->starttime);
 			$this->log->timer = $this->totaltime ;
 
 		// Output
@@ -86,7 +86,7 @@ class Copilot {
 	*
 	* @param string $querystring contains $_SERVER['QUERY_STRING'] (by default, if not set).
 	*/
-	public function interpretQuery($querystring = $_SERVER['QUERY_STRING']) {
+	public function interpretQuery($querystring = null) {
 
 		/* a properly formed query string contains either fields or filters.
 		   an example of each:
@@ -100,6 +100,8 @@ class Copilot {
 			Query Composure Ideas
 				??????????????
 		*/
+
+		$querystring = isset($querystring) ? $querystring : $_SERVER['QUERY_STRING'] ;
 
 		$output = str_replace(array('(', ')'), '', trim(urldecode($querystring))) ;
 
@@ -131,7 +133,7 @@ class Copilot {
 	/**
 	* Function createRoute
 	*
-	* Public pasthrough function which allows external methods to be bound to the API using api\addRoute().
+	* Public function which allows external methods to be bound to the API using api\addRoute().
 	*
 	* @param string $httpMethod contains the http method - i.e. get, post, put, delete.
 	* @param string $requestRoute contains the url parameter which calls this route.

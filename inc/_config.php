@@ -6,8 +6,9 @@
 
 define(	"APP_DOMAIN", 			"TS") ;
 define(	"APP_NAME", 			"Copilot") ;
-define(	"APP_VERSION", 			"0.6.0") ; // major, minor, patch
+define(	"APP_VERSION", 			"0.7.0") ; // major, minor, patch
 define(	"APP_VERSION_TITLE", 	"ALPHA") ;
+define(	"API_VERSION", 			"v1") ;
 define(	"COPYRIGHT_YEAR", 		"2013") ;
 
 
@@ -15,7 +16,7 @@ define(	"SERVER_DOCRT", 		$_SERVER['DOCUMENT_ROOT'].'/copilot') ;
 define(	"SERVER_NAME", 			$_SERVER['HTTP_HOST']) ;
 
 $prod_server = 'copilot.tsllc.net' ;
-$test_server = 'luxprimus.com'
+$test_server = 'luxprimus.com' ;
 
 if(SERVER_NAME == $prod_server) {
 
@@ -67,9 +68,6 @@ define(	"DB_NAME", 				$db_name) ;
 define(	"DB_USER", 				$db_user) ;
 define(	"DB_PW", 				$db_pass) ;
 define(	"DB_TIMEZONE", 			"America/New_York");
-
-// Extras
-define(	"API_VERSION", 			"v1") ;
 
 // Error Messages
 define(	"ERROR_ACCESS_DENIED", 	"Access denied. This is not a public portal.");

@@ -42,7 +42,26 @@ class API {
 	}
 
 	/**
-	* Function addRoute
+
+	*/
+	public function addRoute($httpMethod, $requestRoute, $callbackMethod) {
+
+		$requestRoute = trim($requestRoute) ;
+
+		$this->addRouteToIndex($httpMethod, $requestRoute, $callbackMethod) ;
+
+		if(substr($requestRoute, -1) != '/') {
+
+			$requestRouteAppend = $requestRoute.'/' ; 
+
+			$this->addRouteToIndex($httpMethod, $requestRouteAppend, $callbackMethod) ;
+
+		}
+
+	}
+
+	/**
+	* Function addRouteToIndex
 	*
 	* Adds any desired route to the routeIndex which is dynamically added to the API.
 	*
@@ -50,7 +69,7 @@ class API {
 	* @param string $requestRoute contains the url parameter which calls this route.
 	* @param string $callbackMethod contains the call_user_method() compatible function name.
 	*/
-	public function addRoute($httpMethod, $requestRoute, $callbackMethod) {
+	public function addRouteToIndex($httpMethod, $requestRoute, $callbackMethod) {
 
 		$this->routeIndex[] = array('httpMethod'=>$httpMethod, 'requestRoute'=>$requestRoute, 'callbackMethod'=>$callbackMethod) ;
 
@@ -76,11 +95,17 @@ class API {
 	*/
 	private function buildStaticRoutes() {
 
-		$this->slim->get('/', function () {
+		$this->addRoute('get', '/', function() {
 
 			$this->log->add(APP_NAME ." is online.", CP_STATUS) ;
+					
+		}) ;
 
-		});
+		$this->addRoute('get', '/'.API_VERSION, function() {
+
+			$this->log->add("API Version ".API_VERSION." is online.", CP_STATUS) ;
+					
+		}) ;
 
 		$this->slim->notFound(function () {
 
