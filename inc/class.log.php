@@ -6,9 +6,7 @@
 Namespace CP ;
 
 /**
-* Handles all published errors and messages (logs).
-*
-* This object is currently being initialized public so that anyone anywhere can access it.
+* Handles all errors and messages.
 */
 class Log {
 

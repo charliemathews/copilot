@@ -6,13 +6,11 @@
 Namespace CP ;
 
 /**
-* Responsible for compiling responses and interpreting submissions.
-*
-* This class is a singleton.
+* Responsible for creating and managing all member objects. Provides acessors.
 */
 class Copilot {
 
-	public $log ;
+	private $log ;
 	private $db_local ;
 	private $data ;
 	private $api ;
@@ -23,11 +21,9 @@ class Copilot {
 	* Copilot may only be a singleton.
 	*/
 	public static function & Instance() {
-
 		if (is_null(self::$_instance)) {
 			self::$_instance = new self();
 		}
-		
 		return self::$_instance;
 	}
 
@@ -36,46 +32,50 @@ class Copilot {
 	*/
 	public function __construct() {
 
-		//Script timer.
-		$mtime = microtime(); 
-		$mtime = explode(" ",$mtime); 
-		$mtime = $mtime[1] + $mtime[0]; 
-		$this->starttime = $mtime; 
+		//Script timer. 
+			$mtime = explode(" ",microtime()); 
+			$this->starttime = $mtime[1] + $mtime[0] ;
 		
 		// Core classes.
-		$this->log = new Log() ;
-		//$this->db_local = new DB($this->log, DB_HOST_LOCAL, DB_NAME_LOCAL, DB_USER_LOCAL, DB_PASS_LOCAL) ;
-		$this->data = new Data($this->log) ;
+			$this->log = new Log() ;
+			//DATABASE//$this->db_local = new DB($this->log, DB_HOST_LOCAL, DB_NAME_LOCAL, DB_USER_LOCAL, DB_PASS_LOCAL) ;
+			$this->data = new Data($this->log) ;
 
 		// API class.
-		$this->api = new API($this->log) ;
+			$this->api = new API($this->log) ;
 
 	}
 
 	/**
-
+	* Function interpretQuery
+	*
+	* Public function which assembles, enables, and times the api. It also chooses how to output the results.
 	*/
 	public function ready() {
 
-		$this->api->buildRoutes() ;
-		$this->api->enableSlim() ;
+		// Load the API.
+			$this->api->buildRoutes() ;
+			$this->api->enableSlim() ;
 
-		//Script timer end.
-		$mtime = microtime(); 
-		$mtime = explode(" ",$mtime); 
-		$mtime = $mtime[1] + $mtime[0]; 
-		$endtime = $mtime; 
-		$this->totaltime = ($endtime - $this->starttime);
-		$this->log->timer = $this->totaltime ;
+		// End the script timer.
+			$mtime = explode(" ",microtime()); 
+			$this->totaltime = (($mtime[1] + $mtime[0]; ) - $this->starttime);
+			$this->log->timer = $this->totaltime ;
 
 		// Output
-		if(DEV_GUI) {
-			$this->log->add($this->getData(), CP_RESPONSE) ;
-			require_once(SERVER_DOCRT.'/view/splash.php') ;
-		} else {
-			header('Content-Type: application/json');
-			echo $this->getData() ;
-		}
+			if(DEV_GUI) {
+
+				$this->log->add($this->getData(), CP_RESPONSE) ;
+
+				require_once(SERVER_DOCRT.'/view/splash.php') ;
+
+			} else {
+
+				header('Content-Type: application/json');
+
+				echo $this->getData() ;
+
+			}
 
 	}
 
@@ -83,8 +83,10 @@ class Copilot {
 	* Function interpretQuery
 	*
 	* Public function which interprets the query string and also determines if the request was malformed.
+	*
+	* @param string $querystring contains $_SERVER['QUERY_STRING'] (by default, if not set).
 	*/
-	public function interpretQuery($querystring) {
+	public function interpretQuery($querystring = $_SERVER['QUERY_STRING']) {
 
 		/* a properly formed query string contains either fields or filters.
 		   an example of each:
@@ -96,6 +98,7 @@ class Copilot {
 					/users?(postcode=07869)
 
 			Query Composure Ideas
+				??????????????
 		*/
 
 		$output = str_replace(array('(', ')'), '', trim(urldecode($querystring))) ;
@@ -103,15 +106,23 @@ class Copilot {
 		$output = explode(':', $output) ;
 
 		for($i = 0; $i < 2; ++$i) {
+
 			$temp = explode(',', $output[$i]) ;
+
 			for($j = 0; $j < count($temp); ++$j) {
+
 				$temp[$j] = explode('=', $temp[$j]) ;
+
 			}
+
 			$output[$i] = $temp ;
+
 		}
 
 		$output['filters'] = $output[0] ;
+
 		$output['fields'] = $output[1] ;
+
 		unset($output[0], $output[1]) ;
 
 		return $output ;
@@ -127,7 +138,9 @@ class Copilot {
 	* @param string $callbackMethod contains the call_user_method() compatible function name.
 	*/
 	public function createRoute($httpMethod, $requestRoute, $callbackMethod) {
+
 		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, $callbackMethod) ;
+
 	}
 
 	/**
@@ -139,7 +152,9 @@ class Copilot {
 	* @param string $input contains the new block of data.
 	*/
 	public function addData($name, $input) {
+
 		$this->data->add($name, $input) ;
+
 	}
 
 	/**
@@ -148,15 +163,21 @@ class Copilot {
 	* Public pasthrough function which get's the json encoded return data stream.
 	*/
 	public function getData() {
+
 		return $this->data->returnStream() ;
+
 	}
 
 	public function __clone() {
+
 		trigger_error('Cloning instances of this class is forbidden.', E_USER_ERROR);
+
 	}
 
 	public function __wakeup() {
+
 		trigger_error('Unserializing instances of this class is forbidden.', E_USER_ERROR);
+		
 	}
 
 }

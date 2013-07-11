@@ -6,7 +6,7 @@
 Namespace CP ;
 
 /**
-* Constructs the API.
+* This class builds and manages the API.
 */
 class API {
 
@@ -23,6 +23,7 @@ class API {
 
 		// Initiate the slim framework.
 		\Slim\Slim::registerAutoloader();
+		
 		$this->slim = new \Slim\Slim() ;
 
 		$this->routeIndex = array() ;
@@ -63,6 +64,7 @@ class API {
 	public function buildRoutes() {
 
 		$this->buildStaticRoutes() ;
+
 		$this->buildDynamicRoutes() ;
 
 	}
@@ -75,11 +77,15 @@ class API {
 	private function buildStaticRoutes() {
 
 		$this->slim->get('/', function () {
+
 			$this->log->add(APP_NAME ." is online.", CP_STATUS) ;
+
 		});
 
 		$this->slim->notFound(function () {
+
     		$this->log->add("Unknown call.", CP_STATUS) ;
+
 		});
 
 	}
@@ -92,9 +98,13 @@ class API {
 	private function buildDynamicRoutes() {
 
 		foreach($this->routeIndex as $singleRoute) {
+
 			if($singleRoute['httpMethod'] == 'get') {
+
 				$this->slim->get($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
+
 			}
+
 		}
 
 	}

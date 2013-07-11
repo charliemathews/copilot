@@ -15,6 +15,7 @@ define(	"SERVER_DOCRT", 		$_SERVER['DOCUMENT_ROOT'].'/copilot') ;
 define(	"SERVER_NAME", 			$_SERVER['HTTP_HOST']) ;
 
 $prod_server = 'copilot.tsllc.net' ;
+$test_server = 'luxprimus.com'
 
 if(SERVER_NAME == $prod_server) {
 
@@ -22,16 +23,25 @@ if(SERVER_NAME == $prod_server) {
 	define(	"DEV", 		FALSE) ;
 	define(	"DEV_GUI", 	FALSE) ;
 
-	//define db here
+	$local_db_host 		= "localhost:3306" ;
+	$local_db_name 		= "copilot" ;
+	$local_db_user 		= "admin" ;
+	$local_db_pass 		= "password" ;
+
+	$db_host 			= "mysql-pilot-dev.crfispfaqs9z.us-east-1.rds.amazonaws.com" ;
+	$db_name 			= "tsspilot" ;
+	$db_user 			= "tsspilot" ;
+	$db_pass 			= "p!lot2013" ;
 
 
-} elseif(SERVER_NAME != $prod_server) {
+} elseif(SERVER_NAME != $prod_server | SERVER_NAME == $test_server) {
 
 
 	define(	"DEV", 		TRUE) ;
 	define(	"DEV_GUI", 	FALSE) ;
 
 	error_reporting(E_ALL);
+	ini_set('display_errors',1);
 
 	$local_db_host 		= "localhost:3306" ;
 	$local_db_name 		= "copilot" ;
