@@ -15,7 +15,7 @@
 			"file": "inc/_config.php",
 			"settings":
 			{
-				"buffer_size": 2104,
+				"buffer_size": 2095,
 				"line_ending": "Windows"
 			}
 		},
@@ -31,7 +31,7 @@
 			"file": "cp.php",
 			"settings":
 			{
-				"buffer_size": 497,
+				"buffer_size": 514,
 				"line_ending": "Windows"
 			}
 		},
@@ -39,7 +39,7 @@
 			"file": "inc/class.copilot.php",
 			"settings":
 			{
-				"buffer_size": 3742,
+				"buffer_size": 4105,
 				"line_ending": "Windows"
 			}
 		},
@@ -47,7 +47,7 @@
 			"file": "inc/class.log.php",
 			"settings":
 			{
-				"buffer_size": 2090,
+				"buffer_size": 1980,
 				"line_ending": "Windows"
 			}
 		},
@@ -55,7 +55,7 @@
 			"file": "inc/class.api.php",
 			"settings":
 			{
-				"buffer_size": 2030,
+				"buffer_size": 2606,
 				"line_ending": "Windows"
 			}
 		},
@@ -63,7 +63,7 @@
 			"file": "inc/class.data.php",
 			"settings":
 			{
-				"buffer_size": 2988,
+				"buffer_size": 2999,
 				"line_ending": "Windows"
 			}
 		},
@@ -103,7 +103,10 @@
 	},
 	"console":
 	{
-		"height": 0.0
+		"height": 0.0,
+		"history":
+		[
+		]
 	},
 	"distraction_free":
 	{
@@ -215,17 +218,18 @@
 				{
 					"buffer": 0,
 					"file": "inc/_config.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2104,
+						"buffer_size": 2095,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								550,
-								550
+								193,
+								193
 							]
 						],
 						"settings":
@@ -234,7 +238,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 180.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -242,6 +246,7 @@
 				{
 					"buffer": 1,
 					"file": "index.php",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 1345,
@@ -251,8 +256,8 @@
 						"selection":
 						[
 							[
-								216,
-								216
+								869,
+								572
 							]
 						],
 						"settings":
@@ -269,9 +274,10 @@
 				{
 					"buffer": 2,
 					"file": "cp.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 497,
+						"buffer_size": 514,
 						"regions":
 						{
 						},
@@ -295,17 +301,18 @@
 				{
 					"buffer": 3,
 					"file": "inc/class.copilot.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3742,
+						"buffer_size": 4105,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								2279,
+								2279
 							]
 						],
 						"settings":
@@ -314,7 +321,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 315.0,
+						"translation.y": 1176.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -322,17 +329,18 @@
 				{
 					"buffer": 4,
 					"file": "inc/class.log.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2090,
+						"buffer_size": 1980,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								839,
+								839
 							]
 						],
 						"settings":
@@ -341,7 +349,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 791.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -349,17 +357,18 @@
 				{
 					"buffer": 5,
 					"file": "inc/class.api.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2030,
+						"buffer_size": 2606,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								953,
+								953
 							]
 						],
 						"settings":
@@ -368,7 +377,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1170.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -376,17 +385,18 @@
 				{
 					"buffer": 6,
 					"file": "inc/class.data.php",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2988,
+						"buffer_size": 2999,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								941,
+								941
 							]
 						],
 						"settings":
@@ -403,6 +413,7 @@
 				{
 					"buffer": 7,
 					"file": "inc/class.db.php",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 760,
@@ -422,7 +433,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 45.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -430,12 +441,13 @@
 			]
 		},
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 8,
 					"file": "class/class.db.php",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 3633,
@@ -445,8 +457,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								1390,
+								1390
 							]
 						],
 						"settings":
@@ -464,6 +476,7 @@
 				{
 					"buffer": 9,
 					"file": "class/class.tss.main.php",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 19033,
@@ -473,8 +486,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								12167,
+								12167
 							]
 						],
 						"settings":
@@ -484,7 +497,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5505.0,
+						"translation.y": 4256.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -530,6 +543,7 @@
 		]
 	},
 	"menu_visible": true,
+	"project": "copilot.sublime-project",
 	"replace":
 	{
 		"height": 0.0
@@ -551,10 +565,24 @@
 		],
 		"width": 0.0
 	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 150.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }

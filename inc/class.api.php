@@ -47,13 +47,16 @@ class API {
 	public function addRoute($httpMethod, $requestRoute, $callbackMethod) {
 
 		$requestRoute = trim($requestRoute) ;
-
 		$this->addRouteToIndex($httpMethod, $requestRoute, $callbackMethod) ;
 
-		if(substr($requestRoute, -1) != '/') {
+		if(strlen($requestRoute) > 1 && substr($requestRoute, -1) != '/') {
 
 			$requestRouteAppend = $requestRoute.'/' ; 
+			$this->addRouteToIndex($httpMethod, $requestRouteAppend, $callbackMethod) ;
 
+		} elseif(strlen($requestRoute) > 1 && substr($requestRoute, -1) == '/') {
+
+			$requestRouteAppend = substr_replace($requestRoute, "", -1) ;
 			$this->addRouteToIndex($httpMethod, $requestRouteAppend, $callbackMethod) ;
 
 		}

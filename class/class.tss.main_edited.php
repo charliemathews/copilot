@@ -6,16 +6,16 @@
 Namespace APP\PILOT ;
 
   class tss_main extends DB {
-      function get_technician_list($hide_inactive = true, $nativeCompanyID = "15") {
+      function get_technician_list($hide_inactive = true) {
             $data = array();
               
             $query = "SELECT u.id AS I, CONCAT(u.last_name, ', ', u.first_name) AS D 
                         FROM tss_user u 
                         INNER JOIN tss_user_group ug
-                               ON ug.tss_user_id = u.id
+                        	   ON ug.tss_user_id = u.id
                         INNER JOIN tss_group g 
-                               ON ug.tss_group_id = g.id
-                        WHERE u.tss_customer_id = ".$nativeCompanyID."
+                        	   ON ug.tss_group_id = g.id
+                        WHERE u.tss_customer_id = ".NATIVE_COMPANY_ID."
                         AND g.group_name IN ('user', 'contractor')";
             
             if($hide_inactive) {
@@ -61,7 +61,6 @@ Namespace APP\PILOT ;
             return $rs1;
       }
       
-      
       // object. don't do this one yet. it's going to change friday the 12th
       function get_project_list($show_inactive = true) {
             $data = array();
@@ -69,7 +68,7 @@ Namespace APP\PILOT ;
             $where_clause = "";
             
             if(!in_array('superadmin', $_SESSION['perms'])) {
-             $where_clause = "WHERE p.id IN (".implode(',', $_SESSION['auth_projects']).")";
+			 $where_clause = "WHERE p.id IN (".implode(',', $_SESSION['auth_projects']).")";
             }
               
             $query = "SELECT p.id AS I, CONCAT(c.name, ': ', p.name) AS D 
@@ -167,9 +166,9 @@ Namespace APP\PILOT ;
             $data = array();
               
             $query = "SELECT T.id AS I, T.description AS D 
-                        FROM tss_substatus T   
-                        WHERE T.tss_status_id = ".$current_status." 
-                        ORDER BY D";
+            	 	    FROM tss_substatus T   
+            	 	    WHERE T.tss_status_id = ".$current_status." 
+            	 	    ORDER BY D";
             
 //            if(!$show_inactive) {
 //                $query .= " WHERE p.is_inactive = 0";
@@ -360,8 +359,8 @@ Namespace APP\PILOT ;
             $this->query($query,1);
         }
         
-        // use existing /user/:id?(first, last) call
-       function get_user_fullname($id) {
+        // /user/:id?(first, last)
+	   function get_user_fullname($id) {
             $query = "SELECT CONCAT(w.first_name, ' ', w.last_name) AS D 
                                      FROM tss_user w
                                      WHERE w.id = ".$id;
@@ -374,10 +373,10 @@ Namespace APP\PILOT ;
             else {
                       return 'ERROR';
             }
-       }
-       
-       // use existing user call
-       function get_user_email($id) {
+	   }
+	   
+	   
+	   function get_user_email($id) {
             $query = "SELECT w.email_address AS D 
                                      FROM tss_user w
                                      WHERE w.id = ".$id;
@@ -390,10 +389,10 @@ Namespace APP\PILOT ;
             else {
                       return 'ERROR';
             }
-       }
-       
-       // use existing user call
-       function get_user_timezone($id) {
+	   }
+	   
+	   
+	   function get_user_timezone($id) {
             $query = "SELECT z.timezone AS D 
                          FROM tss_user w
                          INNER JOIN tss_timezone z
@@ -408,29 +407,29 @@ Namespace APP\PILOT ;
             else {
                       return 'ERROR';
             }
-       }
-       
-       
-       function get_popup_method() {
+	   }
+	   
+	   
+	   function get_popup_method() {
             if($_SESSION['device_type'] == 'computer') {
                       return 'rel="shadowbox;width='.DEFAULT_SHADOWBOX_WIDTH.';height='.DEFAULT_SHADOWBOX_HEIGHT.'"';
             }
             else {
                       return 'target="_blank"';
             }
-       }
-       
-       
-       function get_close_window_method() {
+	   }
+	   
+	   
+	   function get_close_window_method() {
             if($_SESSION['device_type'] == 'computer') {
                       return 'parent.location.reload();';
             }
             else {
                       return 'opener.location.reload();self.close();';
             }
-       }
-       
-       // ad. timezones
+	   }
+	   
+	   // ad. timezones
       function get_timezone_list() {
             $data = array();
               
@@ -458,9 +457,9 @@ Namespace APP\PILOT ;
 //           
 //            return NULL;
 //        }
-       
+	   
        // dont worry about this one
-       function is_site_billable($id) {
+	   function is_site_billable($id) {
             $query = "SELECT w.is_billable_address AS D 
                          FROM tss_site w
                          WHERE w.id = ".$id;
@@ -473,16 +472,16 @@ Namespace APP\PILOT ;
             else {
                       return false;
             }
-       }
-       
-       // ad list of file extentions
+	   }
+	   
+	   // ad list of file extentions
       function get_permitted_file_extensions($attachment_type) {
             $data = array();
               
             $query = "SELECT p.extension AS D 
                         FROM tss_mime_extension p 
                         INNER JOIN tss_attachment_type_mime_extension x
-                               ON x.tss_mime_extension_id = p.id 
+                        	   ON x.tss_mime_extension_id = p.id 
                         WHERE x.tss_attachment_type_id = ".$attachment_type;
             
             $rs1 = $this->query($query);
@@ -500,131 +499,131 @@ Namespace APP\PILOT ;
 
     */
     function get_where_clause(
-                            $status,
-                            $keywords,
-                            $cond,
-                            $sts_change,
-                            $date1,
-                            $date2,
-                            $service_type,
-                            $priority,
-                            $po_number,
-                            $po_field,
-                            $site,
-                            $projects,
-                            $crew
-                            ) {
-            
-            // STATUS
-            if(count($status) > 0) {
-                $sql .= " AND (";
-                
-                foreach($status as $v) {
-                   $s = explode('|', $v);
-                   
-                   $status_stmt_array[] = "(E.tss_status_id = ".$s[0].(!empty($s[1]) ? " AND E.tss_substatus_id = ".$s[1] : "").")";
-                }
-                
-                $sql .= implode(" OR ", $status_stmt_array);
-                $sql .= ")";
-            }   
-            
-            
-            // DATE RANGES
-            switch($cond) {
-                    case "on":
-                    $sql .= " AND (CONVERT_TZ(E.".$sts_change.", '".DB_TIMEZONE."', '".$this->get_user_timezone($_SESSION['user_id'])."') BETWEEN '".$date1." 00:00:00' AND '".$date1." 23:59:59')";
-                    break;
-                    
-                    case "before":
-                    $sql .= " AND (CONVERT_TZ(E.".$sts_change.", '".DB_TIMEZONE."', '".$this->get_user_timezone($_SESSION['user_id'])."') < '".$date1." 23:59:59')";
-                    break;
-                    
-                    case "after":
-                    $sql .= " AND (CONVERT_TZ(E.".$sts_change.", '".DB_TIMEZONE."', '".$this->get_user_timezone($_SESSION['user_id'])."') > '".$date1." 00:00:00')";
-                    break;
-                    
-                    case "between":
-                    $sql .= " AND (CONVERT_TZ(E.".$sts_change.", '".DB_TIMEZONE."', '".$this->get_user_timezone($_SESSION['user_id'])."') BETWEEN '".$date1." 00:00:00' AND '".$date2." 23:59:59')";
-                    break;
-            } // END SWITCHCASE
-            
-            
-            
-            // SITE ID
-            if(trim($site) != "" && is_numeric($site)) {
-                    $sql .= " AND (E.tss_site_id = ".$site.")";
-            }
-            
-            
-            // PROJECT IDs
-            if(count($projects) > 0) {
-                    $sql .= " AND (E.tss_project_id IN (".implode(",", $projects)."))";
-            }
-            
-            
-            // ASSIGNED CREW
-            if(count($crew) > 0) {
-                    $sql .= " AND (A.tss_tech_id IN (".implode(",", $crew)."))";
-            }
-            
-            
-            // SERVICE TYPE
-            if(count($service_type) > 0) {
-                $sql .= " AND (";
-                
-                foreach($service_type as $v) {
-                   $s = explode('|', $v);
-                   
-                   $svc_type_stmt_array[] = "(E.tss_type_id = ".$s[0].(!empty($s[1]) ? " AND E.tss_subtype_id = ".$s[1] : "").")";
-                }
-                
-                $sql .= implode(" OR ", $svc_type_stmt_array);
-                $sql .= ")";
-            }
-            
-            
-            // PRIORITY
-            if(count($priority) > 0) {
-                    $sql .= " AND (E.tss_priority_id IN (".implode(",", $priority)."))";
-            }
-            
-            
-            if(trim($po_number) != "") {
-                    $sql .= " AND (E.".$po_field." = '".$po_number."')";
-            }
-            
-            
-            if(trim($keywords) != "") {
-                   // PAD SINGLE QUOTES
-                   $keywords = str_replace("'", "''", trim($keywords));
-                   
-                   $words = explode(" ", $keywords);
-                   $numrows = count($words);
-                   
-                   for($i = 0; $i < $numrows; $i++) {
-                           $words[$i] = "%".$words[$i]."%";
-                   } // END FOR
-                   
-                   $sql .= " AND (E.title LIKE '".$words[0]."'";
-                   if($numrows > 1) {
-                           for($i = 1; $i < $numrows; $i++) {
-                                   $sql .= " OR E.title LIKE '".$words[$i]."'";
-                           } // end for
-                   } // end if
-                   
-                   $sql .= " OR E.description LIKE '".$words[0]."'";
-                   if($numrows > 1) {
-                           for($i = 1; $i < $numrows; $i++) {
-                                   $sql .= " OR E.description LIKE '".$words[$i]."'";
-                           } // end for
-                   } // end if
-                   $sql .= ")";
-            }
-            
-            //echo $sql;
-            
-            return $sql;
+						    $status,
+						    $keywords,
+						    $cond,
+						    $sts_change,
+						    $date1,
+						    $date2,
+						    $service_type,
+						    $priority,
+						    $po_number,
+						    $po_field,
+						    $site,
+						    $projects,
+						    $crew
+						    ) {
+		    
+		    // STATUS
+		    if(count($status) > 0) {
+		        $sql .= " AND (";
+		        
+		        foreach($status as $v) {
+			       $s = explode('|', $v);
+			       
+			       $status_stmt_array[] = "(E.tss_status_id = ".$s[0].(!empty($s[1]) ? " AND E.tss_substatus_id = ".$s[1] : "").")";
+		        }
+		        
+		        $sql .= implode(" OR ", $status_stmt_array);
+		        $sql .= ")";
+		    }   
+		    
+		    
+		    // DATE RANGES
+		    switch($cond) {
+				    case "on":
+				    $sql .= " AND (CONVERT_TZ(E.".$sts_change.", '".DB_TIMEZONE."', '".$this->get_user_timezone($_SESSION['user_id'])."') BETWEEN '".$date1." 00:00:00' AND '".$date1." 23:59:59')";
+				    break;
+				    
+				    case "before":
+				    $sql .= " AND (CONVERT_TZ(E.".$sts_change.", '".DB_TIMEZONE."', '".$this->get_user_timezone($_SESSION['user_id'])."') < '".$date1." 23:59:59')";
+				    break;
+				    
+				    case "after":
+				    $sql .= " AND (CONVERT_TZ(E.".$sts_change.", '".DB_TIMEZONE."', '".$this->get_user_timezone($_SESSION['user_id'])."') > '".$date1." 00:00:00')";
+				    break;
+				    
+				    case "between":
+				    $sql .= " AND (CONVERT_TZ(E.".$sts_change.", '".DB_TIMEZONE."', '".$this->get_user_timezone($_SESSION['user_id'])."') BETWEEN '".$date1." 00:00:00' AND '".$date2." 23:59:59')";
+				    break;
+		    } // END SWITCHCASE
+		    
+		    
+		    
+		    // SITE ID
+		    if(trim($site) != "" && is_numeric($site)) {
+				    $sql .= " AND (E.tss_site_id = ".$site.")";
+		    }
+		    
+		    
+		    // PROJECT IDs
+		    if(count($projects) > 0) {
+				    $sql .= " AND (E.tss_project_id IN (".implode(",", $projects)."))";
+		    }
+		    
+		    
+		    // ASSIGNED CREW
+		    if(count($crew) > 0) {
+				    $sql .= " AND (A.tss_tech_id IN (".implode(",", $crew)."))";
+		    }
+		    
+		    
+		    // SERVICE TYPE
+		    if(count($service_type) > 0) {
+		        $sql .= " AND (";
+		        
+		        foreach($service_type as $v) {
+			       $s = explode('|', $v);
+			       
+			       $svc_type_stmt_array[] = "(E.tss_type_id = ".$s[0].(!empty($s[1]) ? " AND E.tss_subtype_id = ".$s[1] : "").")";
+		        }
+		        
+		        $sql .= implode(" OR ", $svc_type_stmt_array);
+		        $sql .= ")";
+		    }
+		    
+		    
+		    // PRIORITY
+		    if(count($priority) > 0) {
+				    $sql .= " AND (E.tss_priority_id IN (".implode(",", $priority)."))";
+		    }
+		    
+		    
+		    if(trim($po_number) != "") {
+				    $sql .= " AND (E.".$po_field." = '".$po_number."')";
+		    }
+		    
+		    
+		    if(trim($keywords) != "") {
+			       // PAD SINGLE QUOTES
+			       $keywords = str_replace("'", "''", trim($keywords));
+			       
+			       $words = explode(" ", $keywords);
+			       $numrows = count($words);
+			       
+			       for($i = 0; $i < $numrows; $i++) {
+					       $words[$i] = "%".$words[$i]."%";
+			       } // END FOR
+			       
+			       $sql .= " AND (E.title LIKE '".$words[0]."'";
+			       if($numrows > 1) {
+					       for($i = 1; $i < $numrows; $i++) {
+							       $sql .= " OR E.title LIKE '".$words[$i]."'";
+					       } // end for
+			       } // end if
+			       
+			       $sql .= " OR E.description LIKE '".$words[0]."'";
+			       if($numrows > 1) {
+					       for($i = 1; $i < $numrows; $i++) {
+							       $sql .= " OR E.description LIKE '".$words[$i]."'";
+					       } // end for
+			       } // end if
+			       $sql .= ")";
+		    }
+		    
+		    //echo $sql;
+		    
+		    return $sql;
     }
   }
   
