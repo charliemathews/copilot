@@ -51,7 +51,14 @@ class Log {
 
 	}
 
-
+	/**
+	* Function parseLog
+	*
+	* It returns a log if one exists, otherwise it returns null.
+	*
+	* @param string $row
+	* @param string $type
+	*/
 	private function parseLog($row, $type) {
 
 		if($type == '*' || $this->messages[$row]['type'] == $type) {
