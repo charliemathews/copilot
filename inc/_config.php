@@ -6,23 +6,44 @@
 
 define(	"APP_DOMAIN", 			"TS") ;
 define(	"APP_NAME", 			"Copilot") ;
-define(	"APP_VERSION", 			"0.8.0") ; // major, minor, patch
+define(	"APP_VERSION", 			"0.9.0") ; // major, minor, patch
 define(	"APP_VERSION_TITLE", 	"BETA") ;
 define(	"API_VERSION", 			"v1") ;
 define(	"COPYRIGHT_YEAR", 		"2013") ;
 
-
-define(	"SERVER_DOCRT", 		$_SERVER['DOCUMENT_ROOT'].'/copilot') ;
-define(	"SERVER_NAME", 			$_SERVER['HTTP_HOST']) ;
-
 $prod_server = 'copilot.tsllc.net' ;
-$test_server = 'luxprimus.com' ;
+$test_server = 'copilotdev.tsllc.net' ;
+$local_server = 'localhost' ;
+
+define(	"SERVER_NAME", 			$_SERVER['HTTP_HOST']) ;
 
 if(SERVER_NAME == $prod_server) {
 
+	define(	"SERVER_DOCRT", 		$_SERVER['DOCUMENT_ROOT']) ;
 
 	define(	"DEV", 		FALSE) ;
 	define(	"DEV_GUI", 	FALSE) ;
+
+	$local_db_host 		= "" ;
+	$local_db_name 		= "" ;
+	$local_db_user 		= "" ;
+	$local_db_pass 		= "" ;
+
+	$db_host 			= "" ;
+	$db_name 			= "" ;
+	$db_user 			= "" ;
+	$db_pass 			= "p!" ;
+
+
+} elseif(SERVER_NAME == $test_server) {
+
+	define(	"SERVER_DOCRT", 		$_SERVER['DOCUMENT_ROOT']) ;
+
+	define(	"DEV", 		TRUE) ;
+	define(	"DEV_GUI", 	FALSE) ;
+
+	error_reporting(E_ALL);
+	ini_set('display_errors',1);
 
 	$local_db_host 		= "localhost:3306" ;
 	$local_db_name 		= "copilot" ;
@@ -34,9 +55,9 @@ if(SERVER_NAME == $prod_server) {
 	$db_user 			= "tsspilot" ;
 	$db_pass 			= "p!lot2013" ;
 
+} elseif(SERVER_NAME == $local_server) {
 
-} elseif(SERVER_NAME != $prod_server | SERVER_NAME == $test_server) {
-
+	define(	"SERVER_DOCRT", 		$_SERVER['DOCUMENT_ROOT'].'/copilot') ;
 
 	define(	"DEV", 		TRUE) ;
 	define(	"DEV_GUI", 	FALSE) ;

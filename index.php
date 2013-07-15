@@ -7,9 +7,11 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
+// sudo /opt/bitnami/ctlscript.sh restart apache
+
 
 // Load copilot.
-require_once('/cp.php');
+require_once('cp.php');
 $__CP = CP\Copilot::Instance() ;
 
 
@@ -193,6 +195,5 @@ $__CP->createRoute('get', '/definition/filetype', function() use($__CP)
 
 // Enable copilot.
 $__CP->ready() ;
-
 
 ?>

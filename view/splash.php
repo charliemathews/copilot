@@ -9,14 +9,8 @@
 			: ERROR_ACCESS_DENIED) ?>
 </div>
 
-<div id="meta">
-<?= (DEV ? 	"<div>\n".
-			SERVER_NAME."<br>\n".
-			SCRIPT_TIME."<br>\n".
-			"</div>\n"
-			: ERROR_ACCESS_DENIED) ?>
 </div>
-<h2>Dev Messages</h2>
+<h2>DEV: <?= DEV ?> and DEV_GUI: <?= DEV_GUI ?></h2>
 <div id="msg_box">
 	<?php $this->log->displayFancy('*') ; ?>
 </div>

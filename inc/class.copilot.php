@@ -65,9 +65,9 @@ class Copilot {
 		// Output
 			if(DEV_GUI) {
 
-				$this->log->add($this->getData(), CP_RESPONSE) ;
-
 				require_once(SERVER_DOCRT.'/view/splash.php') ;
+
+				echo $this->getData() ;
 
 			} else {
 
@@ -151,7 +151,7 @@ class Copilot {
 	/**
 	* Function addData
 	*
-	* Public pasthrough function which adds a datablock to the return stream.
+	* Public passthrough function which adds a datablock to the return stream.
 	*
 	* @param string $name contains the name of the data block.
 	* @param string $input contains the new block of data.
@@ -165,11 +165,24 @@ class Copilot {
 	/**
 	* Function addData
 	*
-	* Public pasthrough function which get's the json encoded return data stream.
+	* Public passthrough function which get's the json encoded return data stream.
 	*/
 	public function getData() {
 
 		return $this->data->returnStream() ;
+
+	}
+
+	/**
+	* Function returnRoutes
+	*
+	* Public passthrough function which returns all the known API routes.
+	*/
+	public function returnRoutes() {
+
+		$routes = $this->api->getRoutes() ;
+
+		
 
 	}
 

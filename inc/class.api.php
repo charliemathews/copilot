@@ -98,21 +98,23 @@ class API {
 	*/
 	private function buildStaticRoutes() {
 
-		$this->addRoute('get', '/', function() {
+		$apiLog = $this->log ;
 
-			$this->log->add(APP_NAME ." is online.", CP_STATUS) ;
+		$this->addRoute('get', '/', function() use($apiLog) {
+
+			$apiLog->add(APP_NAME ." is online.", CP_STATUS) ;
 					
 		}) ;
 
-		$this->addRoute('get', '/'.API_VERSION, function() {
+		$this->addRoute('get', '/'.API_VERSION, function() use($apiLog) {
 
-			$this->log->add("API Version ".API_VERSION." is online.", CP_STATUS) ;
+			$apiLog->add("API Version ".API_VERSION." is online.", CP_STATUS) ;
 					
 		}) ;
 
-		$this->slim->notFound(function () {
+		$this->slim->notFound(function () use($apiLog) {
 
-    		$this->log->add("Unknown call.", CP_STATUS) ;
+    		$apiLog->add("Unknown call.", CP_STATUS) ;
 
 		});
 
@@ -134,6 +136,12 @@ class API {
 			}
 
 		}
+
+	}
+
+	public function returnRoutes() {
+
+		return $routeIndex ;
 
 	}
 

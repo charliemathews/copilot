@@ -21,6 +21,6 @@ require_once(SERVER_DOCRT.'/Slim/Slim.php');
 
 //Copilot
 require_once(SERVER_DOCRT.'/inc/class.copilot.php') ;
-
+/**/
 
 ?>
