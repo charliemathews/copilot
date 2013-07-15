@@ -4,9 +4,11 @@
 //Confidential & Proprietary Information.
 
 
+// sudo /opt/bitnami/ctlscript.sh restart apache
+
 define(	"APP_DOMAIN", 			"TS") ;
 define(	"APP_NAME", 			"Copilot") ;
-define(	"APP_VERSION", 			"0.9.0") ; // major, minor, patch
+define(	"APP_VERSION", 			"0.9.2") ; // major, minor, patch
 define(	"APP_VERSION_TITLE", 	"BETA") ;
 define(	"API_VERSION", 			"v1") ;
 define(	"COPYRIGHT_YEAR", 		"2013") ;
@@ -15,11 +17,11 @@ $prod_server = 'copilot.tsllc.net' ;
 $test_server = 'copilotdev.tsllc.net' ;
 $local_server = 'localhost' ;
 
-define(	"SERVER_NAME", 			$_SERVER['HTTP_HOST']) ;
+define(	"SERVER_NAME", $_SERVER['HTTP_HOST']) ;
 
 if(SERVER_NAME == $prod_server) {
 
-	define(	"SERVER_DOCRT", 		$_SERVER['DOCUMENT_ROOT']) ;
+	define(	"SERVER_DOCRT", $_SERVER['DOCUMENT_ROOT']) ;
 
 	define(	"DEV", 		FALSE) ;
 	define(	"DEV_GUI", 	FALSE) ;
@@ -32,12 +34,12 @@ if(SERVER_NAME == $prod_server) {
 	$db_host 			= "" ;
 	$db_name 			= "" ;
 	$db_user 			= "" ;
-	$db_pass 			= "p!" ;
+	$db_pass 			= "" ;
 
 
 } elseif(SERVER_NAME == $test_server) {
 
-	define(	"SERVER_DOCRT", 		$_SERVER['DOCUMENT_ROOT']) ;
+	define(	"SERVER_DOCRT", $_SERVER['DOCUMENT_ROOT']) ;
 
 	define(	"DEV", 		TRUE) ;
 	define(	"DEV_GUI", 	FALSE) ;
@@ -57,7 +59,7 @@ if(SERVER_NAME == $prod_server) {
 
 } elseif(SERVER_NAME == $local_server) {
 
-	define(	"SERVER_DOCRT", 		$_SERVER['DOCUMENT_ROOT'].'/copilot') ;
+	define(	"SERVER_DOCRT", $_SERVER['DOCUMENT_ROOT'].'/copilot') ;
 
 	define(	"DEV", 		TRUE) ;
 	define(	"DEV_GUI", 	FALSE) ;

@@ -61,8 +61,9 @@ Namespace APP\PILOT ;
             return $rs1;
       }
       
-      
-      // object. don't do this one yet. it's going to change friday the 12th
+      /**
+      object. don't do this one yet. it's going to change friday the 12th
+      */
       function get_project_list($show_inactive = true) {
             $data = array();
             
@@ -161,8 +162,9 @@ Namespace APP\PILOT ;
             
             return $data;
       }
-      
-      // getting a list of substatus of status
+      /**
+      getting a list of substatus of status
+      */
       function get_substatus_list($current_status, $show_inactive = true) {
             $data = array();
               
@@ -354,7 +356,9 @@ Namespace APP\PILOT ;
             }
         }
         
-        // ticket changelog. /event/log
+        /**
+        Requires input. Ticket changelog. /event/log
+        */
         function append_to_log($id, $desc, $type = 1) {
             $query = "INSERT INTO tss_history (tss_event_id, tss_user_id, description, timestamp, tss_history_type_id) VALUES (".$id.", ".$_SESSION['user_id'].", '".$desc."', NOW(), ".$type.")";
             $this->query($query,1);
@@ -475,7 +479,9 @@ Namespace APP\PILOT ;
             }
        }
        
-       // ad list of file extentions
+      /**
+      Passes a variable in.
+      */
       function get_permitted_file_extensions($attachment_type) {
             $data = array();
               
@@ -497,7 +503,7 @@ Namespace APP\PILOT ;
       }
       
     /**
-
+    Generate a mysql query. Sort this out later with Dave.
     */
     function get_where_clause(
                             $status,

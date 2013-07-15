@@ -7,32 +7,19 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
-// sudo /opt/bitnami/ctlscript.sh restart apache
-
-
 // Load copilot.
 require_once('cp.php');
 $__CP = CP\Copilot::Instance() ;
 
 
-/* // Method binding example.
-$__CP->createRoute('get', '/foo/:url+', function($url) use($__CP) 
-					{
-					require(SERVER_DOCRT.'/class/class.foo.php') ;
-					$testfoo = new app\test\foo() ;
-					$testfoo->childfunctiontest() ;
 
 
-					echo $_SERVER['QUERY_STRING'];
 
-					$res = array_filter($url) ;
-
-					$__CP->addData("foo", array($testfoo->returnLog(), $res)) ;
-					}) ;
-*/
 $__CP->createRoute('get', '/query', function() use ($__CP) {
-					$__CP->addData("query", $__CP->interpretQuery($_SERVER['QUERY_STRING'])) ;
+						$__CP->interpretQuery($_SERVER['QUERY_STRING']) ;
 					}) ;
+
+
 
 
 

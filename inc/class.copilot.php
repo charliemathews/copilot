@@ -88,49 +88,72 @@ class Copilot {
 	*/
 	public function interpretQuery($querystring = null) {
 
-		/* a properly formed query string contains either fields or filters.
-		   an example of each:
-				fields
-					/user/joe?(firstname,lastname)
-				fields and filters
-					/users?(firstname,lastname):(postcode=07869)
-				filters
-					/users?(postcode=07869)
+		/*
 
-			Query Composure Ideas
-				??????????????
+		/user/joe?(firstname,lastname)
 
-		localhost/copilot/v1/query?(postcode=07869,gender=male):(firstname,lastname)
+		/users?(firstname,lastname):(postcode=07869)
+
+		/users?(postcode=07869)
+
+		/query?(postcode=07869,gender=male):(firstname,lastname)
+
+		
+
+		
+
+		http://localhost/copilot/v1/query?#()::@()
+
+		Error cases:
+			Were there more than 2 () ()? Maybe they didn't use URL encode.
+					or anything other than 2 or 4.
+			Was there ::? Were there more than 2 :'s? Bad url encode.
 		
 		*/
 
-		$querystring = isset($querystring) ? $querystring : $_SERVER['QUERY_STRING'] ;
+		$querystring = $querystring == null ? $_SERVER['QUERY_STRING'] : $querystring ;
+
+		if(strpos($querystring, "::" !== FALSE)) {
+
+			$output = explode("::", $querystring) ;
+
+			$filterCheck = strpos($output, "#(") ;
+			if($filterCheck) {
+
+			}
+
+			// do both filter and field exist? they need to in this case.
+			// find out which one occurs first using strpos and then use strstr to get the one on the end and then the first one.
+
+		} else { // they didn't use filters AND fields? Maybe they used just one.
+
+			//
+
+		}
+
+		/*
 
 		$output = str_replace(array('(', ')'), '', trim(urldecode($querystring))) ;
-
 		$output = explode(':', $output) ;
 
 		for($i = 0; $i < 2; ++$i) {
 
 			$temp = explode(',', $output[$i]) ;
-
 			for($j = 0; $j < count($temp); ++$j) {
-
 				$temp[$j] = explode('=', $temp[$j]) ;
-
 			}
-
 			$output[$i] = $temp ;
 
 		}
 
 		$output['filters'] = $output[0] ;
-
 		$output['fields'] = $output[1] ;
-
 		unset($output[0], $output[1]) ;
 
 		return $output ;
+
+		*/
+	
 	}
 
 	/**
