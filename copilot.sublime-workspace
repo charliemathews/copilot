@@ -15,7 +15,7 @@
 			"file": "inc/_config.php",
 			"settings":
 			{
-				"buffer_size": 2592,
+				"buffer_size": 2562,
 				"line_ending": "Windows"
 			}
 		},
@@ -31,7 +31,7 @@
 			"file": "index.php",
 			"settings":
 			{
-				"buffer_size": 5589,
+				"buffer_size": 5661,
 				"line_ending": "Windows"
 			}
 		},
@@ -47,7 +47,7 @@
 			"file": "inc/class.copilot.php",
 			"settings":
 			{
-				"buffer_size": 4787,
+				"buffer_size": 8528,
 				"line_ending": "Windows"
 			}
 		},
@@ -189,6 +189,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"callerror",
+			"call",
+			"parseerror",
+			"parseerrorurlErrorurlError",
 			"filter",
 			"CONSTRUCTOR",
 			"php",
@@ -227,15 +231,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2592,
+						"buffer_size": 2562,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								245,
-								245
+								2554,
+								2554
 							]
 						],
 						"settings":
@@ -244,7 +248,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1215.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -283,15 +287,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5589,
+						"buffer_size": 5661,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								267,
-								267
+								161,
+								161
 							]
 						],
 						"settings":
@@ -338,15 +342,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4787,
+						"buffer_size": 8528,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2138,
-								2138
+								2121,
+								2121
 							]
 						],
 						"settings":
@@ -355,7 +359,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1338.0,
+						"translation.y": 1188.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

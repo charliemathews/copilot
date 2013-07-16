@@ -12,9 +12,10 @@ require_once('cp.php');
 $__CP = CP\Copilot::Instance() ;
 
 
+// DUMMY CALL
 $__CP->createRoute('get', '/query', function() use ($__CP) {
 
-						$__CP->addData("querytest", array($__CP->queryFields, $__CP->queryFilters)) ;
+						$__CP->addData("parsed_query_string", array('fields'=>$__CP->queryFields, 'filters'=>$__CP->queryFilters)) ;
 
 					}) ;
 

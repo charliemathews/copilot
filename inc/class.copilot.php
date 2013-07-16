@@ -96,47 +96,60 @@ class Copilot {
 
 		/*
 
+		http://localhost/copilot/v1/query?&(field1=asdf,field2=hjkl)::@(firstname,lastname,home_phone)
+
 		/user/joe?@(firstname,lastname)
 		/users?@(firstname,lastname):&(postcode=07869)
 		/users?&(postcode=07869)
 		/query?&(postcode=07869,gender=male):@(firstname,lastname)
 		
+
 		http://localhost/copilot/v1/query?&()::@()
 
-		& FILTERS
 		@ FIELDS
+		& FILTERS
 
 		Anything between () MUST be url encoded.
 		
 		*/
 
-		$queryParts = array() ;
-		$rawQuery = array() ;
-		$parsedQuery = array() ;
-		$urlError = FALSE ; // currently unused. returns malformed url error.
-		$callError = FALSE ;
+		$queryParts 						= 	array() 	;
+		$rawQuery 							= 	array() 	;
+		$parsedQuery 						= 	NULL		;
+
+		$urlError 							= 	FALSE 		; // for malformed url
+		$callWarning 						= 	FALSE 		; // for blank or messy call
+
+		$callWarningMsg						=	"Empty or unsanitary input received. The action you attempted may not have completed and you may receive a default response." ;
+		$urlErrorMsg						=	"Received a malformed URL." ;
+
+		$queryParts['fields']['isset'] 		= 	NULL 		;
+		$queryParts['filters']['isset'] 	= 	NULL 		;
+
+		$fieldDelimiter 					= 	"@" 		;
+		$filterDelimiter 					= 	"&" 		;
 
 
 		// If use didn't pass in a query string then get one by default.
 		if($querystring == NULL || isset($querystring) == FALSE) { 
 			$querystring == $_SERVER['QUERY_STRING'] ; 
-			$callError = TRUE ;
+			$callWarning = TRUE ;
 		}
 
 
 		// Check how many pairs of () there are. If there are more than 2 pairs or any unpaired sides, trigger error.
 		preg_match_all("#\([^()]*\)#", $querystring, $matches) ;
 		
-		if(count($matches[0]) >= 1 && count($matches[0]) <= 2 && $callError == FALSE) {
+		if(count($matches[0]) >= 1 && count($matches[0]) <= 2 && $callWarning == FALSE) {
 
 			if(strpos($querystring, "::") !== FALSE && substr_count($querystring, ":") == 2 && 
-				(substr_count($querystring, "@(") > 0 || substr_count($querystring, "&(") > 0)) {		// two possible input parts
+				(substr_count($querystring, ($fieldDelimiter."(")) > 0 || substr_count($querystring, ($filterDelimiter."(")) > 0)) {		// two possible input parts
 
 				// There should be something on boths sides of '::'
 				$rawQuery = explode("::", $querystring) ;
 
 			} elseif(substr_count($querystring, ":") == 0 && 
-				(substr_count($querystring, "@(") > 0 || substr_count($querystring, "&(") > 0)) { 		// one possible input part
+				(substr_count($querystring, ($fieldDelimiter."(")) > 0 || substr_count($querystring, ($filterDelimiter."(")) > 0)) { 		// one possible input part
 
 				$rawQuery[0] = $querystring ;
 				$rawQuery[1] = NULL ;
@@ -156,17 +169,21 @@ class Copilot {
 					// If there was only one pair of '()', process the side.
 					if(count($matches[0]) == 1) {
 
-						if(strpos($rawQueryPart, "&(") !== FALSE && isset($queryParts['filters']['isset']) == FALSE) {
+						if(strpos($rawQueryPart, $filterDelimiter."(") !== FALSE && isset($queryParts['filters']['isset']) == FALSE) {
 
 							$queryParts['filters']['isset'] = TRUE ;
 							$queryParts['filters']['data']['raw'] = trim(str_replace(array('(', ')'), '', $matches[0][0])) ;
 							$queryParts['filters']['data']['parsed'] = NULL ;
+
+							if($filterDelimiter.$matches[0][0] !== $rawQueryPart) { $callWarning = TRUE ; }
 							
-						} elseif(strpos($rawQueryPart, "@(") !== FALSE) {
+						} elseif(strpos($rawQueryPart, $fieldDelimiter."(") !== FALSE) {
 
 							$queryParts['fields']['isset'] = TRUE ;
 							$queryParts['fields']['data']['raw'] = trim(str_replace(array('(', ')'), '', $matches[0][0])) ;
 							$queryParts['fields']['data']['parsed'] = NULL ;
+
+							if($fieldDelimiter.$matches[0][0] !== $rawQueryPart) { $callWarning = TRUE ; }
 
 						}
 
@@ -174,49 +191,73 @@ class Copilot {
 
 				} else { $urlError = TRUE ; }
 
-				// We now have raw data or null in output[0] and output[1]
+				// We now have raw data or null in queryParts[filters] and queryParts[fields]
 
+				if($queryParts['filters']['isset'] !== NULL) { // Parse filters.
 
+					$temp = urldecode($queryParts['filters']['data']['raw']) ;
+
+					$temp = explode(',', $temp) ;
+
+					for($i = 0; $i < count($temp); $i++) {
+
+						$temp[$i] = explode('=', $temp[$i]) ;
+
+						if(count($temp[$i]) > 1) { $temp[$i][0] = trim($temp[$i][0]) ; $temp[$i][1] = trim($temp[$i][1]) ; } else { $temp[$i][0] = trim($temp[$i][0]) ; }
+
+					}
+					
+					$queryParts['filters']['data']['parsed'] = $temp ;
+
+				}
+
+				if($queryParts['fields']['isset'] !== NULL) { // Parse fields.
+
+					$temp = urldecode($queryParts['fields']['data']['raw']) ;
+
+					$temp = explode(',', $temp) ;
+
+					for($i = 0; $i < count($temp); $i++) { $temp[$i] = trim($temp[$i]) ; }
+
+					$queryParts['fields']['data']['parsed'] = $temp ;
+
+				}
+
+				if($queryParts['filters']['isset'] !== NULL) {
+					$this->queryFilters = $queryParts['filters']['data']['parsed'] ;
+				}
+
+				if($queryParts['fields']['isset'] !== NULL) {
+					$this->queryFields = $queryParts['fields']['data']['parsed'] ;
+				}
+
+				$parsedQuery = array('fields'=>$this->queryFields, 'filters'=>$this->queryFilters) ;
 
 			} else { $urlError = TRUE ; }
 
-			if($callError == TRUE) {
+			if($callWarning == TRUE) {
 
-				$this->log->add("Input was expected. The action you attempted may not have completed and you may receive the call's default response fields.", CP_WARN) ;
+				$this->log->add($callWarningMsg, CP_WARN) ;
 
 			}
 
-			if($urlError == TRUE && $callError == FALSE) {
+			if($urlError == TRUE && $callWarning == FALSE) {
 
-				$this->log->add("Received a malformed URL.", CP_ERR) ;
+				$this->log->add($urlErrorMsg, CP_ERR) ;
 
 				return NULL ;
 
-			} else { // replace this else statement with an elseif which will replace the if statement below.
+			}
 
-				// !!!!! TEMPORARY !!!!!
-				if(isset($queryParts['filters']['data'])) { 
-					echo $queryParts['filters']['data']['raw'], PHP_EOL ;
-					$this->queryFilters = $queryParts['filters']['data']['raw'] ;
-				}
-				if(isset($queryParts['fields']['data'])) { 
-					echo $queryParts['fields']['data']['raw'], PHP_EOL ; 
-					$this->queryFields = $queryParts['fields']['data']['raw'] ;
-				}
+			if($urlError == FALSE && $parsedQuery !== NULL) {
 
-					
-				if($parsedQuery !== NULL) {
+				$this->log->add("Query parsed successfully.", CP_MSG) ;
 
-					//$this->queryFields = $queryParts['fields']['data']['parsed'] ;
-					//$this->queryFilters = $queryParts['filters']['data']['parsed'] ;
+				return $parsedQuery ;
 
-					return $parsedQuery ;
+			} else {
 
-				} else {
-
-					return NULL ;
-
-				}
+				return NULL ;
 
 			}
 	
