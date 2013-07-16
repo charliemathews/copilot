@@ -8,7 +8,7 @@
 
 define(	"APP_DOMAIN", 			"TS") ;
 define(	"APP_NAME", 			"Copilot") ;
-define(	"APP_VERSION", 			"0.9.2") ; // major, minor, patch
+define(	"APP_VERSION", 			"0.9.3") ; // major, minor, patch
 define(	"APP_VERSION_TITLE", 	"BETA") ;
 define(	"API_VERSION", 			"v1") ;
 define(	"COPYRIGHT_YEAR", 		"2013") ;
@@ -97,9 +97,7 @@ define(	"ERROR_ACCESS_DENIED", 	"Access denied. This is not a public portal.");
 
 // Log Types
 define(	"CP_ERR", 				"Error") ;
+define(	"CP_WARN",				"Warning") ;
 define(	"CP_STATUS", 			"Status") ;
-define(	"CP_INPUT", 			"Input") ;
-define(	"CP_RESPONSE", 			"Response") ;
-define(	"CP_DEV", 				"Dev") ;
 
 ?>

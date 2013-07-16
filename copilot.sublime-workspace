@@ -31,7 +31,7 @@
 			"file": "index.php",
 			"settings":
 			{
-				"buffer_size": 5989,
+				"buffer_size": 5589,
 				"line_ending": "Windows"
 			}
 		},
@@ -47,7 +47,7 @@
 			"file": "inc/class.copilot.php",
 			"settings":
 			{
-				"buffer_size": 4272,
+				"buffer_size": 4787,
 				"line_ending": "Windows"
 			}
 		},
@@ -111,6 +111,8 @@
 	},
 	"file_history":
 	[
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/pilot/includes/class.tss.customer.php",
+		"/C/Program Files (x86)/Zend/Apache2/htdocs/pilot/includes/class.tss.labor.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/class/class.tss.main.php",
 		"/C/Program Files (x86)/Zend/Apache2/htdocs/copilot/class/class.db.php",
 		"/C/Program Files (x86)/Zend/Apache2/conf/httpd.conf",
@@ -187,6 +189,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"filter",
+			"CONSTRUCTOR",
+			"php",
 			"directory",
 			"file",
 			"$_",
@@ -213,7 +218,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -229,8 +234,8 @@
 						"selection":
 						[
 							[
-								690,
-								690
+								245,
+								245
 							]
 						],
 						"settings":
@@ -263,7 +268,8 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -277,15 +283,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5989,
+						"buffer_size": 5589,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								119,
-								119
+								267,
+								267
 							]
 						],
 						"settings":
@@ -332,15 +338,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4272,
+						"buffer_size": 4787,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2486,
-								2486
+								2138,
+								2138
 							]
 						],
 						"settings":
@@ -349,7 +355,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 630.0,
+						"translation.y": 1338.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -395,8 +401,8 @@
 						"selection":
 						[
 							[
-								2233,
-								2233
+								55,
+								57
 							]
 						],
 						"settings":
@@ -405,7 +411,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 990.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -423,8 +429,8 @@
 						"selection":
 						[
 							[
-								941,
-								941
+								2572,
+								2578
 							]
 						],
 						"settings":
@@ -433,7 +439,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1636.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -451,8 +457,8 @@
 						"selection":
 						[
 							[
-								246,
-								246
+								306,
+								306
 							]
 						],
 						"settings":

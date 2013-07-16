@@ -15,6 +15,9 @@ class Copilot {
 	private $data ;
 	private $api ;
 
+	public $queryFields = array(1) ;
+	public $queryFilters = array(2) ;
+
 	static private $_instance = null;
 
 	/**
@@ -53,6 +56,9 @@ class Copilot {
 	*/
 	public function ready() {
 
+		// Parse the query string.
+		$this->interpretQuery($_SERVER['QUERY_STRING']) ;
+
 		// Load the API.
 			$this->api->buildRoutes() ;
 			$this->api->enableSlim() ;
@@ -86,73 +92,133 @@ class Copilot {
 	*
 	* @param string $querystring contains $_SERVER['QUERY_STRING'] (by default, if not set).
 	*/
-	public function interpretQuery($querystring = null) {
+	public function interpretQuery($querystring = NULL) {
 
 		/*
 
-		/user/joe?(firstname,lastname)
-
-		/users?(firstname,lastname):(postcode=07869)
-
-		/users?(postcode=07869)
-
-		/query?(postcode=07869,gender=male):(firstname,lastname)
-
+		/user/joe?@(firstname,lastname)
+		/users?@(firstname,lastname):&(postcode=07869)
+		/users?&(postcode=07869)
+		/query?&(postcode=07869,gender=male):@(firstname,lastname)
 		
+		http://localhost/copilot/v1/query?&()::@()
 
-		
+		& FILTERS
+		@ FIELDS
 
-		http://localhost/copilot/v1/query?#()::@()
-
-		Error cases:
-			Were there more than 2 () ()? Maybe they didn't use URL encode.
-					or anything other than 2 or 4.
-			Was there ::? Were there more than 2 :'s? Bad url encode.
+		Anything between () MUST be url encoded.
 		
 		*/
 
-		$querystring = $querystring == null ? $_SERVER['QUERY_STRING'] : $querystring ;
+		$queryParts = array() ;
+		$rawQuery = array() ;
+		$parsedQuery = array() ;
+		$urlError = FALSE ; // currently unused. returns malformed url error.
+		$callError = FALSE ;
 
-		if(strpos($querystring, "::" !== FALSE)) {
 
-			$output = explode("::", $querystring) ;
+		// If use didn't pass in a query string then get one by default.
+		if($querystring == NULL || isset($querystring) == FALSE) { 
+			$querystring == $_SERVER['QUERY_STRING'] ; 
+			$callError = TRUE ;
+		}
 
-			$filterCheck = strpos($output, "#(") ;
-			if($filterCheck) {
+
+		// Check how many pairs of () there are. If there are more than 2 pairs or any unpaired sides, trigger error.
+		preg_match_all("#\([^()]*\)#", $querystring, $matches) ;
+		
+		if(count($matches[0]) >= 1 && count($matches[0]) <= 2 && $callError == FALSE) {
+
+			if(strpos($querystring, "::") !== FALSE && substr_count($querystring, ":") == 2 && 
+				(substr_count($querystring, "@(") > 0 || substr_count($querystring, "&(") > 0)) {		// two possible input parts
+
+				// There should be something on boths sides of '::'
+				$rawQuery = explode("::", $querystring) ;
+
+			} elseif(substr_count($querystring, ":") == 0 && 
+				(substr_count($querystring, "@(") > 0 || substr_count($querystring, "&(") > 0)) { 		// one possible input part
+
+				$rawQuery[0] = $querystring ;
+				$rawQuery[1] = NULL ;
+
+			} else { 																					// no good input parts - saftey net. preg_match_all should catch this.
+
+				$rawQuery[0] = NULL ;
+				$rawQuery[1] = NULL ;
 
 			}
 
-			// do both filter and field exist? they need to in this case.
-			// find out which one occurs first using strpos and then use strstr to get the one on the end and then the first one.
+			if($rawQuery[0] !== NULL || $rawQuery[1] !== NULL) foreach($rawQuery as $rawQueryPart) {
 
-		} else { // they didn't use filters AND fields? Maybe they used just one.
+					// Check the rawQueryPart for '()'
+					preg_match_all("#\([^()]*\)#", $rawQueryPart, $matches) ;
+					
+					// If there was only one pair of '()', process the side.
+					if(count($matches[0]) == 1) {
 
-			//
+						if(strpos($rawQueryPart, "&(") !== FALSE && isset($queryParts['filters']['isset']) == FALSE) {
 
-		}
+							$queryParts['filters']['isset'] = TRUE ;
+							$queryParts['filters']['data']['raw'] = trim(str_replace(array('(', ')'), '', $matches[0][0])) ;
+							$queryParts['filters']['data']['parsed'] = NULL ;
+							
+						} elseif(strpos($rawQueryPart, "@(") !== FALSE) {
 
-		/*
+							$queryParts['fields']['isset'] = TRUE ;
+							$queryParts['fields']['data']['raw'] = trim(str_replace(array('(', ')'), '', $matches[0][0])) ;
+							$queryParts['fields']['data']['parsed'] = NULL ;
 
-		$output = str_replace(array('(', ')'), '', trim(urldecode($querystring))) ;
-		$output = explode(':', $output) ;
+						}
 
-		for($i = 0; $i < 2; ++$i) {
+					}
 
-			$temp = explode(',', $output[$i]) ;
-			for($j = 0; $j < count($temp); ++$j) {
-				$temp[$j] = explode('=', $temp[$j]) ;
+				} else { $urlError = TRUE ; }
+
+				// We now have raw data or null in output[0] and output[1]
+
+
+
+			} else { $urlError = TRUE ; }
+
+			if($callError == TRUE) {
+
+				$this->log->add("Input was expected. The action you attempted may not have completed and you may receive the call's default response fields.", CP_WARN) ;
+
 			}
-			$output[$i] = $temp ;
 
-		}
+			if($urlError == TRUE && $callError == FALSE) {
 
-		$output['filters'] = $output[0] ;
-		$output['fields'] = $output[1] ;
-		unset($output[0], $output[1]) ;
+				$this->log->add("Received a malformed URL.", CP_ERR) ;
 
-		return $output ;
+				return NULL ;
 
-		*/
+			} else { // replace this else statement with an elseif which will replace the if statement below.
+
+				// !!!!! TEMPORARY !!!!!
+				if(isset($queryParts['filters']['data'])) { 
+					echo $queryParts['filters']['data']['raw'], PHP_EOL ;
+					$this->queryFilters = $queryParts['filters']['data']['raw'] ;
+				}
+				if(isset($queryParts['fields']['data'])) { 
+					echo $queryParts['fields']['data']['raw'], PHP_EOL ; 
+					$this->queryFields = $queryParts['fields']['data']['raw'] ;
+				}
+
+					
+				if($parsedQuery !== NULL) {
+
+					//$this->queryFields = $queryParts['fields']['data']['parsed'] ;
+					//$this->queryFilters = $queryParts['filters']['data']['parsed'] ;
+
+					return $parsedQuery ;
+
+				} else {
+
+					return NULL ;
+
+				}
+
+			}
 	
 	}
 
