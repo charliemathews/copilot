@@ -6,12 +6,12 @@
 
 // sudo /opt/bitnami/ctlscript.sh restart apache
 
-define(	"APP_DOMAIN", 			"TS") ;
-define(	"APP_NAME", 			"Copilot") ;
-define(	"APP_VERSION", 			"0.9.4") ; // major, minor, patch
-define(	"APP_VERSION_TITLE", 	"BETA") ;
-define(	"API_VERSION", 			"v1") ;
-define(	"COPYRIGHT_YEAR", 		"2013") ;
+define(	"APP_DOMAIN"		, 	"TS"		) ;
+define(	"APP_NAME"			, 	"Copilot"	) ;
+define(	"APP_VERSION"		, 	"0.9.4"		) ; // major, minor, patch
+define(	"APP_VERSION_TITLE"	, 	"BETA"		) ;
+define(	"API_VERSION"		, 	"v1"		) ;
+define(	"COPYRIGHT_YEAR"	, 	"2013"		) ;
 
 $prod_server = 'copilot.tsllc.net' ;
 $test_server = 'copilotdev.tsllc.net' ;
@@ -19,7 +19,8 @@ $local_server = 'localhost' ;
 
 define(	"SERVER_NAME", $_SERVER['HTTP_HOST']) ;
 
-if(SERVER_NAME == $prod_server) {
+if(SERVER_NAME == $prod_server)
+{
 
 	define(	"SERVER_DOCRT", $_SERVER['DOCUMENT_ROOT']) ;
 
@@ -37,7 +38,9 @@ if(SERVER_NAME == $prod_server) {
 	$db_pass 			= "" ;
 
 
-} elseif(SERVER_NAME == $test_server) {
+}
+elseif(SERVER_NAME == $test_server)
+{
 
 	define(	"SERVER_DOCRT", $_SERVER['DOCUMENT_ROOT']) ;
 
@@ -57,7 +60,9 @@ if(SERVER_NAME == $prod_server) {
 	$db_user 			= "tsspilot" ;
 	$db_pass 			= "p!lot2013" ;
 
-} elseif(SERVER_NAME == $local_server) {
+} 
+elseif(SERVER_NAME == $local_server)
+{
 
 	define(	"SERVER_DOCRT", $_SERVER['DOCUMENT_ROOT'].'/copilot') ;
 

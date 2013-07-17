@@ -13,12 +13,12 @@ class DB {
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(Log &$log, $host, $dbname, $user, $pass) {
-
+	public function __construct(Log &$log, $host, $dbname, $user, $pass)
+	{
 		$this->log = $log ;
 
-		try {
-
+		try
+		{
 			// MySQL with PDO_MYSQL
 			$DBH = new \PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
 
@@ -26,22 +26,21 @@ class DB {
 			$DBH->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
 
 			$this->log->add("Initializing database connection at " . $host . ".", 'LOG') ;
-
 		}
-		catch(PDOException $e){
-
+		catch(PDOException $e)
+		{
 			echo $e->getMessage();
 
 			$this->log->add("Database connection to " . $host . " failed.", 'LOG') ;
-
 		}
-
 	}
 
-	public function close() {
 
+	/**
+
+	*/
+	public function close()
+	{
 		$this->DBH = null ;
-
 	}
-
 }

@@ -8,17 +8,18 @@ Namespace CP ;
 /**
 * This class builds and manages the API.
 */
-class API {
-
+class API
+{
 	private $log ;
 	private $slim ;
 	private $routeIndex ;
 
+
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(Log &$log) {
-
+	public function __construct(Log &$log)
+	{
 		$this->log = $log ;
 
 		// Initiate the slim framework.
@@ -27,41 +28,40 @@ class API {
 		$this->slim = new \Slim\Slim() ;
 
 		$this->routeIndex = array() ;
-
 	}
+
 
 	/**
 	* Function enableSlim
 	*
 	* Enables the slim instance.
 	*/
-	public function enableSlim() {
-
+	public function enableSlim()
+	{
 		$this->slim->run();
-
 	}
+
 
 	/**
 
 	*/
-	public function addRoute($httpMethod, $requestRoute, $callbackMethod) {
-
+	public function addRoute($httpMethod, $requestRoute, $callbackMethod)
+	{
 		$requestRoute = trim($requestRoute) ;
 		$this->addRouteToIndex($httpMethod, $requestRoute, $callbackMethod) ;
 
-		if(strlen($requestRoute) > 1 && substr($requestRoute, -1) != '/') {
-
+		if(strlen($requestRoute) > 1 && substr($requestRoute, -1) != '/')
+		{
 			$requestRouteAppend = $requestRoute.'/' ; 
 			$this->addRouteToIndex($httpMethod, $requestRouteAppend, $callbackMethod) ;
-
-		} elseif(strlen($requestRoute) > 1 && substr($requestRoute, -1) == '/') {
-
+		}
+		elseif(strlen($requestRoute) > 1 && substr($requestRoute, -1) == '/')
+		{
 			$requestRouteAppend = substr_replace($requestRoute, "", -1) ;
 			$this->addRouteToIndex($httpMethod, $requestRouteAppend, $callbackMethod) ;
-
 		}
-
 	}
+
 
 	/**
 	* Function addRouteToIndex
@@ -72,79 +72,74 @@ class API {
 	* @param string $requestRoute contains the url parameter which calls this route.
 	* @param string $callbackMethod contains the call_user_method() compatible function name.
 	*/
-	public function addRouteToIndex($httpMethod, $requestRoute, $callbackMethod) {
-
+	public function addRouteToIndex($httpMethod, $requestRoute, $callbackMethod)
+	{
 		$this->routeIndex[] = array('httpMethod'=>$httpMethod, 'requestRoute'=>$requestRoute, 'callbackMethod'=>$callbackMethod) ;
-
 	}
+
 
 	/**
 	* Function buildRoutes
 	*
 	* Runs the methods for building statically and dynamically created routes.
 	*/
-	public function buildRoutes() {
-
+	public function buildRoutes()
+	{
 		$this->buildStaticRoutes() ;
-
 		$this->buildDynamicRoutes() ;
-
 	}
+
 
 	/**
 	* Function buildStaticRoutes
 	*
 	* Submits staticly programmed routes into slim.
 	*/
-	private function buildStaticRoutes() {
-
+	private function buildStaticRoutes()
+	{
 		$apiLog = $this->log ;
 
-		$this->addRoute('get', '/', function() use($apiLog) {
-
-			$apiLog->add(APP_NAME ." is online.", CP_STATUS) ;
-					
+		$this->addRoute('get', '/', function() use($apiLog)
+		{
+			$apiLog->add(APP_NAME ." is online.", CP_STATUS) ;	
 		}) ;
 
-		$this->addRoute('get', '/'.API_VERSION, function() use($apiLog) {
-
-			$apiLog->add("API Version ".API_VERSION." is online.", CP_STATUS) ;
-					
+		$this->addRoute('get', '/'.API_VERSION, function() use($apiLog)
+		{
+			$apiLog->add("API Version ".API_VERSION." is online.", CP_STATUS) ;	
 		}) ;
 
-		$this->slim->notFound(function () use($apiLog) {
-
+		$this->slim->notFound(function () use($apiLog)
+		{
     		$apiLog->add("Unknown call.", CP_STATUS) ;
-
 		});
-
 	}
+
 
 	/**
 	* Function buildDynamicRoutes
 	*
 	* Submits dynamically programmed routes into slim.
 	*/
-	private function buildDynamicRoutes() {
-
-		foreach($this->routeIndex as $singleRoute) {
-
-			if($singleRoute['httpMethod'] == 'get') {
-
+	private function buildDynamicRoutes()
+	{
+		foreach($this->routeIndex as $singleRoute)
+		{
+			if($singleRoute['httpMethod'] == 'get')
+			{
 				$this->slim->get($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
-
 			}
-
 		}
-
 	}
 
-	public function returnRoutes() {
 
+	/**
+
+	*/
+	public function returnRoutes()
+	{
 		return $routeIndex ;
-
 	}
-
 }
 
 ?>

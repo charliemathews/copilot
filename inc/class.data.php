@@ -8,20 +8,20 @@ Namespace CP ;
 /**
 * This class is responsible for interpreting and creating the json stream.
 */
-class Data {
-
+class Data
+{
 	private $dataQueue ;
+
 
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct(Log &$log) {
-
+	public function __construct(Log &$log)
+	{
 		$this->dataQueue = array() ;
-
 		$this->log = $log ;
-
 	}
+
 
 	/**
 	* Function encode
@@ -30,19 +30,19 @@ class Data {
 	*
 	* @param string $input contains the new data array or object to add to queue.
 	*/
-	public function add($name, $input) {
-
+	public function add($name, $input)
+	{
 		$this->dataQueue[] = array("name"=>$name, "data"=>$input) ;
-
 	}
+
 
 	/**
 	* Function encode
 	*
 	* Encodes returning data stream into json and adds relevant authentication data.
 	*/
-	private function encoder() {
-
+	private function encoder()
+	{
 		$output = array() ;
 
 		$token = $this->random_text("alnum", 32) ;
@@ -53,34 +53,33 @@ class Data {
 									'token'=>$token // every transaction is issued a token by the API. The server remains stateless, this is just a historical tracking tool.
 								 );
 
-		foreach($this->dataQueue as $dataPart) {
-			
+		foreach($this->dataQueue as $dataPart)
+		{
 			$output['blocks'][] = $dataPart ;
-
 		}
 
 		$logOutput = $this->log->display('*') ;
 
-		foreach($logOutput as $log) {
-
+		foreach($logOutput as $log)
+		{
 			$output['log'][] = $log ;
-
 		}
 
 		return json_encode($output) ;
 
 	}
 
+
 	/**
 	* Function returnStream
 	*
 	* Returns the JSON response.
 	*/
-	public function returnStream() {
-
+	public function returnStream()
+	{
 		return $this->encoder() ;
-		
 	}
+
 
 	/**
 	* Function decode
@@ -89,15 +88,19 @@ class Data {
 	*
 	* @param string $data contains array of data to be decoded.
 	*/
-	public function decode(&$input) {
-
+	public function decode(&$input)
+	{
 		return json_decode($input) ;
-
 	}
 
-	function random_text( $type = 'alnum', $length = 8 ) {
 
-		switch ( $type ) {
+	/**
+
+	*/
+	function random_text( $type = 'alnum', $length = 8 )
+	{
+		switch ( $type )
+		{
 			case 'alnum':
 				$pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 				break;
@@ -121,7 +124,8 @@ class Data {
 				break;
 		}
  
-		$crypto_rand_secure = function ( $min, $max ) {
+		$crypto_rand_secure = function ( $min, $max )
+		{
 			$range = $max - $min;
 			if ( $range < 0 ) return $min; 			// not so random...
 			$log    = log( $range, 2 );
@@ -137,13 +141,14 @@ class Data {
  
 		$token = "";
 		$max   = strlen( $pool );
-		for ( $i = 0; $i < $length; $i++ ) {
+
+		for ( $i = 0; $i < $length; $i++ )
+		{
 			$token .= $pool[$crypto_rand_secure( 0, $max )];
 		}
+
 		return $token;
-
 	}
-
 }
 
 ?>

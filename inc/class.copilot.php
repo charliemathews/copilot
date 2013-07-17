@@ -8,8 +8,8 @@ Namespace CP ;
 /**
 * Responsible for creating and managing all member objects. Provides acessors.
 */
-class Copilot {
-
+class Copilot
+{
 	private $log ;
 	private $db_local ;
 	private $data ;
@@ -20,21 +20,22 @@ class Copilot {
 
 	static private $_instance = null;
 
+
 	/**
 	* Copilot may only be a singleton.
 	*/
-	public static function & Instance() {
-		if (is_null(self::$_instance)) {
-			self::$_instance = new self();
-		}
+	public static function & Instance()
+	{
+		if (is_null(self::$_instance)) { self::$_instance = new self(); }
 		return self::$_instance;
 	}
+
 
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct() {
-
+	public function __construct() 
+	{
 		//Script timer. 
 			$mtime = explode(" ",microtime()); 
 			$this->starttime = $mtime[1] + $mtime[0] ;
@@ -46,16 +47,16 @@ class Copilot {
 
 		// API class.
 			$this->api = new API($this->log) ;
-
 	}
+
 
 	/**
 	* Function interpretQuery
 	*
 	* Public function which assembles, enables, and times the api. It also chooses how to output the results.
 	*/
-	public function ready() {
-
+	public function ready()
+	{
 		// Parse the query string.
 		$this->interpretQuery($_SERVER['QUERY_STRING']) ;
 
@@ -69,21 +70,18 @@ class Copilot {
 			$this->log->timer = $this->totaltime ;
 
 		// Output
-			if(DEV_GUI) {
-
+			if(DEV_GUI)
+			{
 				require_once(SERVER_DOCRT.'/view/splash.php') ;
-
 				echo $this->getData() ;
-
-			} else {
-
-				header('Content-Type: application/json');
-
-				echo $this->getData() ;
-
 			}
-
+			else
+			{
+				header('Content-Type: application/json');
+				echo $this->getData() ;
+			}
 	}
+
 
 	/**
 	* Function interpretQuery
@@ -92,8 +90,8 @@ class Copilot {
 	*
 	* @param string $querystring contains $_SERVER['QUERY_STRING'] (by default, if not set).
 	*/
-	public function interpretQuery($querystring = NULL) {
-
+	public function interpretQuery($querystring = NULL)
+	{
 		/*
 
 		http://localhost/copilot/v1/query?&(field1=asdf,field2=hjkl)::@(firstname,lastname,home_phone)
@@ -131,7 +129,8 @@ class Copilot {
 
 
 		// If use didn't pass in a query string then get one by default.
-		if($querystring == NULL || isset($querystring) == FALSE) { 
+		if($querystring == NULL || isset($querystring) == FALSE)
+		{ 
 			$querystring == $_SERVER['QUERY_STRING'] ; 
 			$callWarning = TRUE ;
 		}
@@ -140,128 +139,124 @@ class Copilot {
 		// Check how many pairs of () there are. If there are more than 2 pairs or any unpaired sides, trigger error.
 		preg_match_all("#\([^()]*\)#", $querystring, $matches) ;
 		
-		if(count($matches[0]) >= 1 && count($matches[0]) <= 2 && $callWarning == FALSE) {
-
-			if(strpos($querystring, "::") !== FALSE && substr_count($querystring, ":") == 2 && 
-				(substr_count($querystring, ($fieldDelimiter."(")) > 0 || substr_count($querystring, ($filterDelimiter."(")) > 0)) {		// two possible input parts
-
+		if(count($matches[0]) >= 1 && count($matches[0]) <= 2 && $callWarning == FALSE)
+		{
+			if(
+				strpos($querystring, "::") !== FALSE && substr_count($querystring, ":") == 2 && 
+			  	(substr_count($querystring, ($fieldDelimiter."(")) > 0 || substr_count($querystring, ($filterDelimiter."(")) > 0)
+			  )
+			{// two possible input parts
 				// There should be something on boths sides of '::'
 				$rawQuery = explode("::", $querystring) ;
-
-			} elseif(substr_count($querystring, ":") == 0 && 
-				(substr_count($querystring, ($fieldDelimiter."(")) > 0 || substr_count($querystring, ($filterDelimiter."(")) > 0)) { 		// one possible input part
-
+			}
+			elseif(
+					substr_count($querystring, ":") == 0 && 
+				  	(substr_count($querystring, ($fieldDelimiter."(")) > 0 || substr_count($querystring, ($filterDelimiter."(")) > 0)
+				  )
+			{// one possible input part
 				$rawQuery[0] = $querystring ;
 				$rawQuery[1] = NULL ;
-
-			} else { 																					// no good input parts - saftey net. preg_match_all should catch this.
-
+			}
+			else
+			{// no good input parts - saftey net. preg_match_all should catch this.
 				$rawQuery[0] = NULL ;
 				$rawQuery[1] = NULL ;
-
 			}
 
-			if($rawQuery[0] !== NULL || $rawQuery[1] !== NULL) foreach($rawQuery as $rawQueryPart) {
-
+			if($rawQuery[0] !== NULL || $rawQuery[1] !== NULL) foreach($rawQuery as $rawQueryPart)
+			{
 					// Check the rawQueryPart for '()'
 					preg_match_all("#\([^()]*\)#", $rawQueryPart, $matches) ;
 					
 					// If there was only one pair of '()', process the side.
-					if(count($matches[0]) == 1) {
-
-						if(strpos($rawQueryPart, $filterDelimiter."(") !== FALSE && isset($queryParts['filters']['isset']) == FALSE) {
-
+					if(count($matches[0]) == 1)
+					{
+						if(strpos($rawQueryPart, $filterDelimiter."(") !== FALSE && isset($queryParts['filters']['isset']) == FALSE)
+						{
 							$queryParts['filters']['isset'] = TRUE ;
 							$queryParts['filters']['data']['raw'] = trim(str_replace(array('(', ')'), '', $matches[0][0])) ;
 							$queryParts['filters']['data']['parsed'] = NULL ;
 
 							if($filterDelimiter.$matches[0][0] !== $rawQueryPart) { $callWarning = TRUE ; }
-							
-						} elseif(strpos($rawQueryPart, $fieldDelimiter."(") !== FALSE) {
-
+						}
+						elseif(strpos($rawQueryPart, $fieldDelimiter."(") !== FALSE)
+						{
 							$queryParts['fields']['isset'] = TRUE ;
 							$queryParts['fields']['data']['raw'] = trim(str_replace(array('(', ')'), '', $matches[0][0])) ;
 							$queryParts['fields']['data']['parsed'] = NULL ;
 
 							if($fieldDelimiter.$matches[0][0] !== $rawQueryPart) { $callWarning = TRUE ; }
-
 						}
-
 					}
-
-				} else { $urlError = TRUE ; }
+				}
+				else
+				{
+					$urlError = TRUE ;
+				}
 
 				// We now have raw data or null in queryParts[filters] and queryParts[fields]
 
-				if($queryParts['filters']['isset'] !== NULL) { // Parse filters.
-
+				if($queryParts['filters']['isset'] !== NULL) // Parse filters.
+				{ 
 					$temp = urldecode($queryParts['filters']['data']['raw']) ;
-
 					$temp = explode(',', $temp) ;
 
-					for($i = 0; $i < count($temp); $i++) {
-
+					for($i = 0; $i < count($temp); ++$i)
+					{
 						$temp[$i] = explode('=', $temp[$i]) ;
-
 						if(count($temp[$i]) > 1) { $temp[$i][0] = trim($temp[$i][0]) ; $temp[$i][1] = trim($temp[$i][1]) ; } else { $temp[$i][0] = trim($temp[$i][0]) ; }
-
 					}
 					
 					$queryParts['filters']['data']['parsed'] = $temp ;
-
 				}
 
-				if($queryParts['fields']['isset'] !== NULL) { // Parse fields.
-
+				if($queryParts['fields']['isset'] !== NULL) // Parse fields.
+				{ 
 					$temp = urldecode($queryParts['fields']['data']['raw']) ;
-
 					$temp = explode(',', $temp) ;
-
-					for($i = 0; $i < count($temp); $i++) { $temp[$i] = trim($temp[$i]) ; }
-
+					for($i = 0; $i < count($temp); ++$i) { $temp[$i] = trim($temp[$i]) ; }
 					$queryParts['fields']['data']['parsed'] = $temp ;
-
 				}
 
-				if($queryParts['filters']['isset'] !== NULL) {
+				if($queryParts['filters']['isset'] !== NULL)
+				{
 					$this->queryFilters = $queryParts['filters']['data']['parsed'] ;
 				}
 
-				if($queryParts['fields']['isset'] !== NULL) {
+				if($queryParts['fields']['isset'] !== NULL)
+				{
 					$this->queryFields = $queryParts['fields']['data']['parsed'] ;
 				}
 
 				$parsedQuery = array('fields'=>$this->queryFields, 'filters'=>$this->queryFilters) ;
+			}
+			else
+			{
+				$urlError = TRUE ;
+			}
 
-			} else { $urlError = TRUE ; }
-
-			if($callWarning == TRUE) {
-
+			if($callWarning == TRUE)
+			{
 				$this->log->add($callWarningMsg, CP_WARN) ;
-
 			}
 
-			if($urlError == TRUE && $callWarning == FALSE) {
-
+			if($urlError == TRUE && $callWarning == FALSE)
+			{
 				$this->log->add($urlErrorMsg, CP_ERR) ;
-
 				return NULL ;
-
 			}
 
-			if($urlError == FALSE && $parsedQuery !== NULL) {
-
+			if($urlError == FALSE && $parsedQuery !== NULL)
+			{
 				$this->log->add("Query parsed successfully.", CP_MSG) ;
-
 				return $parsedQuery ;
-
-			} else {
-
-				return NULL ;
-
 			}
-	
+			else
+			{
+				return NULL ;
+			}
 	}
+
 
 	/**
 	* Function createRoute
@@ -272,11 +267,11 @@ class Copilot {
 	* @param string $requestRoute contains the url parameter which calls this route.
 	* @param string $callbackMethod contains the call_user_method() compatible function name.
 	*/
-	public function createRoute($httpMethod, $requestRoute, $callbackMethod) {
-
+	public function createRoute($httpMethod, $requestRoute, $callbackMethod)
+	{
 		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, $callbackMethod) ;
-
 	}
+
 
 	/**
 	* Function addData
@@ -286,46 +281,43 @@ class Copilot {
 	* @param string $name contains the name of the data block.
 	* @param string $input contains the new block of data.
 	*/
-	public function addData($name, $input) {
-
+	public function addData($name, $input)
+	{
 		$this->data->add($name, $input) ;
-
 	}
+
 
 	/**
 	* Function addData
 	*
 	* Public passthrough function which get's the json encoded return data stream.
 	*/
-	public function getData() {
-
+	public function getData()
+	{
 		return $this->data->returnStream() ;
-
 	}
+
 
 	/**
 	* Function returnRoutes
 	*
 	* Public passthrough function which returns all the known API routes.
 	*/
-	public function returnRoutes() {
-
+	public function returnRoutes()
+	{
 		$routes = $this->api->getRoutes() ;
-
-		
-
 	}
 
-	public function __clone() {
 
+	public function __clone()
+	{
 		trigger_error('Cloning instances of this class is forbidden.', E_USER_ERROR);
-
 	}
 
-	public function __wakeup() {
 
+	public function __wakeup()
+	{
 		trigger_error('Unserializing instances of this class is forbidden.', E_USER_ERROR);
-		
 	}
 
 }
