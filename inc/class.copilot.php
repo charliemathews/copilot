@@ -247,7 +247,7 @@ class Copilot
 
 			if($callBlank == TRUE) 										// If there was a blank query. (only in DEV mode)
 			{					
-				if(DEV) { $this->log->add($callBlankMsg, CP_WARN) ; }
+				//if(DEV) { $this->log->add($callBlankMsg, CP_WARN) ; }
 				return NULL ;
 			}
 			elseif($callWarning == TRUE) 								// If there was a warning.

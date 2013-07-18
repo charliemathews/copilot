@@ -50,12 +50,14 @@ class Data
 		$output['header'] = array(	'app'=>APP_NAME.' v'.APP_VERSION, 
 									'api'=>API_VERSION,
 									'time'=>$this->log->timer,
-									'token'=>$token // every transaction is issued a token by the API. The server remains stateless, this is just a historical tracking tool.
+									'token'=>$token
 								 );
 
-		foreach($this->dataQueue as $dataPart)
+		$dataCount = count($this->dataQueue) ;
+
+		for($i = 0; $i < $dataCount; ++$i)
 		{
-			$output['blocks'][] = $dataPart ;
+			$output['blocks'][$this->dataQueue[$i]['name']] = $this->dataQueue[$i]['data'] ;
 		}
 
 		$logOutput = $this->log->display('*') ;
