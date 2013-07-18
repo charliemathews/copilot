@@ -3,14 +3,6 @@
 A restful API built to fill the role of a middle tier data access layer for TS Software and Services.
 
 
-Roadmap
-	
-	PRE-ALPHA 	- non-functional
-	ALPHA		- partly-functional
-	BETA		- functional, pre-release
-	v1.0		- functional, release
-
-
 Licensing
 
 	Slim Framework - MIT Public

@@ -11,6 +11,7 @@
 require_once('cp.php');
 $__CP = CP\Copilot::Instance() ;
 
+
 /* $__CP->createRoute({http request type}, {url path}, {ACTION callback function}, {REQUESTED callback function})
 
 		{type} 		can be get, post, put, delete
@@ -22,14 +23,6 @@ $__CP = CP\Copilot::Instance() ;
 		{REQUESTED} This is where you can include an extra function callback which will run just before the rest of the call. 
 					It's for including code that you're finding yourself repeating in every call, such as include() statements.
 */
-
-
-// DUMMY CALL
-$__CP->createRoute('get', '/query', function() use ($__CP)
-{
-	$__CP->addData("parsed_query_string", array('fields'=>$__CP->queryFields, 'filters'=>$__CP->queryFilters)) ;
-});
-
 
 
 $defaultPilotIncludes = function () {
@@ -46,6 +39,8 @@ $__CP->createRoute('get', '/users', function() use($__CP)
 }, $defaultPilotIncludes);
 
 
+// Needs Input.
+/*
 $__CP->createRoute('get', '/user/:id', function($id) use($__CP) 
 {
 	require_once(SERVER_DOCRT.'/class/class.db.php') ;
@@ -53,6 +48,7 @@ $__CP->createRoute('get', '/user/:id', function($id) use($__CP)
 	$instance = new APP\PILOT\tss_main() ;
 	$__CP->addData("user", $id) ;
 });
+*/
 
 
 $__CP->createRoute('get', '/users/technician', function() use($__CP) 

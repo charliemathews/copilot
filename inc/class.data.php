@@ -49,6 +49,7 @@ class Data
 
 		$output['header'] = array(	'app'=>APP_NAME.' v'.APP_VERSION, 
 									'api'=>API_VERSION,
+									'release'=>APP_VERSION_TITLE,
 									'time'=>$this->log->timer,
 									'token'=>$token
 								 );
