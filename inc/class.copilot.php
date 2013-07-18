@@ -18,7 +18,9 @@ class Copilot
 	public $queryFields = array(1) ;
 	public $queryFilters = array(2) ;
 
-	static private $_instance = null;
+	static private $_instance = NULL ;
+
+	private $ready = FALSE ;
 
 
 	/**
@@ -75,10 +77,14 @@ class Copilot
 				require_once(SERVER_DOCRT.'/view/splash.php') ;
 				echo $this->getData() ;
 			}
-			else
+			elseif($this->ready == TRUE)
 			{
 				header('Content-Type: application/json');
 				echo $this->getData() ;
+			}
+			else
+			{
+				echo "Something went terribly, terribly wrong. (and took " . $this->totaltime . " to do so.)" ;
 			}
 	}
 
@@ -118,7 +124,7 @@ class Copilot
 		$urlError 							= 	FALSE 		; // for malformed url
 		$callWarning 						= 	FALSE 		; // for blank or messy call
 
-		$callWarningMsg						=	"Empty or unsanitary input received. The action you attempted may not have completed and you may receive a default response." ;
+		$callWarningMsg						=	"Empty or unsanitary input received." ;
 		$urlErrorMsg						=	"Received a malformed URL." ;
 
 		$queryParts['fields']['isset'] 		= 	NULL 		;
@@ -269,7 +275,12 @@ class Copilot
 	*/
 	public function createRoute($httpMethod, $requestRoute, $callbackMethod)
 	{
-		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, $callbackMethod) ;
+		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function() use ($callbackMethod) {
+
+			call_user_func($callbackMethod) ;
+			$this->ready = TRUE ;
+
+		}) ;
 	}
 
 

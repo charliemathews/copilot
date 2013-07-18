@@ -8,18 +8,18 @@ Namespace CP ;
 /**
 * Handles all errors and messages.
 */
-class Log {
-
+class Log
+{
 	private $messages ;
 	public $timer ;
+
 
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct() {
-
+	public function __construct()
+	{
 		$this->messages = array() ;
-		
 	}
 
 
@@ -31,10 +31,9 @@ class Log {
 	* @param string $msg contains message to be logged.
 	* @param string $type defines what kind of message is being logged.
 	*/
-	public function add($msg, $type) {
-
+	public function add($msg, $type)
+	{
 		$this->messages[] = array('msg'=>$msg, 'type'=>$type) ;
-
 	}
 
 
@@ -45,11 +44,11 @@ class Log {
 	*
 	* @param string $method should contain __METHOD__.
 	*/
-	public function addMethod($method) {
-
+	public function addMethod($method)
+	{
 		$this->messages[] = array('msg'=>($method. ' initiated.'), 'type'=>'LOG') ;
-
 	}
+
 
 	/**
 	* Function parseLog
@@ -59,18 +58,16 @@ class Log {
 	* @param string $row
 	* @param string $type
 	*/
-	private function parseLog($row, $type) {
-
-		if($type == '*' || $this->messages[$row]['type'] == $type) {
-
+	private function parseLog($row, $type)
+	{
+		if($type == '*' || $this->messages[$row]['type'] == $type)
+		{
 			return array($this->messages[$row]['msg'], $this->messages[$row]['type']) ;
-
-		} else {
-
-			return array(null, null) ;
-
 		}
-
+		else
+		{
+			return array(null, null) ;
+		}
 	}
 
 
@@ -81,21 +78,18 @@ class Log {
 	*
 	* @param string $type defines what type of message is being returned.
 	*/
-	public function display($type) {
-
+	public function display($type)
+	{
 		$cache = array() ;
-
 		$msgCount = count($this->messages) ;
 
-		for($i = 0 ; $i < $msgCount; ++$i) {
-
+		for($i = 0 ; $i < $msgCount; ++$i)
+		{
 			$temp = $this->parseLog($i, $type) ;
-
 			if($temp[0] != null) $cache[] = array('msg'=>$temp[0], 'type'=>$temp[1]) ;
 		}
 
 		return $cache ;
-
 	}
 
 
@@ -106,18 +100,14 @@ class Log {
 	*
 	* @param string $type defines what type of message is being returned.
 	*/
-	public function displayFancy($type) {
-
-		for($i = 0 ; $i < count($this->messages); ++$i) {
-
+	public function displayFancy($type)
+	{
+		for($i = 0 ; $i < count($this->messages); ++$i)
+		{
 			$temp = $this->parseLog($i, $type) ;	
-
 			echo '<span style="font-weight: bold;">' . $temp[1] . '</span>: ' . $temp[0] . '<br>', PHP_EOL ;
-
 		}
-
 	}
-
 }
 
 ?>
