@@ -10,17 +10,16 @@ Namespace CP ;
 */
 class Copilot
 {
-	private $log ;
-	private $db_local ;
-	private $data ;
-	private $api ;
+	private 	$log 						;
+	private 	$db_local 					;
+	private 	$data 						;
+	private 	$api 						;
+	private 	$ready 			= NULL 		;
 
-	public $queryFields = array(1) ;
-	public $queryFilters = array(2) ;
+	public 		$queryFields 	= array(1) 	;
+	public 		$queryFilters 	= array(2) 	;
 
-	static private $_instance = NULL ;
-
-	private $ready = FALSE ;
+	static private $_instance 	= NULL 		;
 
 
 	/**
@@ -60,11 +59,12 @@ class Copilot
 	public function ready()
 	{
 		// Parse the query string.
-		$this->interpretQuery($_SERVER['QUERY_STRING']) ;
+			$this->interpretQuery($_SERVER['QUERY_STRING']) ;
 
 		// Load the API.
 			$this->api->buildRoutes() ;
 			$this->api->enableSlim() ;
+			if($this->ready == NULL) $this->ready = &$this->api->callExecuted ;
 
 		// End the script timer.
 			$mtime = explode(" ",microtime()); 
@@ -72,18 +72,20 @@ class Copilot
 			$this->log->timer = $this->totaltime ;
 
 		// Output
-			if(DEV_GUI)
+			if(DEV_GUI) 											// if a call was made in DEV mode
 			{
 				require_once(SERVER_DOCRT.'/view/splash.php') ;
 				echo $this->getData() ;
 			}
-			elseif($this->ready == TRUE)
+			elseif($this->ready == TRUE) 							// if a call was made
 			{
 				header('Content-Type: application/json');
 				echo $this->getData() ;
 			}
-			else
+			else 													// if no slim call was executed (default or otherwise)
 			{
+				echo $this->getData(), "<br><br>";
+
 				echo "Something went terribly, terribly wrong. (and took " . $this->totaltime . " to do so.)" ;
 			}
 	}
@@ -122,10 +124,12 @@ class Copilot
 		$parsedQuery 						= 	NULL		;
 
 		$urlError 							= 	FALSE 		; // for malformed url
-		$callWarning 						= 	FALSE 		; // for blank or messy call
+		$callWarning 						= 	FALSE 		; // for messy call
+		$callBlank							= 	FALSE 		; // for empty call
 
-		$callWarningMsg						=	"Empty or unsanitary input received." ;
+		$callWarningMsg						=	"Unsanitary input received." ;
 		$urlErrorMsg						=	"Received a malformed URL." ;
+		$callBlankMsg						= 	"Empty query received." ;
 
 		$queryParts['fields']['isset'] 		= 	NULL 		;
 		$queryParts['filters']['isset'] 	= 	NULL 		;
@@ -135,17 +139,17 @@ class Copilot
 
 
 		// If use didn't pass in a query string then get one by default.
-		if($querystring == NULL || isset($querystring) == FALSE)
+		if($querystring == NULL || isset($querystring) !== TRUE)
 		{ 
-			$querystring == $_SERVER['QUERY_STRING'] ; 
-			$callWarning = TRUE ;
+			$querystring = $_SERVER['QUERY_STRING'] ;
+			$callBlank = TRUE ;
 		}
 
 
 		// Check how many pairs of () there are. If there are more than 2 pairs or any unpaired sides, trigger error.
 		preg_match_all("#\([^()]*\)#", $querystring, $matches) ;
 		
-		if(count($matches[0]) >= 1 && count($matches[0]) <= 2 && $callWarning == FALSE)
+		if(count($matches[0]) >= 1 && count($matches[0]) <= 2 && $callBlank == FALSE)
 		{
 			if(
 				strpos($querystring, "::") !== FALSE && substr_count($querystring, ":") == 2 && 
@@ -241,25 +245,32 @@ class Copilot
 				$urlError = TRUE ;
 			}
 
-			if($callWarning == TRUE)
+			if($callBlank == TRUE) 										// If there was a blank query. (only in DEV mode)
+			{					
+				if(DEV) { $this->log->add($callBlankMsg, CP_WARN) ; }
+				return NULL ;
+			}
+			elseif($callWarning == TRUE) 								// If there was a warning.
 			{
 				$this->log->add($callWarningMsg, CP_WARN) ;
+				return NULL ;
 			}
-
-			if($urlError == TRUE && $callWarning == FALSE)
+			elseif($urlError == TRUE) 									// If there was a malformed query.
 			{
 				$this->log->add($urlErrorMsg, CP_ERR) ;
 				return NULL ;
 			}
-
-			if($urlError == FALSE && $parsedQuery !== NULL)
-			{
-				$this->log->add("Query parsed successfully.", CP_MSG) ;
-				return $parsedQuery ;
-			}
 			else
 			{
-				return NULL ;
+				if($parsedQuery !== NULL)
+				{
+					$this->log->add("Query parsed successfully.", CP_MSG) ;
+					return $parsedQuery ;
+				}
+				else
+				{
+					return NULL ;
+				}
 			}
 	}
 
@@ -273,13 +284,15 @@ class Copilot
 	* @param string $requestRoute contains the url parameter which calls this route.
 	* @param string $callbackMethod contains the call_user_method() compatible function name.
 	*/
-	public function createRoute($httpMethod, $requestRoute, $callbackMethod)
+	public function createRoute($httpMethod, $requestRoute, $callbackMethod, $requestedCallback = NULL)
 	{
-		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function() use ($callbackMethod) {
+		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function() use ($callbackMethod, $requestedCallback) {
 
+			if($requestedCallback !== NULL) {
+				call_user_func($requestedCallback) ;
+			}
 			call_user_func($callbackMethod) ;
 			$this->ready = TRUE ;
-
 		}) ;
 	}
 
@@ -301,7 +314,7 @@ class Copilot
 	/**
 	* Function addData
 	*
-	* Public passthrough function which get's the json encoded return data stream.
+	* Public passthrough function which gets the json encoded return data stream.
 	*/
 	public function getData()
 	{

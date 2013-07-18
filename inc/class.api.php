@@ -10,10 +10,10 @@ Namespace CP ;
 */
 class API
 {
-	private $log ;
-	private $slim ;
-	private $routeIndex ;
-
+	private 	$log 						;
+	private 	$slim 						;
+	private 	$routeIndex 	= array() 	;
+	public 		$callExecuted 	= NULL 		;
 
 	/**
 	* CONSTRUCTOR
@@ -22,12 +22,8 @@ class API
 	{
 		$this->log = $log ;
 
-		// Initiate the slim framework.
 		\Slim\Slim::registerAutoloader();
-		
 		$this->slim = new \Slim\Slim() ;
-
-		$this->routeIndex = array() ;
 	}
 
 
@@ -97,21 +93,26 @@ class API
 	*/
 	private function buildStaticRoutes()
 	{
-		$apiLog = $this->log ;
+		$apiBits = array() ;
+		$apiBits['log'] = &$this->log ;
+		$apiBits['status'] = &$this->callExecuted ;
 
-		$this->addRoute('get', '/', function() use($apiLog)
+		$this->addRoute('get', '/', function() use($apiBits)
 		{
-			$apiLog->add(APP_NAME ." is online.", CP_STATUS) ;	
+			$apiBits['log']->add(APP_NAME ." is online.", CP_STATUS) ;
+			$apiBits['status'] = TRUE ;
 		}) ;
 
-		$this->addRoute('get', '/'.API_VERSION, function() use($apiLog)
+		$this->addRoute('get', '/'.API_VERSION, function() use($apiBits)
 		{
-			$apiLog->add("API Version ".API_VERSION." is online.", CP_STATUS) ;	
+			$apiBits['log']->add("API Version ".API_VERSION." is online.", CP_STATUS) ;
+			$apiBits['status'] = TRUE ;
 		}) ;
 
-		$this->slim->notFound(function () use($apiLog)
+		$this->slim->notFound(function () use($apiBits)
 		{
-    		$apiLog->add("Unknown call.", CP_STATUS) ;
+    		$apiBits['log']->add("Unknown call.", CP_STATUS) ;
+    		$apiBits['status'] = TRUE ;
 		});
 	}
 

@@ -13,19 +13,21 @@ Namespace APP\PILOT ;
                     $this->db_id = $db_id;
                     $this->db_usr = $db_usr;
                     $this->db_pwd = $db_pwd;
-                    
+
                     $this->conn = mysql_connect($this->db_hst, $this->db_usr, $this->db_pwd, TRUE);
                     mysql_select_db($this->db_id);
                     
                     $this->exec_func = "\$result = mysql_query(\$sql, \$this->conn);";
                     $this->fetch_func = "return (\$row = mysql_fetch_array(\$result)) ? TRUE : FALSE;";
                     
-                    if(!$this->conn) {
+                    if(!$this->conn)
+                    {
                             DB::throwError(mysql_error());
                             $this->created = FALSE;
                             exit;
                     }
-                    else {
+                    else
+                    {
                             $this->created = TRUE;
                     }
             } 
