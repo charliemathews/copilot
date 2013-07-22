@@ -293,15 +293,32 @@ class Copilot
 	* @param string $httpMethod contains the http method - i.e. get, post, put, delete.
 	* @param string $requestRoute contains the url parameter which calls this route.
 	* @param string $callbackMethod contains the call_user_method() compatible function name.
+
 	*/
 	public function createRoute($httpMethod, $requestRoute, $callbackMethod, $requestedCallback = NULL)
 	{
-		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function() use ($callbackMethod, $requestedCallback) {
-
-			if($requestedCallback !== NULL) {
+		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function($param) use ($callbackMethod, $requestedCallback)
+		{
+			if($requestedCallback !== NULL)
+			{
 				call_user_func($requestedCallback) ;
 			}
-			call_user_func($callbackMethod) ;
+
+			/* further work into passing multiple parameters to slim.
+			$func = new \ReflectionFunction($callbackMethod);
+			$func = $func->getParameters() ;
+			$paramCount = count($func) ;
+
+			if($paramCount >= 1)
+			{
+				call_user_func_array($callbackMethod, $func) ;
+			}
+			else
+			{
+			*/
+
+			call_user_func($callbackMethod, $param) ;
+
 			$this->ready = TRUE ;
 		}) ;
 	}

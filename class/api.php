@@ -34,14 +34,6 @@ $defaultIncludes = function () use ($__CP)
 
 */
 
-
-$__CP->createRoute('get', '/users', function() use($__CP) 
-{
-	$instance = new PILOT\tss_main() ;
-	$__CP->addBlock("users", $instance->get_user_list()) ;
-}, $defaultIncludes);
-
-
 $__CP->createRoute('get', '/users/technician', function() use($__CP) 
 {
 	$instance = new PILOT\tss_main() ;
@@ -206,6 +198,120 @@ $__CP->createRoute('delete', '/material/:id', function($id) use($__CP)
 
 */
 
+$__CP->createRoute('get', '/users', function() use($__CP)
+{															// view all
+	$instance = new PILOT\tss_main() ;
+	$__CP->addBlock("users", $instance->get_user_list()) ;
+}, $defaultIncludes);
+
+
+$__CP->createRoute('get', '/user/:id', function($id) use($__CP) 
+{																// view one
+	if(isset( $id ) !== FALSE)
+	{
+		require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
+		$instance = new PILOT\tss_user() ;
+		$__CP->addBlock("user:".$id, $instance->load( $id )) ;
+	}
+}, $defaultIncludes);
+
+
+$__CP->createRoute('post', '/users', function() use($__CP) 
+{															// create
+	if(	isset( $__CP->queryFilter['email'] ) 		&& 
+		isset( $__CP->queryFilter['phone'] ) 		&& 
+		isset( $__CP->queryFilter['first_name'] ) 	&& 
+		isset( $__CP->queryFilter['last_name'] ) 	&& 
+		isset( $__CP->queryFilter['notes'] ) 		&& 
+		isset( $__CP->queryFilter['hourly_rate'] ) 	&& 
+		isset( $__CP->queryFilter['timezone'] )		&& 
+		isset( $__CP->queryFilter['roles'] )		&& 
+		isset( $__CP->queryFilter['projects'] )
+		)
+	{
+		require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
+		$instance = new PILOT\tss_user() ;
+		$__CP->addBlock("user_created", $instance->add(	$__CP->queryFilter['email']			, 
+														$__CP->queryFilter['phone']			,
+														$__CP->queryFilter['first_name']	,
+														$__CP->queryFilter['last_name']		,
+														$__CP->queryFilter['notes']			,
+														$__CP->queryFilter['hourly_rate']	,
+														$__CP->queryFilter['timezone']		,
+														$__CP->queryFilter['roles']			,
+														$__CP->queryFilter['projects']
+														) ) ;
+	}
+	else
+	{
+		$__CP->addBlock("user_created", array(false, false)) ;
+	}
+}, $defaultIncludes);
+
+
+$__CP->createRoute('put', '/user/:id', function($id) use($__CP) 
+{																// update
+	if( isset( $id) )
+	{
+		if(	isset( $__CP->queryFilter['email'] ) 		&& 
+			isset( $__CP->queryFilter['phone'] ) 		&& 
+			isset( $__CP->queryFilter['first_name'] ) 	&& 
+			isset( $__CP->queryFilter['last_name'] ) 	&& 
+			isset( $__CP->queryFilter['notes'] ) 		&& 
+			isset( $__CP->queryFilter['hourly_rate'] ) 	&& 
+			isset( $__CP->queryFilter['timezone'] )		&& 
+			isset( $__CP->queryFilter['roles'] )		&& 
+			isset( $__CP->queryFilter['projects'] )
+			)
+		{
+			require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
+			$instance = new PILOT\tss_user() ;
+			$__CP->addBlock("user_updated", $instance->add(	$__CP->queryFilter['email']			, 
+															$__CP->queryFilter['phone']			,
+															$__CP->queryFilter['first_name']	,
+															$__CP->queryFilter['last_name']		,
+															$__CP->queryFilter['notes']			,
+															$__CP->queryFilter['hourly_rate']	,
+															$__CP->queryFilter['timezone']		,
+															$__CP->queryFilter['roles']			,
+															$__CP->queryFilter['projects']
+															) ) ;
+		}
+		else
+		{
+			$__CP->addBlock("user_updated", array(false, false)) ;
+		}
+	}
+}, $defaultIncludes);
+
+
+$__CP->createRoute('delete', '/user/:id', function($id) use($__CP) 
+{																	// delete
+	if(isset( $id ) !== FALSE)
+	{
+		require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
+		$instance = new PILOT\tss_user() ;
+		$__CP->addBlock("user_deleted", $instance->del( $id )) ;
+	}
+}, $defaultIncludes);
+
+
+$__CP->createRoute('put', '/user/:id/password', function($id) use($__CP) 
+{																// update password (needs to be integrated with the update function at some point)
+	if( isset( $id ) )
+	{
+		if(	isset( $__CP->queryFilter['password'] ) )
+		{
+			require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
+			$instance = new PILOT\tss_user() ;
+			$__CP->addBlock("user_updated", $instance->change_password(	$__CP->queryFilter['password']	) ) ;
+		}
+		else
+		{
+			$__CP->addBlock("user_updated", array(false, false)) ;
+		}
+	}
+}, $defaultIncludes);
 
 
 ?>
