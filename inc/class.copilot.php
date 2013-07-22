@@ -208,16 +208,26 @@ class Copilot
 
 				if($queryParts['filters']['isset'] !== NULL) // Parse filters.
 				{ 
-					$temp = urldecode($queryParts['filters']['data']['raw']) ;
-					$temp = explode(',', $temp) ;
+					$tempRAW = array() ;
+					$tempParsed = array() ;
 
-					for($i = 0; $i < count($temp); ++$i)
+					$tempRAW = urldecode($queryParts['filters']['data']['raw']) ;
+					$tempRAW = explode(',', $tempRAW) ;
+
+					for($i = 0; $i < count($tempRAW); ++$i)
 					{
-						$temp[$i] = explode('=', $temp[$i]) ;
-						if(count($temp[$i]) > 1) { $temp[$i][0] = trim($temp[$i][0]) ; $temp[$i][1] = trim($temp[$i][1]) ; } else { $temp[$i][0] = trim($temp[$i][0]) ; }
+						$tempRAW[$i] = explode('=', $tempRAW[$i]) ;
+						if(count($tempRAW[$i]) > 1)
+						{
+							$tempParsed[trim($tempRAW[$i][0])] = trim($tempRAW[$i][1]) ;
+						}
+						else
+						{
+							$tempParsed[$i][0] = trim($tempRAW[$i][0]) ;
+						}
 					}
 					
-					$queryParts['filters']['data']['parsed'] = $temp ;
+					$queryParts['filters']['data']['parsed'] = $tempParsed ;
 				}
 
 				if($queryParts['fields']['isset'] !== NULL) // Parse fields.
@@ -305,7 +315,7 @@ class Copilot
 	* @param string $name contains the name of the data block.
 	* @param string $input contains the new block of data.
 	*/
-	public function addData($name, $input)
+	public function addBlock($name, $input)
 	{
 		$this->data->add($name, $input) ;
 	}
