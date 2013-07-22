@@ -216,7 +216,7 @@ $__CP->createRoute('get', '/user/:id', function($id) use($__CP)
 }, $defaultIncludes);
 
 
-$__CP->createRoute('post', '/users', function() use($__CP) 
+$__CP->createRoute('put', '/users', function() use($__CP) 
 {															// create
 	if(	isset( $__CP->queryFilter['email'] ) 		&& 
 		isset( $__CP->queryFilter['phone'] ) 		&& 
@@ -249,7 +249,7 @@ $__CP->createRoute('post', '/users', function() use($__CP)
 }, $defaultIncludes);
 
 
-$__CP->createRoute('put', '/user/:id', function($id) use($__CP) 
+$__CP->createRoute('post', '/user/:id', function($id) use($__CP) 
 {																// update
 	if( isset( $id) )
 	{
@@ -296,7 +296,7 @@ $__CP->createRoute('delete', '/user/:id', function($id) use($__CP)
 }, $defaultIncludes);
 
 
-$__CP->createRoute('put', '/user/:id/password', function($id) use($__CP) 
+$__CP->createRoute('post', '/user/:id/password', function($id) use($__CP) 
 {																// update password (needs to be integrated with the update function at some point)
 	if( isset( $id ) )
 	{

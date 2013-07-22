@@ -295,8 +295,8 @@ class Copilot
 	*
 	* @param string $httpMethod contains the http method - i.e. get, post, put, delete.
 	* @param string $requestRoute contains the url parameter which calls this route.
-	* @param string $callbackMethod contains the call_user_method() compatible function name.
-
+	* @param lambda $callbackMethod contains the call_user_method() compatible lambda function.
+	* @param lambda $requestedCallback contains a call_user_method() compatible lambda function which runs just before the main callback method.
 	*/
 	public function createRoute($httpMethod, $requestRoute, $callbackMethod, $requestedCallback = NULL)
 	{
