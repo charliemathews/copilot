@@ -10,10 +10,11 @@ Namespace CP ;
 */
 class API
 {
-	private 	$log 						;
-	private 	$slim 						;
-	private 	$routeIndex 	= array() 	;
-	public 		$callExecuted 	= NULL 		;
+	private 	$log 							;
+	private 	$slim 							;
+	private 	$routeIndex 		= array() 	;
+	private 	$routeIndexMirror	= array() 	;
+	public 		$callExecuted 		= NULL 		;
 
 	/**
 	* CONSTRUCTOR
@@ -49,12 +50,12 @@ class API
 		if(strlen($requestRoute) > 1 && substr($requestRoute, -1) != '/')
 		{
 			$requestRouteAppend = $requestRoute.'/' ; 
-			$this->addRouteToIndex($httpMethod, $requestRouteAppend, $callbackMethod) ;
+			$this->addRouteToIndex($httpMethod, $requestRouteAppend, $callbackMethod, TRUE) ;
 		}
 		elseif(strlen($requestRoute) > 1 && substr($requestRoute, -1) == '/')
 		{
 			$requestRouteAppend = substr_replace($requestRoute, "", -1) ;
-			$this->addRouteToIndex($httpMethod, $requestRouteAppend, $callbackMethod) ;
+			$this->addRouteToIndex($httpMethod, $requestRouteAppend, $callbackMethod, TRUE) ;
 		}
 	}
 
@@ -68,9 +69,10 @@ class API
 	* @param string $requestRoute contains the url parameter which calls this route.
 	* @param string $callbackMethod contains the call_user_method() compatible function name.
 	*/
-	public function addRouteToIndex($httpMethod, $requestRoute, $callbackMethod)
+	public function addRouteToIndex($httpMethod, $requestRoute, $callbackMethod, $mirror = FALSE)
 	{
-		$this->routeIndex[] = array('httpMethod'=>$httpMethod, 'requestRoute'=>$requestRoute, 'callbackMethod'=>$callbackMethod) ;
+		if($mirror == FALSE) $this->routeIndex[] = array('httpMethod'=>$httpMethod, 'requestRoute'=>$requestRoute, 'callbackMethod'=>$callbackMethod) ;
+		elseif($mirror == TRUE) $this->routeIndexMirror[] = array('httpMethod'=>$httpMethod, 'requestRoute'=>$requestRoute, 'callbackMethod'=>$callbackMethod) ;
 	}
 
 
@@ -82,7 +84,8 @@ class API
 	public function buildRoutes()
 	{
 		$this->buildStaticRoutes() ;
-		$this->buildDynamicRoutes() ;
+		$this->buildDynamicRoutes($this->routeIndex) ;
+		$this->buildDynamicRoutes($this->routeIndexMirror) ;
 	}
 
 
@@ -122,13 +125,25 @@ class API
 	*
 	* Submits dynamically programmed routes into slim.
 	*/
-	private function buildDynamicRoutes()
+	private function buildDynamicRoutes($theIndex)
 	{
-		foreach($this->routeIndex as $singleRoute)
+		foreach($theIndex as $singleRoute)
 		{
 			if($singleRoute['httpMethod'] == 'get')
 			{
 				$this->slim->get($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
+			} 
+			elseif($singleRoute['httpMethod'] == 'post')
+			{
+				$this->slim->post($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
+			} 
+			elseif($singleRoute['httpMethod'] == 'put')
+			{
+				$this->slim->put($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
+			} 
+			elseif($singleRoute['httpMethod'] == 'delete')
+			{
+				$this->slim->delete($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
 			}
 		}
 	}
@@ -137,9 +152,13 @@ class API
 	/**
 
 	*/
-	public function returnRoutes()
+	public function getRoutes()
 	{
-		return $routeIndex ;
+		foreach($this->routeIndex as $route)
+		{
+			$routeIndexOutput[] = array('httpMethod'=>$route['httpMethod'], 'requestRoute'=>$route['requestRoute']) ;
+		}
+		return $routeIndexOutput ;
 	}
 }
 

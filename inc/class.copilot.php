@@ -16,6 +16,8 @@ class Copilot
 	private 	$api 						;
 	private 	$ready 			= NULL 		;
 
+	public  	$totaltime 					;
+
 	public 		$queryFields 	= array(1) 	;
 	public 		$queryFilters 	= array(2) 	;
 
@@ -25,9 +27,9 @@ class Copilot
 	/**
 	* Copilot may only be a singleton.
 	*/
-	public static function & Instance()
+	public static function & Instance($muteOutput = FALSE)
 	{
-		if (is_null(self::$_instance)) { self::$_instance = new self(); }
+		if (is_null(self::$_instance)) { self::$_instance = new self($muteOutput); }
 		return self::$_instance;
 	}
 
@@ -35,7 +37,7 @@ class Copilot
 	/**
 	* CONSTRUCTOR
 	*/
-	public function __construct() 
+	public function __construct($muteOutput = FALSE) 
 	{
 		//Script timer. 
 			$mtime = explode(" ",microtime()); 
@@ -48,6 +50,9 @@ class Copilot
 
 		// API class.
 			$this->api = new API($this->log) ;
+
+		// Dev option for muting the json return stream.
+			define("DEV_MUTE", $muteOutput) ;
 	}
 
 
@@ -72,10 +77,9 @@ class Copilot
 			$this->log->timer = $this->totaltime ;
 
 		// Output
-			if(DEV_GUI) 											// if a call was made in DEV mode
+			if(DEV_MUTE == TRUE)
 			{
-				require_once(SERVER_DOCRT.'/view/splash.php') ;
-				echo $this->getData() ;
+				//
 			}
 			elseif($this->ready == TRUE) 							// if a call was made
 			{
@@ -85,7 +89,6 @@ class Copilot
 			else 													// if no slim call was executed (default or otherwise)
 			{
 				echo $this->getData(), "<br><br>";
-
 				echo "Something went terribly, terribly wrong. (and took " . $this->totaltime . " to do so.)" ;
 			}
 	}
@@ -297,30 +300,48 @@ class Copilot
 	*/
 	public function createRoute($httpMethod, $requestRoute, $callbackMethod, $requestedCallback = NULL)
 	{
-		$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function($param) use ($callbackMethod, $requestedCallback)
+		$func = new \ReflectionFunction($callbackMethod);
+		$func = $func->getParameters() ;
+		$paramCount = count($func) ;
+
+		/*
+		echo $httpMethod, " ", $requestRoute, " ", $paramCount, PHP_EOL ;
+		print_r($func) ;
+		echo PHP_EOL ;
+
+		//call_user_func_array($callbackMethod, $func) ;
+		*/
+
+		if($paramCount == 1)
 		{
-			if($requestedCallback !== NULL)
+			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function($param) use ($callbackMethod, $requestedCallback)
 			{
-				call_user_func($requestedCallback) ;
-			}
+				if($requestedCallback !== NULL)
+				{
+					call_user_func($requestedCallback) ;
+				}
+				call_user_func($callbackMethod, $param) ;
 
-			/* further work into passing multiple parameters to slim.
-			$func = new \ReflectionFunction($callbackMethod);
-			$func = $func->getParameters() ;
-			$paramCount = count($func) ;
-
-			if($paramCount >= 1)
+				$this->ready = TRUE ;
+			}) ;
+		}
+		elseif($paramCount == 0)
+		{
+			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function() use ($callbackMethod, $requestedCallback)
 			{
-				call_user_func_array($callbackMethod, $func) ;
-			}
-			else
-			{
-			*/
+				if($requestedCallback !== NULL)
+				{
+					call_user_func($requestedCallback) ;
+				}
+				call_user_func($callbackMethod) ;
 
-			call_user_func($callbackMethod, $param) ;
+				$this->ready = TRUE ;
+			}) ;
+		}
+		else
+		{
 
-			$this->ready = TRUE ;
-		}) ;
+		}
 	}
 
 
@@ -356,7 +377,7 @@ class Copilot
 	*/
 	public function returnRoutes()
 	{
-		$routes = $this->api->getRoutes() ;
+		return $this->api->getRoutes() ;
 	}
 
 
