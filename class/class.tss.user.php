@@ -3,8 +3,6 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
-namespace PILOT ;
-
   class tss_user extends tss_main {
         function load($id) {
             if(is_numeric($id)) {

@@ -3,8 +3,6 @@
 //Copyright 2013 Technical Solutions, LLC.
 //Confidential & Proprietary Information.
 
-Namespace PILOT ;
-
     class DB {
             var $created;
             
@@ -30,6 +28,7 @@ Namespace PILOT ;
                     {
                             $this->created = TRUE;
                     }
+
             } 
 
             

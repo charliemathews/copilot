@@ -36,7 +36,7 @@ $defaultIncludes = function () use ($__CP)
 
 $__CP->createRoute('get', '/users/technician', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("technicians", $instance->get_technician_list()) ;
 },$defaultIncludes);
 
@@ -46,28 +46,28 @@ Projects has session var. Also, this is changing friday the 12th to some unknown
 */
 $__CP->createRoute('get', '/projects', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("projects", $instance->get_project_list()) ;
 }, $defaultIncludes);
 
 
 $__CP->createRoute('get', '/customers', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("customers", $instance->get_customer_list()) ;
 }, $defaultIncludes);
 
 
 $__CP->createRoute('get', '/definition/distance', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("distance", $instance->get_distance_list()) ;
 }, $defaultIncludes);
 
 
 $__CP->createRoute('get', '/definition/priority', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("priority", $instance->get_priority_list()) ;
 }, $defaultIncludes);
 
@@ -79,7 +79,7 @@ $__CP->createRoute('get', '/definition/substatus', function() use($__CP)
 {
 	if(isset( $__CP->queryFilters['status'] ) !== FALSE)
 	{
-		$instance = new PILOT\tss_main() ;
+		$instance = new tss_main() ;
 		$__CP->addBlock("substatus", $instance->get_substatus_list( $__CP->queryFilters['status'] )) ;
 	}
 }, $defaultIncludes);
@@ -87,35 +87,35 @@ $__CP->createRoute('get', '/definition/substatus', function() use($__CP)
 
 $__CP->createRoute('get', '/definition/role', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("role", $instance->get_role_list()) ;
 }, $defaultIncludes);
 
 
 $__CP->createRoute('get', '/definition/type', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("type", $instance->get_service_type_list()) ;
 }, $defaultIncludes);
 
 
 $__CP->createRoute('get', '/definition/status', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("status", $instance->get_status_list()) ;
 }, $defaultIncludes);
 
 
 $__CP->createRoute('get', '/definition/state', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("state", $instance->get_state_list()) ;
 }, $defaultIncludes);
 
 
 $__CP->createRoute('get', '/event/tabs', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("event_tabs", $instance->get_event_tabs()) ;
 }, $defaultIncludes);
 
@@ -127,7 +127,7 @@ $__CP->createRoute('put', '/event/log', function() use($__CP)
 {
 	if(isset( $__CP->queryFilters['id'] ) !== FALSE && isset( $__CP->queryFilters['desc'] ) !== FALSE)
 	{
-		$instance = new PILOT\tss_main() ;
+		$instance = new tss_main() ;
 		$__CP->addBlock("event_tabs", $instance->append_to_log( $__CP->queryFilters['id'], $__CP->queryFilters['desc'] )) ;
 	}
 }, $defaultIncludes);
@@ -135,7 +135,7 @@ $__CP->createRoute('put', '/event/log', function() use($__CP)
 
 $__CP->createRoute('get', '/definition/timezone', function() use($__CP) 
 {
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("timezone", $instance->get_timezone_list()) ;
 }, $defaultIncludes);
 
@@ -147,7 +147,7 @@ $__CP->createRoute('get', '/definition/filetype', function() use($__CP)
 {
 	if(isset( $__CP->queryFilters['type'] ) !== FALSE)
 	{
-		$instance = new PILOT\tss_main() ;
+		$instance = new tss_main() ;
 		$__CP->addBlock("filetype", $instance->get_permitted_file_extensions( $__CP->queryFilters['type'] )) ;
 	}
 }, $defaultIncludes);
@@ -164,7 +164,7 @@ $__CP->createRoute('get', '/material/:id', function($id) use($__CP)
 	if(isset( $id ) !== FALSE)
 	{
 		require_once(SERVER_DOCRT.'/class/class.tss.material.php') ;
-		$instance = new PILOT\tss_material() ;
+		$instance = new tss_material() ;
 
 		if(isset( $__CP->queryField['creator'] ) !== FALSE)
 		{
@@ -184,7 +184,7 @@ $__CP->createRoute('delete', '/material/:id', function($id) use($__CP)
 	if(isset( $id ) !== FALSE)
 	{
 		require_once(SERVER_DOCRT.'/class/class.tss.material.php') ;
-		$instance = new PILOT\tss_material() ;
+		$instance = new tss_material() ;
 
 		$instance->load( $id ) ;
 		$__CP->addBlock("material", $instance->del()) ;
@@ -200,7 +200,7 @@ $__CP->createRoute('delete', '/material/:id', function($id) use($__CP)
 
 $__CP->createRoute('get', '/users', function() use($__CP)
 {															// view all
-	$instance = new PILOT\tss_main() ;
+	$instance = new tss_main() ;
 	$__CP->addBlock("users", $instance->get_user_list()) ;
 }, $defaultIncludes);
 
@@ -210,7 +210,7 @@ $__CP->createRoute('get', '/user/:id', function($id) use($__CP)
 	if(isset( $id ) !== FALSE)
 	{
 		require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
-		$instance = new PILOT\tss_user() ;
+		$instance = new tss_user() ;
 		$__CP->addBlock("user:".$id, $instance->load( $id )) ;
 	}
 }, $defaultIncludes);
@@ -230,7 +230,7 @@ $__CP->createRoute('put', '/users', function() use($__CP)
 		)
 	{
 		require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
-		$instance = new PILOT\tss_user() ;
+		$instance = new tss_user() ;
 		$__CP->addBlock("user_created", $instance->add(	$__CP->queryFilter['email']			, 
 														$__CP->queryFilter['phone']			,
 														$__CP->queryFilter['first_name']	,
@@ -265,7 +265,7 @@ $__CP->createRoute('post', '/user/:id', function($id) use($__CP)
 			)
 		{
 			require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
-			$instance = new PILOT\tss_user() ;
+			$instance = new tss_user() ;
 			$__CP->addBlock("user_updated", $instance->add(	$__CP->queryFilter['email']			, 
 															$__CP->queryFilter['phone']			,
 															$__CP->queryFilter['first_name']	,
@@ -290,7 +290,7 @@ $__CP->createRoute('delete', '/user/:id', function($id) use($__CP)
 	if(isset( $id ) !== FALSE)
 	{
 		require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
-		$instance = new PILOT\tss_user() ;
+		$instance = new tss_user() ;
 		$__CP->addBlock("user_deleted", $instance->del( $id )) ;
 	}
 }, $defaultIncludes);
@@ -303,7 +303,7 @@ $__CP->createRoute('post', '/user/:id/password', function($id) use($__CP)
 		if(	isset( $__CP->queryFilter['password'] ) )
 		{
 			require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
-			$instance = new PILOT\tss_user() ;
+			$instance = new tss_user() ;
 			$__CP->addBlock("user_updated", $instance->change_password(	$__CP->queryFilter['password']	) ) ;
 		}
 		else
