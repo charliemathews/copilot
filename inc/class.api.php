@@ -100,17 +100,35 @@ class API
 		$apiBits['log'] = &$this->log ;
 		$apiBits['status'] = &$this->callExecuted ;
 
+
 		$this->addRoute('get', '/', function() use($apiBits)
 		{
-			$apiBits['log']->add(APP_NAME ." is online.", CP_STATUS) ;
+			$apiBits['log']->add(APP_NAME ." is online. (GET)", CP_STATUS) ;
 			$apiBits['status'] = TRUE ;
 		}) ;
+		$this->addRoute('post', '/', function() use($apiBits)
+		{
+			$apiBits['log']->add(APP_NAME ." is online. (POST)", CP_STATUS) ;
+			$apiBits['status'] = TRUE ;
+		}) ;
+		$this->addRoute('put', '/', function() use($apiBits)
+		{
+			$apiBits['log']->add(APP_NAME ." is online. (PUT)", CP_STATUS) ;
+			$apiBits['status'] = TRUE ;
+		}) ;
+		$this->addRoute('delete', '/', function() use($apiBits)
+		{
+			$apiBits['log']->add(APP_NAME ." is online. (DELETE)", CP_STATUS) ;
+			$apiBits['status'] = TRUE ;
+		}) ;
+
 
 		$this->addRoute('get', '/'.API_VERSION, function() use($apiBits)
 		{
 			$apiBits['log']->add("API Version ".API_VERSION." is online.", CP_STATUS) ;
 			$apiBits['status'] = TRUE ;
 		}) ;
+
 
 		$this->slim->notFound(function () use($apiBits)
 		{
