@@ -8,7 +8,7 @@
 
 define(	"APP_DOMAIN"		, 	"TS"		) ;
 define(	"APP_NAME"			, 	"Copilot"	) ;
-define(	"APP_VERSION"		, 	"0.10.1"		) ; // major, minor, patch (pre-1.0 is BETA)
+define(	"APP_VERSION"		, 	"0.10.2"		) ; // major, minor, patch (pre-1.0 is BETA)
 define(	"APP_VERSION_TITLE"	, 	"dev"		) ; // dev or prod
 define(	"API_VERSION"		, 	"v1"		) ;
 define(	"COPYRIGHT_YEAR"	, 	"2013"		) ;
@@ -24,6 +24,8 @@ if(SERVER_NAME == $prod_server)
 	define(	"SERVER_DOCRT", $_SERVER['DOCUMENT_ROOT']) ;
 
 	define(	"DEV", 		FALSE) ;
+	define(	"DEV_GUI", 	FALSE) ; // This option 
+	define( "DEV_MUTE", FALSE) ; // This option mute all output from copilot.
 
 	$local_db_host 		= "" ;
 	$local_db_name 		= "" ;
@@ -41,6 +43,7 @@ elseif(SERVER_NAME == $test_server)
 
 	define(	"DEV", 		TRUE) ;
 	define(	"DEV_GUI", 	FALSE) ;
+	define( "DEV_MUTE", FALSE) ;
 
 	error_reporting(E_ALL);
 	ini_set('display_errors',1);
@@ -61,6 +64,7 @@ elseif(SERVER_NAME == $local_server)
 
 	define(	"DEV", 		TRUE) ;
 	define(	"DEV_GUI", 	FALSE) ;
+	define( "DEV_MUTE", FALSE) ;
 
 	error_reporting(E_ALL);
 	ini_set('display_errors',1);

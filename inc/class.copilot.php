@@ -51,8 +51,14 @@ class Copilot
 		// API class.
 			$this->api = new API($this->log) ;
 
-		// Dev option for muting the json return stream.
-			define("DEV_MUTE", $muteOutput) ;
+		if($muteOutput == TRUE)
+		{
+			$this->mute = TRUE ;
+		}
+		else
+		{
+			$this->mute = DEV_MUTE ;
+		}
 	}
 
 
@@ -77,7 +83,7 @@ class Copilot
 			$this->log->timer = $this->totaltime ;
 
 		// Output
-			if(DEV_MUTE == TRUE)
+			if($this->mute)
 			{
 				//
 			}
