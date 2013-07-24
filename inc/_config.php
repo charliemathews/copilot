@@ -8,7 +8,7 @@
 
 define(	"APP_DOMAIN"		, 	"TS"		) ;
 define(	"APP_NAME"			, 	"Copilot"	) ;
-define(	"APP_VERSION"		, 	"0.10.4"	) ; // major, minor, patch (pre-1.0 is BETA)
+define(	"APP_VERSION"		, 	"0.10.5"	) ; // major, minor, patch (pre-1.0 is BETA)
 define(	"APP_VERSION_TITLE"	, 	"dev"		) ; // dev or prod
 define(	"API_VERSION"		, 	"v1"		) ;
 define(	"COPYRIGHT_YEAR"	, 	"2013"		) ;

@@ -122,8 +122,7 @@ $__CP->createRoute('put', '/event/log', function() use($__CP)
 	if(isset( $__CP->queryFilters['id'] ) && isset( $__CP->queryFilters['desc'] ) && isset( $__CP->queryFilters['userid'] ))
 	{
 		$instance = new tss_main() ;
-		$instance->append_to_log( $__CP->queryFilters['id'], $__CP->queryFilters['desc'], $__CP->queryFilters['userid'] ) ;
-		$__CP->addBlock("event_log", array("true", "true")) ;
+		$__CP->addBlock("event_log", $instance->append_to_log( $__CP->queryFilters['id'], $__CP->queryFilters['desc'], $__CP->queryFilters['userid'] ) ) ;
 	}
 	else {
 		$__CP->addLog("Required input was not present.", CP_ERR) ;
