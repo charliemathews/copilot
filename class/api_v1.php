@@ -42,7 +42,7 @@ $__CP->createRoute('get', '/users/technician', function() use($__CP)
 
 
 /**
-Projects has session var. Also, this is changing friday the 12th to some unknown new method.
+Projects has session var. Due to lack of default value, talk to dave about this specific separation.
 */
 $__CP->createRoute('get', '/projects', function() use($__CP) 
 {
@@ -72,9 +72,6 @@ $__CP->createRoute('get', '/definition/priority', function() use($__CP)
 }, $defaultIncludes);
 
 
-/**
-UNTESTED. Input added.
-*/
 $__CP->createRoute('get', '/definition/substatus', function() use($__CP) 
 {
 	if(isset( $__CP->queryFilters['status'] ) !== FALSE)
@@ -120,15 +117,16 @@ $__CP->createRoute('get', '/event/tabs', function() use($__CP)
 }, $defaultIncludes);
 
 
-/**
-UNTESTED. Input added. Verify http method.
-*/
 $__CP->createRoute('put', '/event/log', function() use($__CP) 
 {
-	if(isset( $__CP->queryFilters['id'] ) !== FALSE && isset( $__CP->queryFilters['desc'] ) !== FALSE)
+	if(isset( $__CP->queryFilters['id'] ) && isset( $__CP->queryFilters['desc'] ) && isset( $__CP->queryFilters['userid'] ))
 	{
 		$instance = new tss_main() ;
-		$__CP->addBlock("event_tabs", $instance->append_to_log( $__CP->queryFilters['id'], $__CP->queryFilters['desc'] )) ;
+		$instance->append_to_log( $__CP->queryFilters['id'], $__CP->queryFilters['desc'], $__CP->queryFilters['userid'] ) ;
+		$__CP->addBlock("event_log", array("true", "true")) ;
+	}
+	else {
+		$__CP->addLog("Required input was not present.", CP_ERR) ;
 	}
 }, $defaultIncludes);
 
@@ -140,9 +138,6 @@ $__CP->createRoute('get', '/definition/timezone', function() use($__CP)
 }, $defaultIncludes);
 
 
-/**
-Needs input.
-*/
 $__CP->createRoute('get', '/definition/filetype', function() use($__CP) 
 {
 	if(isset( $__CP->queryFilters['type'] ) !== FALSE)

@@ -387,6 +387,17 @@ class Copilot
 	}
 
 
+	/**
+	* Function addLog
+	*
+	* Public passthrough function which allows adding logs externally.
+	*/
+	public function addLog($msg = NULL, $type = NULL)
+	{
+		if($msg !== NULL && $type !== NULL) $this->log->add($msg, $type) ;
+	}
+
+
 	public function __clone()
 	{
 		trigger_error('Cloning instances of this class is forbidden.', E_USER_ERROR);
