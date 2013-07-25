@@ -202,38 +202,56 @@ $__CP->createRoute('get', '/users', function() use($__CP)
 $__CP->createRoute('get', '/user/:id', function($id) use($__CP) 
 {																// view one
 	if(isset( $id ) !== FALSE)
-	{
-		require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
-		$instance = new tss_user() ;
-		$__CP->addBlock("user:".$id, $instance->load( $id )) ;
+	{	
+		if(in_array("fullname", $__CP->queryFields))
+		{
+			$instance = new tss_main() ;
+			$__CP->addBlock("user:".$id, $instance->get_user_fullname( $id )) ;
+		}
+		elseif(in_array("email", $__CP->queryFields))
+		{
+			$instance = new tss_main() ;
+			$__CP->addBlock("user:".$id, $instance->get_user_email( $id )) ;
+		}
+		elseif(in_array("timezone", $__CP->queryFields))
+		{
+			$instance = new tss_main() ;
+			$__CP->addBlock("user:".$id, $instance->get_user_timezone( $id )) ;
+		}
+		else
+		{
+			require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
+			$instance = new tss_user() ;
+			$__CP->addBlock("user:".$id, $instance->load( $id )) ;
+		}
 	}
 }, $defaultIncludes);
 
 
 $__CP->createRoute('put', '/users', function() use($__CP) 
 {															// create
-	if(	isset( $__CP->queryFilter['email'] ) 		&& 
-		isset( $__CP->queryFilter['phone'] ) 		&& 
-		isset( $__CP->queryFilter['first_name'] ) 	&& 
-		isset( $__CP->queryFilter['last_name'] ) 	&& 
-		isset( $__CP->queryFilter['notes'] ) 		&& 
-		isset( $__CP->queryFilter['hourly_rate'] ) 	&& 
-		isset( $__CP->queryFilter['timezone'] )		&& 
-		isset( $__CP->queryFilter['roles'] )		&& 
-		isset( $__CP->queryFilter['projects'] )
+	if(	isset( $__CP->queryFilters['email'] ) 		&& 
+		isset( $__CP->queryFilters['phone'] ) 		&& 
+		isset( $__CP->queryFilters['first_name'] ) 	&& 
+		isset( $__CP->queryFilters['last_name'] ) 	&& 
+		isset( $__CP->queryFilters['notes'] ) 		&& 
+		isset( $__CP->queryFilters['hourly_rate'] ) 	&& 
+		isset( $__CP->queryFilters['timezone'] )		&& 
+		isset( $__CP->queryFilters['roles'] )		&& 
+		isset( $__CP->queryFilters['projects'] )
 		)
 	{
 		require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
 		$instance = new tss_user() ;
-		$__CP->addBlock("user_created", $instance->add(	$__CP->queryFilter['email']			, 
-														$__CP->queryFilter['phone']			,
-														$__CP->queryFilter['first_name']	,
-														$__CP->queryFilter['last_name']		,
-														$__CP->queryFilter['notes']			,
-														$__CP->queryFilter['hourly_rate']	,
-														$__CP->queryFilter['timezone']		,
-														$__CP->queryFilter['roles']			,
-														$__CP->queryFilter['projects']
+		$__CP->addBlock("user_created", $instance->add(	$__CP->queryFilters['email']			, 
+														$__CP->queryFilters['phone']			,
+														$__CP->queryFilters['first_name']	,
+														$__CP->queryFilters['last_name']		,
+														$__CP->queryFilters['notes']			,
+														$__CP->queryFilters['hourly_rate']	,
+														$__CP->queryFilters['timezone']		,
+														$__CP->queryFilters['roles']			,
+														$__CP->queryFilters['projects']
 														) ) ;
 	}
 	else
