@@ -147,19 +147,19 @@ class API
 	{
 		foreach($theIndex as $singleRoute)
 		{
-			if($singleRoute['httpMethod'] == 'get')
+			if($singleRoute['httpMethod'] == 'get' || $singleRoute['httpMethod'] == 'GET')
 			{
 				$this->slim->get($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
 			} 
-			elseif($singleRoute['httpMethod'] == 'post')
+			elseif($singleRoute['httpMethod'] == 'post' || $singleRoute['httpMethod'] == 'POST')
 			{
 				$this->slim->post($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
 			} 
-			elseif($singleRoute['httpMethod'] == 'put')
+			elseif($singleRoute['httpMethod'] == 'put' || $singleRoute['httpMethod'] == 'PUT')
 			{
 				$this->slim->put($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
 			} 
-			elseif($singleRoute['httpMethod'] == 'delete')
+			elseif($singleRoute['httpMethod'] == 'delete' || $singleRoute['httpMethod'] == 'DELETE')
 			{
 				$this->slim->delete($singleRoute['requestRoute'], $singleRoute['callbackMethod']) ;
 			}
