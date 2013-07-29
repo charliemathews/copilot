@@ -35,4 +35,26 @@ $__CP->createRoute('get', '/users/technician', function() use($__CP)
 }, $defaultIncludes);
 
 
+$data = array();
+$req = new \CP\Client\request(	HTTP_REQUEST_TYPE, 
+								HTTP_REQUEST_ROUTE, 
+								FILTERS_ARRAY,
+								FIELDS_ARRAY
+								);
+$req->execute() ;
+$data = $req->getBlock('example') ;
+return $data;
+
+
+$data = array();
+$req = new \CP\Client\request(	'GET', 
+								'http://localhost/copilot/v1/example', 
+								array('filter1'=>'filterdata', 'filter2'=>'filterdata'),
+								array('field1', 'field2')
+								);
+$req->execute() ;
+$data = $req->getBlock('example') ;
+return $data;
+
+
 ?>
