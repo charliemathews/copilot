@@ -23,7 +23,7 @@ $__CP = CP\Copilot::Instance() ;
 					It's for including code that you're finding yourself repeating in every call, such as include() statements.
 */
 
-include('/class/api_v1.php');
+include('class/api_v1.php');
 
 // Enable copilot.
 $__CP->ready() ;

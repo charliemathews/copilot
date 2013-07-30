@@ -16,7 +16,7 @@
                     mysql_select_db($this->db_id);
                     
                     $this->exec_func = "\$result = mysql_query(\$sql, \$this->conn);";
-                    $this->fetch_func = "return (\$row = mysql_fetch_array(\$result)) ? TRUE : FALSE;";
+                    $this->fetch_func = "return (\$row = mysql_fetch_assoc(\$result)) ? TRUE : FALSE;"; // changed from fetch_array to fetch_assoc
                     
                     if(!$this->conn)
                     {
@@ -58,17 +58,17 @@
                     
                     
                     if($result === "DISABLED") { //if($result === FALSE) {
-                        	   // ON ERROR, NOTIFY ADMINS...
+                               // ON ERROR, NOTIFY ADMINS...
                             DB::throwError(mysql_error());
-                		   
-                		   require_once($_SERVER['DOCUMENT_ROOT'].'/includes/class.phpmailer.php');
-                		   $mail = new PHPMail();
-                		   
-                		   $mail->AddAddress(EMAIL_DEV."@".FQDN, 'Development Team');
-                		   $mail->Subject = "Query Failure";
-                		   $mail->Body = "Script: ".$_SERVER['SCRIPT_FILENAME']."\nError: ".mysql_error()."\nQuery: ".$sql;
-                		   $mail->Body .= "\n\n".$_SERVER['HTTP_USER_AGENT']." | ".$_SESSION['display_name'];
-                		   
+                           
+                           require_once($_SERVER['DOCUMENT_ROOT'].'/includes/class.phpmailer.php');
+                           $mail = new PHPMail();
+                           
+                           $mail->AddAddress(EMAIL_DEV."@".FQDN, 'Development Team');
+                           $mail->Subject = "Query Failure";
+                           $mail->Body = "Script: ".$_SERVER['SCRIPT_FILENAME']."\nError: ".mysql_error()."\nQuery: ".$sql;
+                           $mail->Body .= "\n\n".$_SERVER['HTTP_USER_AGENT']." | ".$_SESSION['display_name'];
+                           
                             if($rb == 1) { 
                                     $this->rollback();
                                     $mail->Subject = "Transaction Failure";

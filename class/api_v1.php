@@ -74,7 +74,7 @@ $__CP->createRoute('get', '/definition/priority', function() use($__CP)
 
 $__CP->createRoute('get', '/definition/substatus', function() use($__CP) 
 {
-	if(isset( $__CP->queryFilters['status'] ) !== FALSE)
+	if(isset( $__CP->queryFilters['status'] ))
 	{
 		$instance = new tss_main() ;
 		$__CP->addBlock("substatus", $instance->get_substatus_list( $__CP->queryFilters['status'] )) ;
@@ -139,7 +139,7 @@ $__CP->createRoute('get', '/definition/timezone', function() use($__CP)
 
 $__CP->createRoute('get', '/definition/filetype', function() use($__CP) 
 {
-	if(isset( $__CP->queryFilters['type'] ) !== FALSE)
+	if(isset( $__CP->queryFilters['type'] ))
 	{
 		$instance = new tss_main() ;
 		$__CP->addBlock("filetype", $instance->get_permitted_file_extensions( $__CP->queryFilters['type'] )) ;
@@ -155,27 +155,18 @@ $__CP->createRoute('get', '/definition/filetype', function() use($__CP)
 
 $__CP->createRoute('get', '/material/:id', function($id) use($__CP) 
 {
-	if(isset( $id ) !== FALSE)
+	if(isset( $id ))
 	{
 		require_once(SERVER_DOCRT.'/class/class.tss.material.php') ;
 		$instance = new tss_material() ;
-
-		if(isset( $__CP->queryField['creator'] ) !== FALSE)
-		{
-			$instance->load( $id ) ;
-			$__CP->addBlock("material_creator", $instance->get_creator_name( $__CP->queryField['creator'] )) ;
-		}
-		else
-		{
-			$__CP->addBlock("material", $instance->load( $id )) ;
-		}
+		$__CP->addBlock("material", $instance->load( $id )) ;
 	}
 }, $defaultIncludes);
 
 
 $__CP->createRoute('delete', '/material/:id', function($id) use($__CP) 
 {
-	if(isset( $id ) !== FALSE)
+	if(isset( $id ))
 	{
 		require_once(SERVER_DOCRT.'/class/class.tss.material.php') ;
 		$instance = new tss_material() ;
@@ -201,7 +192,7 @@ $__CP->createRoute('get', '/users', function() use($__CP)
 
 $__CP->createRoute('get', '/user/:id', function($id) use($__CP) 
 {																// view one
-	if(isset( $id ) !== FALSE)
+	if(isset( $id ))
 	{	
 		if(in_array("fullname", $__CP->queryFields))
 		{
@@ -299,7 +290,7 @@ $__CP->createRoute('post', '/user/:id', function($id) use($__CP)
 
 $__CP->createRoute('delete', '/user/:id', function($id) use($__CP) 
 {																	// delete
-	if(isset( $id ) !== FALSE)
+	if(isset( $id ))
 	{
 		require_once(SERVER_DOCRT.'/class/class.tss.user.php') ;
 		$instance = new tss_user() ;
