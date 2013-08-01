@@ -45,13 +45,13 @@ class Data
 	{
 		$output = array() ;
 
-		$token = $this->random_text("alnum", 32) ;
+		//$token = $this->random_text("alnum", 32) ;
 
 		$output['header'] = array(	'app'=>APP_NAME.' v'.APP_VERSION, 
 									'api'=>API_VERSION,
 									'release'=>APP_VERSION_TITLE,
-									'time'=>$this->log->timer,
-									'token'=>$token
+									'time'=>$this->log->timer
+									//'token'=>$token
 								 );
 
 		$dataCount = count($this->dataQueue) ;

@@ -101,6 +101,24 @@ class API
 		$apiBits['status'] = &$this->callExecuted ;
 
 
+		// Test route for whatever.
+		$this->addRoute('post', '/test', function() use($apiBits)
+		{
+			$apiBits['log']->add("Test call executed.", CP_STATUS) ;
+			$apiBits['status'] = TRUE ;
+		}) ;
+
+
+		// This route returns a cryptographically secure, pseudo-random string.
+		$this->addRoute('get', '/key', function() use($apiBits)
+		{
+			include(SERVER_DOCRT."/inc/func.rand.php") ;
+			$apiBits['log']->add(random_text(), "KEY") ;
+			$apiBits['status'] = TRUE ;
+		}) ;
+
+
+		// Default routes.
 		$this->addRoute('get', '/', function() use($apiBits)
 		{
 			$apiBits['log']->add(APP_NAME ." is online. (GET)", CP_STATUS) ;
@@ -123,6 +141,7 @@ class API
 		}) ;
 
 
+		// API Default Route
 		$this->addRoute('get', '/'.API_VERSION, function() use($apiBits)
 		{
 			$apiBits['log']->add("API Version ".API_VERSION." is online.", CP_STATUS) ;
@@ -130,6 +149,7 @@ class API
 		}) ;
 
 
+		// 404 Route.
 		$this->slim->notFound(function () use($apiBits)
 		{
     		$apiBits['log']->add("Unknown call.", CP_STATUS) ;

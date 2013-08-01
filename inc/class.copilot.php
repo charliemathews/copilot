@@ -85,7 +85,7 @@ class Copilot
 		// Output
 			if($this->mute)
 			{
-				//
+				// do nothing once loaded
 			}
 			elseif($this->ready == TRUE) 							// if a call was made
 			{
@@ -94,8 +94,8 @@ class Copilot
 			}
 			else 													// if no slim call was executed (default or otherwise)
 			{
-				echo $this->getData(), "<br><br>";
-				echo "Something went terribly, terribly wrong. (and took " . $this->totaltime . " to do so.)" ;
+				echo $this->getData() ;
+				echo "<br><br>", "Something went terribly, terribly wrong. (and took " . $this->totaltime . " to do so.)" ;
 			}
 	}
 
@@ -346,7 +346,7 @@ class Copilot
 		}
 		else
 		{
-
+			// See above comments for ideas on how to handle several parameters.
 		}
 	}
 
