@@ -6,20 +6,6 @@ A restful API built to fill the role of a middle tier data access layer for TS S
 Licensing
 
 	Slim Framework - MIT Public
-
-
-Mod Rewrite
-
-	If copilot is saying that your api is not found, make sure your http.conf defaults look like this.
-
-		<Directory />
-		    Options FollowSymLinks
-		    AllowOverride All
-		    Order deny,allow
-		    Deny from all
-		</Directory>
-
-
-Sublime project files are setup to access C:\Program Files (x86)\Zend\Apache2\htdocs\copilot.
+	
 
 (c)Technical Solutions LLC.
