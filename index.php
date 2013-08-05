@@ -8,7 +8,7 @@
 //Confidential & Proprietary Information.
 
 // Load copilot.
-require_once('/inc/static.cp.php');
+require_once('inc/static.cp.php');
 $__CP = CP\Copilot::Instance() ;
 
 /* $__CP->createRoute({http request type}, {url path}, {ACTION callback function}, {REQUESTED callback function})
@@ -23,7 +23,7 @@ $__CP = CP\Copilot::Instance() ;
 					It's for including code that you're finding yourself repeating in every call, such as include() statements.
 */
 
-include('/api.php');
+include('api.php');
 
 // Enable copilot.
 $__CP->ready() ;
