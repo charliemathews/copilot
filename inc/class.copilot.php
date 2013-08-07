@@ -318,9 +318,11 @@ class Copilot
 		//call_user_func_array($callbackMethod, $func) ;
 		*/
 
+		$readyPointer = &$this->ready ;
+
 		if($paramCount == 1)
 		{
-			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function($param) use ($callbackMethod, $requestedCallback)
+			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function($param) use ($callbackMethod, $requestedCallback, $readyPointer)
 			{
 				if($requestedCallback !== NULL)
 				{
@@ -328,12 +330,12 @@ class Copilot
 				}
 				call_user_func($callbackMethod, $param) ;
 
-				$this->ready = TRUE ;
+				$readyPointer = TRUE ;
 			}) ;
 		}
 		elseif($paramCount == 0)
 		{
-			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function() use ($callbackMethod, $requestedCallback)
+			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function() use ($callbackMethod, $requestedCallback, $readyPointer)
 			{
 				if($requestedCallback !== NULL)
 				{
@@ -341,7 +343,7 @@ class Copilot
 				}
 				call_user_func($callbackMethod) ;
 
-				$this->ready = TRUE ;
+				$readyPointer = TRUE ;
 			}) ;
 		}
 		else

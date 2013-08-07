@@ -100,7 +100,7 @@ class Data
 	/**
 
 	*/
-	function random_text( $type = 'alnum', $length = 8 )
+	public function random_text( $type = 'alnum', $length = 8 )
 	{
 		switch ( $type )
 		{

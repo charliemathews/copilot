@@ -113,7 +113,7 @@ class API
 		$this->addRoute('get', '/key', function() use($apiBits)
 		{
 			include(SERVER_DOCRT."/inc/func.rand.php") ;
-			$apiBits['log']->add(random_text(), "KEY") ;
+			$apiBits['log']->add(random_text('distinct'), "KEY") ;
 			$apiBits['status'] = TRUE ;
 		}) ;
 
