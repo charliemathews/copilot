@@ -14,7 +14,7 @@ class API
 	private 	$slim 							;
 	private 	$routeIndex 		= array() 	;
 	private 	$routeIndexMirror	= array() 	;
-	public 		$callExecuted 		= NULL 		;
+	public 		$callExecuted 		= "NULL" 		;
 
 	/**
 	* CONSTRUCTOR

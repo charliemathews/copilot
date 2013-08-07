@@ -14,7 +14,7 @@ class Copilot
 	private 	$db_local 					;
 	private 	$data 						;
 	private 	$api 						;
-	private 	$ready 			= NULL 		;
+	private 	$ready 			= "NULL" 	;
 
 	public  	$totaltime 					;
 
@@ -75,19 +75,19 @@ class Copilot
 		// Load the API.
 			$this->api->buildRoutes() ;
 			$this->api->enableSlim() ;
-			if($this->ready == NULL) $this->ready = &$this->api->callExecuted ;
+			if($this->ready === "NULL") $this->ready = $this->api->callExecuted ;
 
 		// End the script timer.
 			$mtime = explode(" ",microtime()); 
 			$this->totaltime = (($mtime[1] + $mtime[0]) - $this->starttime);
 			$this->log->timer = $this->totaltime ;
-
+ 
 		// Output
 			if($this->mute)
 			{
 				// do nothing once loaded
 			}
-			elseif($this->ready == TRUE) 							// if a call was made
+			elseif($this->ready === TRUE) 							// if a call was made
 			{
 				header('Content-Type: application/json');
 				echo $this->getData() ;
@@ -309,6 +309,8 @@ class Copilot
 		$func = new \ReflectionFunction($callbackMethod);
 		$func = $func->getParameters() ;
 		$paramCount = count($func) ;
+		$readyPointer = &$this->ready ;
+
 
 		/*
 		echo $httpMethod, " ", $requestRoute, " ", $paramCount, PHP_EOL ;
@@ -318,11 +320,9 @@ class Copilot
 		//call_user_func_array($callbackMethod, $func) ;
 		*/
 
-		$readyPointer = &$this->ready ;
-
 		if($paramCount == 1)
 		{
-			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function($param) use ($callbackMethod, $requestedCallback, $readyPointer)
+			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function($param) use ($callbackMethod, $requestedCallback, &$readyPointer)
 			{
 				if($requestedCallback !== NULL)
 				{
@@ -335,7 +335,7 @@ class Copilot
 		}
 		elseif($paramCount == 0)
 		{
-			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function() use ($callbackMethod, $requestedCallback, $readyPointer)
+			$this->api->addRoute($httpMethod, '/'.API_VERSION.$requestRoute, function() use ($callbackMethod, $requestedCallback, &$readyPointer)
 			{
 				if($requestedCallback !== NULL)
 				{
