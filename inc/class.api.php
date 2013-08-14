@@ -14,7 +14,7 @@ class API
 	private 	$slim 							;
 	private 	$routeIndex 		= array() 	;
 	private 	$routeIndexMirror	= array() 	;
-	public 		$callExecuted 		= "NULL" 		;
+	public 		$callExecuted 		= NULL 		;
 
 	/**
 	* CONSTRUCTOR
@@ -139,15 +139,7 @@ class API
 			$apiBits['log']->add(APP_NAME ." is online. (DELETE)", CP_STATUS) ;
 			$apiBits['status'] = TRUE ;
 		}) ;
-
-
-		// API Default Route
-		$this->addRoute('get', '/'.API_VERSION, function() use($apiBits)
-		{
-			$apiBits['log']->add("API Version ".API_VERSION." is online.", CP_STATUS) ;
-			$apiBits['status'] = TRUE ;
-		}) ;
-
+		
 
 		// 404 Route.
 		$this->slim->notFound(function () use($apiBits)

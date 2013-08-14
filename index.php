@@ -12,7 +12,7 @@ require_once('inc/static.cp.php');
 $__CP = CP\Copilot::Instance() ;
 
 // Load api routes.
-include('api.php');
+require_once('api.php');
 
 // Enable copilot.
 $__CP->ready() ;

@@ -14,7 +14,7 @@ class Copilot
 	private 	$db_local 					;
 	private 	$data 						;
 	private 	$api 						;
-	private 	$ready 			= "NULL" 	;
+	private 	$ready 			= NULL 	;
 
 	public  	$totaltime 					;
 
@@ -75,7 +75,7 @@ class Copilot
 		// Load the API.
 			$this->api->buildRoutes() ;
 			$this->api->enableSlim() ;
-			if($this->ready === "NULL") $this->ready = $this->api->callExecuted ;
+			if($this->ready === NULL) $this->ready = $this->api->callExecuted ;
 
 		// End the script timer.
 			$mtime = explode(" ",microtime()); 
@@ -97,6 +97,24 @@ class Copilot
 				echo $this->getData() ;
 				echo "<br><br>", "Something went terribly, terribly wrong. (and took " . $this->totaltime . " to do so.)" ;
 			}
+	}
+
+
+	public function obfuscate($action, $string, $key = CP_DEFAULT_KEY)
+	{
+	$output = false;
+
+	$iv = md5(md5($key));
+
+	if( $action == 'encrypt' ) {
+		$output = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $string, MCRYPT_MODE_CBC, $iv);
+		$output = base64_encode($output);
+	}
+	else if( $action == 'decrypt' ){
+		$output = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($string), MCRYPT_MODE_CBC, $iv);
+		$output = rtrim($output, "");
+	}
+	return $output;
 	}
 
 
@@ -148,7 +166,14 @@ class Copilot
 
 
 		// If use didn't pass in a query string then get one by default.
-		if($querystring == NULL || isset($querystring) !== TRUE)
+		if(isset($_POST['QUERY']))
+		{
+			$data = json_decode($this->obfuscate('decode', $_POST['QUERY'], CP_DEFAULT_KEY)) ;
+			print_r($data) ;
+
+			$querystring = null ;
+		}
+		else if($querystring == NULL || isset($querystring) !== TRUE)
 		{ 
 			$querystring = $_SERVER['QUERY_STRING'] ;
 			$callBlank = TRUE ;

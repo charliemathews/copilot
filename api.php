@@ -28,6 +28,12 @@ $defaultIncludes = function () use ($__CP)
 */
 
 
+$__CP->createRoute('get', '/test', function() use($__CP) 
+{
+	$__CP->addBlock("block.name", "block.data") ;
+});
+
+
 /**
 
 * CLASS.TSS.MAIN

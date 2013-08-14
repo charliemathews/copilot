@@ -8,10 +8,12 @@
 
 define(	"APP_DOMAIN"		, 	"TS"		) ;
 define(	"APP_NAME"			, 	"Copilot"	) ;
-define(	"APP_VERSION"		, 	"0.10.8"	) ; // major, minor, patch (pre-1.0 is BETA)
+define(	"APP_VERSION"		, 	"0.11.0"	) ; // major, minor, patch (pre-1.0 is BETA)
 define(	"APP_VERSION_TITLE"	, 	"dev"		) ; // dev or prod
 define(	"API_VERSION"		, 	"v1"		) ;
 define(	"COPYRIGHT_YEAR"	, 	"2013"		) ;
+
+define( 'CP_DEFAULT_KEY' 	, 	'1myUyZTm28vZKqJFYTPs7ou6MOMIHu3h');
 
 $prod_server 	= 'copilot.tsllc.net' 		;
 $test_server 	= 'copilotdev.tsllc.net' 	;
