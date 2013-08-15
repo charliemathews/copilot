@@ -70,7 +70,7 @@ class Copilot
 	public function ready()
 	{
 		// Parse the query string.
-			$this->interpretQuery($_SERVER['QUERY_STRING']) ;
+			$this->interpretQuery() ;
 
 		// Load the API.
 			$this->api->buildRoutes() ;
@@ -100,21 +100,30 @@ class Copilot
 	}
 
 
-	public function obfuscate($action, $string, $key = CP_DEFAULT_KEY)
+	public function obfuscate($action, $string, $key = 'unset')
 	{
-	$output = false;
+		if($key !== 'unset')
+		{
+			$output = false;
 
-	$iv = md5(md5($key));
+			$iv = md5(md5($key));
 
-	if( $action == 'encrypt' ) {
-		$output = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $string, MCRYPT_MODE_CBC, $iv);
-		$output = base64_encode($output);
-	}
-	else if( $action == 'decrypt' ){
-		$output = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($string), MCRYPT_MODE_CBC, $iv);
-		$output = rtrim($output, "");
-	}
-	return $output;
+			if( $action == 'encrypt' )
+			{
+				$output = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $string, MCRYPT_MODE_CBC, $iv);
+				$output = base64_encode($output);
+			}
+			else if( $action == 'decrypt' )
+			{
+				$output = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($string), MCRYPT_MODE_CBC, $iv);
+				$output = rtrim($output, "\0");
+			}
+			return $output;
+		}
+		else
+		{
+			return "INVALID KEY" ;
+		}
 	}
 
 
@@ -152,7 +161,9 @@ class Copilot
 
 		$urlError 							= 	FALSE 		; // for malformed url
 		$callWarning 						= 	FALSE 		; // for messy call
-		$callBlank							= 	FALSE 		; // for empty call
+		$URLcallBlank						= 	FALSE 		; // for empty url call
+		$POSTcallBlank						= 	FALSE 		;
+		$PUTcallBlank						= 	FALSE 		;
 
 		$callWarningMsg						=	"Unsanitary input received." ;
 		$urlErrorMsg						=	"Received a malformed URL." ;
@@ -168,47 +179,56 @@ class Copilot
 		// If use didn't pass in a query string then get one by default.
 		if(isset($_POST['QUERY']))
 		{
-			$data = json_decode($this->obfuscate('decode', $_POST['QUERY'], CP_DEFAULT_KEY)) ;
-			print_r($data) ;
+			$token = CP_DEFAULT_KEY ;
 
-			$querystring = null ;
+			$encoded_json_base64 	= 	$_POST['QUERY'] ;
+			$decoded_json 			= 	$this->obfuscate('decrypt', $encoded_json_base64, $token) ;
+			$decoded 				= 	json_decode($decoded_json, TRUE) ;
+
+			$this->addLog("QUERY", $decoded) ;
+
+			// Rebuild filters and fields.
+			$this->queryFilters = $decoded['FILTERS'] ;
+			$this->queryFields = $decoded['FIELDS'] ;
 		}
-		else if($querystring == NULL || isset($querystring) !== TRUE)
-		{ 
-			$querystring = $_SERVER['QUERY_STRING'] ;
-			$callBlank = TRUE ;
-		}
-
-
-		// Check how many pairs of () there are. If there are more than 2 pairs or any unpaired sides, trigger error.
-		preg_match_all("#\([^()]*\)#", $querystring, $matches) ;
-		
-		if(count($matches[0]) >= 1 && count($matches[0]) <= 2 && $callBlank == FALSE)
+		else
 		{
-			if(
-				strpos($querystring, "::") !== FALSE && substr_count($querystring, ":") == 2 && 
-			  	(substr_count($querystring, ($fieldDelimiter."(")) > 0 || substr_count($querystring, ($filterDelimiter."(")) > 0)
-			  )
-			{// two possible input parts
-				// There should be something on boths sides of '::'
-				$rawQuery = explode("::", $querystring) ;
-			}
-			elseif(
-					substr_count($querystring, ":") == 0 && 
+			$POSTcallblank = TRUE ;
+		}
+
+		if(($_SERVER['QUERY_STRING'] !== "" && isset($_SERVER['QUERY_STRING']) == TRUE) || ($querystring !== NULL && isset($querystring) == TRUE))
+		{
+			if($querystring == NULL || isset($querystring) !== TRUE) $querystring = $_SERVER['QUERY_STRING'] ;
+
+			// Check how many pairs of () there are. If there are more than 2 pairs or any unpaired sides, trigger error.
+			preg_match_all("#\([^()]*\)#", $querystring, $matches) ;
+
+			if(count($matches[0]) >= 1 && count($matches[0]) <= 2)
+			{
+				if(
+					strpos($querystring, "::") !== FALSE && substr_count($querystring, ":") == 2 && 
 				  	(substr_count($querystring, ($fieldDelimiter."(")) > 0 || substr_count($querystring, ($filterDelimiter."(")) > 0)
 				  )
-			{// one possible input part
-				$rawQuery[0] = $querystring ;
-				$rawQuery[1] = NULL ;
-			}
-			else
-			{// no good input parts - saftey net. preg_match_all should catch this.
-				$rawQuery[0] = NULL ;
-				$rawQuery[1] = NULL ;
-			}
+				{// two possible input parts
+					// There should be something on boths sides of '::'
+					$rawQuery = explode("::", $querystring) ;
+				}
+				elseif(
+						substr_count($querystring, ":") == 0 && 
+					  	(substr_count($querystring, ($fieldDelimiter."(")) > 0 || substr_count($querystring, ($filterDelimiter."(")) > 0)
+					  )
+				{// one possible input part
+					$rawQuery[0] = $querystring ;
+					$rawQuery[1] = NULL ;
+				}
+				else
+				{// no good input parts - saftey net. preg_match_all should catch this.
+					$rawQuery[0] = NULL ;
+					$rawQuery[1] = NULL ;
+				}
 
-			if($rawQuery[0] !== NULL || $rawQuery[1] !== NULL) foreach($rawQuery as $rawQueryPart)
-			{
+				if($rawQuery[0] !== NULL || $rawQuery[1] !== NULL) foreach($rawQuery as $rawQueryPart)
+				{
 					// Check the rawQueryPart for '()'
 					preg_match_all("#\([^()]*\)#", $rawQueryPart, $matches) ;
 					
@@ -235,7 +255,7 @@ class Copilot
 				}
 				else
 				{
-					$urlError = TRUE ;
+					$urlErrorTrigger = TRUE ;
 				}
 
 				// We now have raw data or null in queryParts[filters] and queryParts[fields]
@@ -286,36 +306,48 @@ class Copilot
 			}
 			else
 			{
-				$urlError = TRUE ;
+				$urlErrorTrigger = TRUE ;
 			}
+		}
+		else
+		{
+			$URLcallBlank = TRUE ;
+		}
 
-			if($callBlank == TRUE) 										// If there was a blank query. (only in DEV mode)
-			{					
-				//if(DEV) { $this->log->add($callBlankMsg, CP_WARN) ; }
-				return NULL ;
-			}
-			elseif($callWarning == TRUE) 								// If there was a warning.
+		if($URLcallBlank == FALSE && $urlErrorTrigger == TRUE)
+		{
+			$urlError = TRUE ;
+		}
+		
+		
+
+		if($URLcallBlank == TRUE && $POSTcallBlank == TRUE && $PUTcallBlank == TRUE) 									// If there was a blank query. (only in DEV mode)
+		{					
+			//if(DEV) { $this->log->add($callBlankMsg, CP_WARN) ; }
+			return NULL ;
+		}
+		elseif($callWarning == TRUE) 								// If there was a warning.
+		{
+			$this->log->add($callWarningMsg, CP_WARN) ;
+			return NULL ;
+		}
+		elseif($urlError == TRUE) 									// If there was a malformed query.
+		{
+			$this->log->add($urlErrorMsg, CP_ERR) ;
+			return NULL ;
+		}
+		else
+		{
+			if($parsedQuery !== NULL)
 			{
-				$this->log->add($callWarningMsg, CP_WARN) ;
-				return NULL ;
-			}
-			elseif($urlError == TRUE) 									// If there was a malformed query.
-			{
-				$this->log->add($urlErrorMsg, CP_ERR) ;
-				return NULL ;
+				$this->log->add("Query parsed successfully.", CP_MSG) ;
+				return $parsedQuery ;
 			}
 			else
 			{
-				if($parsedQuery !== NULL)
-				{
-					$this->log->add("Query parsed successfully.", CP_MSG) ;
-					return $parsedQuery ;
-				}
-				else
-				{
-					return NULL ;
-				}
+				return NULL ;
 			}
+		}
 	}
 
 

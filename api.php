@@ -30,6 +30,7 @@ $defaultIncludes = function () use ($__CP)
 
 $__CP->createRoute('get', '/test', function() use($__CP) 
 {
+	$__CP->addBlock("query", array("filters"=>$__CP->queryFilters, "fields"=>$__CP->queryFields)) ;
 	$__CP->addBlock("block.name", "block.data") ;
 });
 
